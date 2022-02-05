@@ -1,0 +1,26 @@
+<p>listar-sucursal works!</p>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+                <th>OPCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let datoSucursal of sucursal">
+                <th scope="row">{{datoSucursal.SUC_ID}}</th>
+                <td>{{datoSucursal.SUC_NOMBRE}}</td>
+                <td>{{datoSucursal.SUC_DIRECCION}}</td>
+                <td>{{datoSucursal.SUC_ESTADO}}</td>
+                <td>
+                    <button type="button" class="btn btn-success">Success</button>
+                    <button type="button" class="btn btn-danger">Danger</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
