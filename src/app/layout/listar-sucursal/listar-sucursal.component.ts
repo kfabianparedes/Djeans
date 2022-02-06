@@ -23,8 +23,8 @@ export class ListarSucursalComponent implements OnInit {
   // FUNCIONES
   private mostrarSucursales():void{
     this.servSucursal.servicioListarSucursales().subscribe(
-      data=>{
-        this.sucursal=data.resultado;
+      rpta=>{
+        this.sucursal=rpta.data;
         console.log(this.sucursal);
       },
       (fallo:HttpErrorResponse)=>{
