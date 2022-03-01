@@ -3,19 +3,26 @@ import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './layout.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { ListarSucursalComponent } from './listar-sucursal/listar-sucursal.component';
-import { ListarTiendaComponent } from './listar-tienda/listar-tienda.component';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TiendaComponent } from './tienda/tienda.component';
+import { ProveedorComponent } from './proveedor/proveedor.component';
+import { MarcaComponent } from './marca/marca.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     ListarSucursalComponent,
-    ListarTiendaComponent
+    TiendaComponent,
+    ProveedorComponent,
+    MarcaComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    LayoutRoutingModule
+    LayoutRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class LayoutModule { }
