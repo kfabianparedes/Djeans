@@ -78,11 +78,28 @@ export class ListarSucursalComponent implements OnInit {
 
   editarSucursal(){
     console.log('EDITAR SUCURSAL')
+    this.servSucursal.servicioEditarSucursal(this.objSucursal.SUC_ID,this.objSucursal)
+    .subscribe(
+      res=>{
+        console.log(res)
+      },
+      err=>console.log(err)
+      )
   }
-  eliminarSucursal(sucursal:Sucursal){
+  eliminarSucursal(id:number){
     console.log('ELIMINAR SUCURSAL')
     // this.servSucursal.
-    // this.servSucursal.servicioEliminarSucursal(sucursal);
+    this.servSucursal.servicioEliminarSucursal(id).subscribe(
+      respuesta=>{
+        console.log(respuesta)
+      },
+      error=>console.log(error)
+    )
+    // if(id==null){
+    //   console.log("NO SE ELIGIO UN ID PARA ELIMINAR");
+    // }
+    // console.log(id);
+    // this.servSucursal.servicioEliminarSucursal(id);
   }
 
   private mostrarSucursales():void{

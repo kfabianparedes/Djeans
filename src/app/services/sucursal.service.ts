@@ -28,9 +28,11 @@ export class SucursalService {
     return this.http.put(url,sucursal);
   }
 
-  // servicioEliminarSucursal(id:number):Observable<any>{
-  //   const url=this.URL+'/eliminar/'+id+'/';
-  //   return this.http.delete(url,id);
-  // }
+  servicioEliminarSucursal(id:number):Observable<any>{
+    const url=this.URL+'/eliminar/'+id+'/';
+    console.log("ENTRO AL SERVICIO ELIMINAR");
+    console.log(url);
+    return this.http.delete(url);
+  }
 
 }
