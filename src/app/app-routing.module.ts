@@ -1,25 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutRoutingModule } from './layout/layout-routing.module';
-import { LayoutComponent } from './layout/layout.component';
-import { ListarSucursalComponent } from './layout/listar-sucursal/listar-sucursal.component';
-import { MarcaComponent } from './layout/marca/marca.component';
-import { ProveedorComponent } from './layout/proveedor/proveedor.component';
-import { TiendaComponent } from './layout/tienda/tienda.component';
+import { ErrorComponent } from './shared/pages/error/error.component';
 
 const routes: Routes = [
-  {path:'home',component:LayoutComponent},
-  {path:'sucursal', component:ListarSucursalComponent},
-  {path:'tienda', component:TiendaComponent},
-  {path:'marca', component:MarcaComponent},
-  {path:'proveedor', component:ProveedorComponent}
+  { path: '', loadChildren: ()=> import('./auth/auth.module').then( m=>m.AuthModule ) },
+  { path: 'layout', loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule) },
+  { path:'',redirectTo:'',pathMatch:'full' },
+  { path:'not-found',component: ErrorComponent },
+  { path:'**',redirectTo:'not-found' }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes),
-    LayoutRoutingModule
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

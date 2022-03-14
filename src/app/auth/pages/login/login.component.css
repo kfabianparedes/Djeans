@@ -1,0 +1,58 @@
+.contenedor{
+    background-color: #212529;
+}
+
+.recuadro-login{
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 50px #cda118;
+    background: white;
+
+}
+input{
+    font-size: 13px;
+    font-family: Montserrat-Medium;
+}
+input:active{
+    box-shadow: 0 0 10px #cda118;
+    border-color: #cda118;
+}
+input:focus-within{
+    box-shadow: 0 0 10px #cda118;
+    border-color: #cda118;
+}
+.boton{
+    color: white;
+    background-color: #BC993F;
+    border: none;
+    font-family: Montserrat-Bold;
+}
+.boton:hover{
+    box-shadow: 0 0 10px #cda118;
+    background: #d0a625;
+}
+.boton:active{
+    box-shadow: 0 0 10px #cda118;
+    background: #d0a625;
+}
+
+#img{
+    border: none;
+    height: 260px;
+}
+
+@media screen and (max-width: 768px){
+    #img{
+        margin-top: 1rem;
+        height :150px;
+    }
+    .login-formulario{
+        margin-top: -1rem;
+        margin-left: 0;
+    }
+}  
+
+.h4{
+    font-family: Montserrat-ExtraBold;
+    color: #BC993F;
+}

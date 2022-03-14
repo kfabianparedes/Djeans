@@ -1,24 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-
-
-
+import { RouterModule } from '@angular/router';
+import { ErrorComponent } from './pages/error/error.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TituloPaginaComponent } from './components/titulo-pagina/titulo-pagina.component';
 @NgModule({
   declarations: [
     SidebarComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    TituloPaginaComponent,
+    ErrorComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     SidebarComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    TituloPaginaComponent,
+    ErrorComponent
 
   ]
 })

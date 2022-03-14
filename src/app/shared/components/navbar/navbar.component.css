@@ -1,0 +1,22 @@
+.titulo-logo{
+    font-family: Montserrat-Bold;
+    color: #BC993F;
+}
+.boton{
+    color: white;
+    border: none;
+    font-family: Montserrat-Bold;
+}
+.boton:hover{
+    box-shadow: 0 0 10px #cda118;
+}
+.boton:active{
+    box-shadow: 0 0 10px #cda118;
+}
+.boton:focus{
+    box-shadow: 0 0 10px #cda118;
+}
+
+.btn-user:hover{
+    color: #cda118;
+}

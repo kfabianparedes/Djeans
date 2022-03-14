@@ -1,0 +1,35 @@
+<div class="container-fluid contenedor m-0 vh-100 row justify-content-center align-items-center">
+    <div class="col-11 col-md-8 col-lg-4 recuadro-login">
+        <div class="row">
+            <div class="col-12 col-lg-12 col-md-6 text-center">
+                <img [src]="'../../../assets/img/logo.jpg'" id="img" class="img-thumbnail" alt="logo-empresa">
+            </div>
+            <div class="col-12 col-lg-12 offset-0 offset-md-1 offset-lg-0 col-md-5 login-formulario text-center">
+                <p class="h4 mt-4 mt-lg-0 text-center">Iniciar Sesión</p>
+                <form autocomplete="off" [formGroup]="loginFormulario" (ngSubmit)="login()" class="text-center from-group mt-3">
+                    <div class="row justify-content-center">
+                        <div class="col-1 mt-2">
+                            <i class="pi pi-user"></i>
+                        </div>
+                        <div class="col-10">
+                            <input formControlName="username" class="form-control" type="text" placeholder="Ingresar nombre de usuario">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="col-1 mt-2">
+                            <i class="pi pi-lock"></i>
+                        </div>
+                        <div class="col-10">
+                            <input formControlName="password" class="form-control" type="password" placeholder="Ingresar contraseña">
+                        </div>
+                    </div>
+                    <div class="row mt-4 justify-content-center">
+                        <button type="submit" [disabled]="loginFormulario.invalid" class="col-12 col-md-12 col-lg-5 boton btn">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
