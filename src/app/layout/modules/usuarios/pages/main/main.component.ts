@@ -14,4 +14,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public obtenerSubtitulo(event:any): void {
+    this.subtituloUsuario = event;
+  }
 }

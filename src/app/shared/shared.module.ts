@@ -6,24 +6,48 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TituloPaginaComponent } from './components/titulo-pagina/titulo-pagina.component';
+
+//PrimeNg
+import {TableModule} from 'primeng/table';
+import {ToastModule} from 'primeng/toast';
+import {ToolbarModule} from 'primeng/toolbar';
+import {ProgressBarModule} from 'primeng/progressbar';
+import { ProgressbarComponent } from './components/progressbar/progressbar.component';
+import {BadgeModule} from 'primeng/badge';
+
 @NgModule({
   declarations: [
     SidebarComponent,
     NavbarComponent,
     FooterComponent,
     TituloPaginaComponent,
-    ErrorComponent
+    ErrorComponent,
+    ProgressbarComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    //PrimeNg
+    TableModule,
+    ToastModule,
+    ToolbarModule,
+    ProgressBarModule,
+    BadgeModule
   ],
   exports: [
     SidebarComponent,
     NavbarComponent,
     FooterComponent,
     TituloPaginaComponent,
-    ErrorComponent
+    ErrorComponent,
+    ProgressbarComponent,
+
+    //PrimeNg
+    TableModule,
+    ToastModule,
+    ToolbarModule,
+    ProgressBarModule,
+    BadgeModule
 
   ]
 })

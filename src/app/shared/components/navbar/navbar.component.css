@@ -1,7 +1,13 @@
 .titulo-logo{
     font-family: Montserrat-Bold;
     color: #BC993F;
+    
 }
+.grupo-opciones{
+    font-size: 13px;
+    font-family: Montserrat-Medium;
+}
+
 .boton{
     color: white;
     border: none;
@@ -19,4 +25,8 @@
 
 .btn-user:hover{
     color: #cda118;
+}
+
+.opciones:hover{
+    box-shadow: 0 0 10px #cda118;
 }

@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import { Respuesta } from 'src/app/shared/models/respuesta.model';
+import { validarCodigosDeErrorDelAPI, exitoAlerta, errorAlerta } from 'src/app/shared/models/reutilizables';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -26,12 +28,24 @@ export class LoginComponent{
   public login():void {
     const { username, password } = this.loginFormulario.value;
     this.authService.login( username, password )
-      .subscribe( success => {
-        if ( success === true ) {
-          this.router.navigateByUrl('/layout');
-        } else {
-          Swal.fire('Error', 'Hubo un error al autorizarse', 'error');
+    .subscribe(
+      {
+        next: (respuesta:Respuesta) => {
+          if ( respuesta.success === true  && respuesta.code === 200){
+            exitoAlerta('Bienvenido', respuesta.message);
+            this.router.navigateByUrl('/layout');
+          }
+        },  
+        error: (respuesta:HttpErrorResponse) => {
+          if(respuesta.status !== 0){
+            if(validarCodigosDeErrorDelAPI(respuesta.error['code'])){
+              errorAlerta(respuesta.error['code'],respuesta.error.message);
+            }
+          }else{
+            errorAlerta('Error en el servidor',AuthService.mensajeErrorDelServidor);
+          }
         }
-      });
+      }
+    )
   }
 }

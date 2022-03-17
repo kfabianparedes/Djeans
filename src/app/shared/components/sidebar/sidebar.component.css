@@ -1,3 +1,7 @@
+.nav{
+    font-size: 13px;
+    font-family: Montserrat-Medium;
+}
 .seleccion:hover{
     color: #BC993F;
     box-shadow: 0 0 10px #BC993F;

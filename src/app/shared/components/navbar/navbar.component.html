@@ -9,11 +9,11 @@
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
-            <a class="btn-user nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="pi pi-user"></i></a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" [routerLink]="['/layout','usuario','perfil']">Perfil</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item">Cerrar Sesión</a></li>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="pi pi-user"></i></a>
+            <ul class="grupo-opciones dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="opciones dropdown-item" [routerLink]="['/layout','usuario','perfil']">Perfil</a></li>
+                <li><hr class="dropdown-divider"/></li>
+                <li><a class="opciones dropdown-item" (click)="logout()">Cerrar Sesión</a></li>
             </ul>
         </li>
     </ul>
