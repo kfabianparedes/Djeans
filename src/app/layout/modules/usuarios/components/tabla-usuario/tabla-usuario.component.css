@@ -1,8 +1,11 @@
+*{
+    font-size: 13px ;
+}
 .titulo{
-    font-family: Montserrat-Bold;
+    font-family: Montserrat-ExtraBold;
 }
 
 .fila{
-
     font-family: Montserrat-Light;
 }
+

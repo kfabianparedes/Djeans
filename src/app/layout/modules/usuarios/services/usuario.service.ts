@@ -8,8 +8,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UsuarioService {
-  public static readonly listaDeRoles: string[] = ['SUPER USUARIO', 'ADMINISTRADOR', 'EMPLEADO'];
-  
   private _url: string = environment.url;
 
   constructor(private http: HttpClient) { }
@@ -19,8 +17,7 @@ export class UsuarioService {
     return this.http.get<Respuesta>( url )
       .pipe(
         map(respuesta => respuesta),
-        catchError(err => throwError(()=>err)),
-        retry(2)
+        catchError(err => throwError(()=>err))
       );
   }
 

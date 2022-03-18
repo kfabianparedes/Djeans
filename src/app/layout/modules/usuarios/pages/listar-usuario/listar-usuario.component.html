@@ -1,8 +1,10 @@
 <div class="container-fluid">
+    <div class="row">
+        <progressbar></progressbar>
+    </div>
     <div class="row tabla">
         <div class="row bg-dark">
-            <progressbar></progressbar>
+            <tabla-usuario [usuarios]="usuarios" ></tabla-usuario>
         </div>
-        <app-tabla-usuario [usuarios]="usuarios" ></app-tabla-usuario>
     </div>
 </div>

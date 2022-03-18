@@ -1,1 +1,8 @@
-<p-progressBar *ngIf="isLoading | async" mode="indeterminate"></p-progressBar>
+<!-- <p-progressBar *ngIf="isLoading | async" mode="indeterminate"></p-progressBar> -->
+<div class="row barra">
+    <p-progressBar 
+        *ngIf="isLoading | async"
+        [style]="{'height': '5px'}" 
+        mode="indeterminate">
+    </p-progressBar>
+</div>

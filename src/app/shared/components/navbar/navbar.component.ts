@@ -13,20 +13,22 @@ import { errorAlerta, exitoAlerta, validarCodigosDeErrorDelAPI } from '../../mod
 })
 export class NavbarComponent implements OnInit {
   @Output() activarSideBar = new EventEmitter<boolean>();
-  esconder: boolean = false;
+  private _esconder: boolean = false;
+  public username: string = '';
   constructor(
     private authService: AuthService,
     private router: Router, 
   ) { }
 
   ngOnInit(): void {
+    this.username = this.authService.decode(localStorage.getItem('USU_USERNAME')!)
   }
 
   estadoSideBar():void{
-    this.esconder===true?
-      this.esconder = false:
-      this.esconder = true;
-    this.activarSideBar.emit(this.esconder);
+    this._esconder===true?
+      this._esconder = false:
+      this._esconder = true;
+    this.activarSideBar.emit(this._esconder);
   }
 
   logout(): void{

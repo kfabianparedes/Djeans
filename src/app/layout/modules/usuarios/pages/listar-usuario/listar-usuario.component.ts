@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { validarCodigosDeErrorDelAPI, errorAlerta } from 'src/app/shared/models/reutilizables';
@@ -11,18 +11,20 @@ import { UsuarioService } from '../../services/usuario.service';
   templateUrl: './listar-usuario.component.html',
   styleUrls: ['./listar-usuario.component.css']
 })
-export class ListarUsuarioComponent implements OnInit {
+export class ListarUsuarioComponent implements OnInit , OnDestroy{
 
-  @Output() subtitulo = new EventEmitter<string>(); 
 
   public usuarios : Usuario[] = [];
 
   constructor(private usuarioService: UsuarioService) { }
-
+  
 
   ngOnInit(): void {
-    this.subtitulo.emit('Listar usuarios')
     this._listarUsuarios();
+  }
+
+  ngOnDestroy(): void {
+    // this.usuarioService.unsubscribe();
   }
 
   private _listarUsuarios(): void{
@@ -41,4 +43,5 @@ export class ListarUsuarioComponent implements OnInit {
 
     });
   }
+
 }

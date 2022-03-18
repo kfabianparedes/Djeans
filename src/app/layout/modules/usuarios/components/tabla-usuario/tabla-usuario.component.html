@@ -1,19 +1,43 @@
-<div class="card">
+<div class="card p-1">
     <p-table responsiveLayout="scroll" [value]="usuarios">
+        <ng-template pTemplate="caption">
+            <div class="flex row justify-content-between">
+                <div class="py-1 col-sm-12 col-md-5 col-lg-4">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-12">
+                            <div class="row">
+                                <div class="col-10">
+                                    <input type="text" class="form-control" name="filtroTexto" placeholder="Nombre de usuario..." >
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-primary"><i class="pi pi-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-1 col-sm-12 col-md-4 col-lg-3">
+                    <button style="float:right" class="btn btn-primary" type="button" label="Nuevo"><i class="pi pi-user-plus">&nbsp;Nuevo</i></button>
+                </div>
+            </div>
+        </ng-template>
         <ng-template pTemplate="header" let-users>
-            <tr class="titulo">
-                <th>Nombre de usuario</th>
-                <th>Activo/Inactivo</th>
-                <th>Tipo de usuario</th>
+            <tr class="titulo contenedor">
+                <th class="text-center">ID</th>
+                <th class="text-center">Nombre de usuario</th>
+                <th class="text-center">Tipo de usuario</th>
+                <th class="text-center">Activo/Inactivo</th>
+                <th class="text-center"></th>
             </tr>
         </ng-template>
         <ng-template  pTemplate="body" let-user let-users="columns">
-            <tr class="fila"> 
-                <td>{{user.username}}</td>
-                <td>{{user.is_active}}</td>
-                <td><span class="badge bg-{{user.is_superuser ? 'success':(user.is_staff && user.is_superuser === false) ? 'warning': 'danger'}}">{{user.username}}</span></td>
+            <tr class="fila contenedor"> 
+                <td class="text-center">{{user.id}}</td>
+                <td class="text-center">{{user.username}}</td>
+                <td class="text-center"><p-tag severity={{obtenerRolDeUsuario(user)[0]}}>{{obtenerRolDeUsuario(user)[1]}}</p-tag></td>
+                <td class="text-center"><p-tag value="{{user.is_active?'ACTIVO':'INACTIVO'}}" severity="{{user.is_active?'success':'danger'}}"></p-tag></td>
+                <td class="text-center">acciones</td>
             </tr>
-            <p-badge value="2" severity="success"></p-badge>
         </ng-template>
     </p-table>
 </div>

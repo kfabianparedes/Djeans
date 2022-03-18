@@ -14,6 +14,9 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {ProgressBarModule} from 'primeng/progressbar';
 import { ProgressbarComponent } from './components/progressbar/progressbar.component';
 import {BadgeModule} from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+import {ButtonModule} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import {BadgeModule} from 'primeng/badge';
     ToastModule,
     ToolbarModule,
     ProgressBarModule,
-    BadgeModule
+    BadgeModule,
+    TagModule,
+    ButtonModule,
+    InputTextModule
   ],
   exports: [
     SidebarComponent,
@@ -47,8 +53,10 @@ import {BadgeModule} from 'primeng/badge';
     ToastModule,
     ToolbarModule,
     ProgressBarModule,
-    BadgeModule
-
+    BadgeModule,
+    TagModule,
+    ButtonModule,
+    InputTextModule
   ]
 })
 export class SharedModule { }

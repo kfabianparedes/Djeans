@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, filter, finalize, Observable, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Token } from '../models/token.model';
 import { errorAlerta } from '../../shared/models/reutilizables';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { ProgressbarService } from 'src/app/shared/services/progressbar.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -14,7 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private _urlsExcluidas: string[];
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router, private progressbarService: ProgressbarService) {
     this._urlsExcluidas= [
       '/login',
       '/logout',
@@ -22,29 +23,33 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.progressbarService.mostrar();
 
     if(this._esUrlValidaParaInterceptar(request.url)){
       if (this.authService.getAccessToken()) {
         request = this.addToken(request, this.authService.getAccessToken()!);
       }
 
-      return next.handle(request).pipe(catchError((error:HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          if(!error.error['messages']){
-            this.authService.removeTokens();
-            errorAlerta(error.error['code'],'Debe renovar la sesión. Vuelva a autenticarse.');
-            this.router.navigate(['/']);
+      return next.handle(request).pipe(
+        finalize(() => this.progressbarService.ocultar()),
+        catchError((error:HttpErrorResponse) => {
+          if (error instanceof HttpErrorResponse && error.status === 401) {
+            if(!error.error['messages']){
+              this.authService.removeTokens();
+              errorAlerta(error.error['code'],'Debe renovar la sesión. Vuelva a autenticarse.');
+              this.router.navigate(['/']);
+              return throwError(()=>error);
+            }
+            return this.handle401Error(request, next);
+            
+          } else {
             return throwError(()=>error);
           }
-          return this.handle401Error(request, next);
-          
-        } else {
-          return throwError(()=>error);
-        }
-      }));
+        })
+      );
     }
 
-    return next.handle(request);
+    return next.handle(request).pipe(finalize(() => this.progressbarService.ocultar()));
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
@@ -65,7 +70,9 @@ export class TokenInterceptor implements HttpInterceptor {
           this.isRefreshing = false;
           this.refreshTokenSubject.next(token.access);
           return next.handle(this.addToken(request, token.access));
-        }));
+        }),
+        finalize(() => this.progressbarService.ocultar())
+      );
 
     } else {
       return this.refreshTokenSubject.pipe(
@@ -73,7 +80,9 @@ export class TokenInterceptor implements HttpInterceptor {
         take(1),
         switchMap((jwt: string) => {
           return next.handle(this.addToken(request, jwt));
-        }));
+        }),
+        finalize(() => this.progressbarService.ocultar())
+      );
     }
   }
 

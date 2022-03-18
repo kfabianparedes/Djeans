@@ -30,3 +30,17 @@
 .opciones:hover{
     box-shadow: 0 0 10px #cda118;
 }
+
+.username{
+    margin-right: 1rem;
+}
+
+.username:hover{
+    color:#cda118;
+}
+@media screen and (max-width : 768px) {
+    .username{
+        margin-right: 0;
+        display: none;
+    }
+}

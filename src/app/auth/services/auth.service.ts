@@ -96,11 +96,11 @@ export class AuthService {
     return this.http.post<Token>(url,body).pipe(tap((auth: Token) => this._guardarTokens(auth)));//,retry(2));
   }
 
-  private encode(valor:string) {
+  public encode(valor:string) {
     return btoa(encodeURIComponent(valor));
   };
 
-  private decode(valor:string) {
+  public decode(valor:string) {
     return decodeURIComponent(atob(valor));
   };
 
