@@ -1,43 +1,52 @@
 <div class="card p-1">
-    <p-table responsiveLayout="scroll" [value]="usuarios">
+    <p-table #tablaUsuarios responsiveLayout="scroll" [value]="usuarios" [filterDelay]="0" [globalFilterFields]="['id','username','tipoDeUsuario','estaActivo']">
         <ng-template pTemplate="caption">
             <div class="flex row justify-content-between">
-                <div class="py-1 col-sm-12 col-md-5 col-lg-4">
+                <div class="py-2 col-sm-12 col-md-5 col-lg-4">
                     <div class="row">
                         <div class="col-md-9 col-sm-12">
-                            <div class="row">
-                                <div class="col-10">
-                                    <input type="text" class="form-control" name="filtroTexto" placeholder="Nombre de usuario..." >
-                                </div>
-                                <div class="col-2">
-                                    <button type="button" class="btn btn-primary"><i class="pi pi-search"></i></button>
+                            <div class="row flex">
+                                <div class="col-sm-8 col-md-11 col-lg-11 d-flex">
+                                    <input 
+                                        type="text" 
+                                        [(ngModel)]="filtroBusquedaUsuario"
+                                        class="input-busqueda form-control" 
+                                        (input)="tablaUsuarios.filterGlobal(filtroBusquedaUsuario, 'contains')" 
+                                        placeholder="Nombre de usuario"
+                                    >
+                                    <button (click)="tablaUsuarios.filterGlobal(filtroBusquedaUsuario, 'contains')" type="button" class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="py-1 col-sm-12 col-md-4 col-lg-3">
-                    <button style="float:right" class="btn btn-primary" type="button" label="Nuevo"><i class="pi pi-user-plus">&nbsp;Nuevo</i></button>
+                <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
+                    <button (click)="abrirModalCrearUsuario()" class="btn-header-derecha btn btn-primary" type="button"><i class="pi pi-user-plus">&nbsp;</i>Nuevo</button>
                 </div>
             </div>
         </ng-template>
-        <ng-template pTemplate="header" let-users>
-            <tr class="titulo contenedor">
-                <th class="text-center">ID</th>
-                <th class="text-center">Nombre de usuario</th>
-                <th class="text-center">Tipo de usuario</th>
-                <th class="text-center">Activo/Inactivo</th>
+        <ng-template pTemplate="header">
+            <tr class="titulo-tabla contenedor">
+                <th class="text-center" pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="username">Nombre de usuario <p-sortIcon field="username"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="tipoDeUsuario">Tipo de usuario <p-sortIcon field="tipoDeUsuario"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="estaActivo">Estado <p-sortIcon field="estaActivo"></p-sortIcon></th>
                 <th class="text-center"></th>
             </tr>
         </ng-template>
-        <ng-template  pTemplate="body" let-user let-users="columns">
-            <tr class="fila contenedor"> 
-                <td class="text-center">{{user.id}}</td>
-                <td class="text-center">{{user.username}}</td>
-                <td class="text-center"><p-tag severity={{obtenerRolDeUsuario(user)[0]}}>{{obtenerRolDeUsuario(user)[1]}}</p-tag></td>
-                <td class="text-center"><p-tag value="{{user.is_active?'ACTIVO':'INACTIVO'}}" severity="{{user.is_active?'success':'danger'}}"></p-tag></td>
-                <td class="text-center">acciones</td>
+        <ng-template  pTemplate="body" let-usuario >
+            <tr class="filas-tabla contenedor" > 
+                <td class="text-center">{{usuario.id}}</td>
+                <td class="text-center">{{usuario.username  | uppercase}}</td>
+                <td class="text-center"><p-tag value="{{usuario.tipoDeUsuario}}" severity={{obtenerColorDelRolDeUsuario(usuario.tipoDeUsuario)}}></p-tag></td>
+                <td class="text-center"><p-tag value="{{usuario.estaActivo}}" severity="{{usuario.is_active?'success':'danger'}}"></p-tag></td>
+                <td class="text-center">
+                    <button pButton pRipple type="button" icon="pi pi-user-edit" class="p-button-rounded p-button-warning p-button-outlined"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                </td>
             </tr>
         </ng-template>
     </p-table>
 </div>
+
+<modal-usuario (cerrarModal)="mostrarModal=$event" [tituloModal]="'Registrar Nuevo Usuario :'" [mostrarModal]="mostrarModal" ></modal-usuario>

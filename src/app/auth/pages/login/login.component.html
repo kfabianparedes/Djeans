@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="row mt-4 justify-content-center">
-                        <button type="submit" [disabled]="loginFormulario.invalid" class="col-12 col-md-12 col-lg-5 boton btn">Login</button>
+                        <button [disabled]="(cargando | async) || loginFormulario.invalid" type="submit" class="col-12 col-md-12 col-lg-5 boton btn">Login</button>
                     </div>
                 </form>
             </div>

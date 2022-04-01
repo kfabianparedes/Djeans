@@ -1,0 +1,56 @@
+<div class="card p-1">
+    <p-table #tablaCategoria responsiveLayout="scroll"  [value]="categoriasDeTabla" [filterDelay]="0" [globalFilterFields]="['cat_id','cat_descripcion','categoriaEstado']">
+        <ng-template pTemplate="caption">
+            <div class="flex row justify-content-between">
+                <div class="py-2 col-sm-12 col-md-5 col-lg-4">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-12">
+                            <div class="row flex">
+                                <div class="col-sm-8 col-md-11 col-lg-11 d-flex">
+                                    <input 
+                                        type="text" 
+                                        [(ngModel)]="filtroBusquedaCategoria"
+                                        class="input-busqueda form-control" 
+                                        (input)="tablaCategoria.filterGlobal(filtroBusquedaCategoria, 'contains')" 
+                                        placeholder="Nombre de categoría"
+                                    >
+                                    <button [disabled]="cargando | async" (click)="tablaCategoria.filterGlobal(filtroBusquedaCategoria, 'contains')" type="button" class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
+                    <button [disabled]="cargando | async" (click)="registroCategoria()" class="btn-header-derecha btn btn-primary" type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo</button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr class="titulo-tabla contenedor">
+                <th class="text-center" pSortableColumn="cat_descripcion">Descripción <p-sortIcon field="cat_descripcion"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="categoriaEstado">Estado <p-sortIcon field="categoriaEstado"></p-sortIcon></th>
+                <th class="text-center"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-categoria >
+            <tr class="filas-tabla contenedor"> 
+                <td class="text-center">{{categoria.cat_descripcion}}</td>
+                <td class="text-center"><p-tag value="{{categoria.categoriaEstado}}" severity="{{categoria.cat_estado?'success':'danger'}}"></p-tag></td>
+                <td class="text-center">
+                    <button [disabled]="cargando | async" (click)="actualizarCategoria(categoria)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-outlined"></button>
+                    <button [disabled]="cargando | async" (click)="eliminarCategoria(categoria.cat_id)" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<modal-categoria
+    [tituloModal]="tituloModal" 
+    [mostrarModal]="mostrarModal"
+    [objetoCategoria]="objetoCategoriaUtilizado"
+    (categoriaActualizarRegistrar)="guardarDataCategoria($event)"
+    
+    (cerrarModal)="mostrarModal=$event"> <!-- (cerrarModal) devuelve un boolean -->
+    
+</modal-categoria>

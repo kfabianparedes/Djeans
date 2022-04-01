@@ -1,10 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import Swal from 'sweetalert2';
 import { Respuesta } from '../../models/respuesta.model';
-import { errorAlerta, exitoAlerta, validarCodigosDeErrorDelAPI } from '../../models/reutilizables';
+import { errorAlerta, exitoAlerta, validarCodigosDeErrorDelAPI } from '../../utils/reutilizables'
 
 @Component({
   selector: 'navbar',

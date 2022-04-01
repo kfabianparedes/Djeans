@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeCategoriaComponent } from './pages/home-categoria/home-categoria.component';
-import { ListarCategoriaComponent } from './pages/listar-categoria/listar-categoria.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeCategoriaComponent,
-    children:[
-      {path: 'listar', component: ListarCategoriaComponent}
-    ]
-  }
+  { path: '', component: HomeCategoriaComponent },
+  { path: '**', redirectTo:'' },
+    // children:[
+    //   {path: 'listar', component: ListarCategoriaComponent},
+    //   {path: '', redirectTo:'listar'},
+    //   {path: '**', redirectTo:'listar'},
+    // ]
 ];
 
 @NgModule({

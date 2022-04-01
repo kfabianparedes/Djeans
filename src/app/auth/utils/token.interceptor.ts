@@ -3,10 +3,11 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { BehaviorSubject, catchError, filter, finalize, Observable, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Token } from '../models/token.model';
-import { errorAlerta } from '../../shared/models/reutilizables';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProgressbarService } from 'src/app/shared/services/progressbar.service';
+import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { errorAlerta } from 'src/app/shared/utils/reutilizables';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -15,23 +16,32 @@ export class TokenInterceptor implements HttpInterceptor {
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private _urlsExcluidas: string[];
 
-  constructor(public authService: AuthService, private router: Router, private progressbarService: ProgressbarService) {
+  constructor(
+    public authService: AuthService, 
+    private router: Router, 
+    private progressbarService: ProgressbarService,
+    private buttonProgressService: ButtonProgressService,
+    ) {
+
     this._urlsExcluidas= [
       '/login',
-      '/logout',
     ];
+
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.progressbarService.mostrar();
-
+    this.buttonProgressService.mostrar();
     if(this._esUrlValidaParaInterceptar(request.url)){
       if (this.authService.getAccessToken()) {
         request = this.addToken(request, this.authService.getAccessToken()!);
       }
 
       return next.handle(request).pipe(
-        finalize(() => this.progressbarService.ocultar()),
+        finalize(() => {
+          this.progressbarService.ocultar(),
+          this.buttonProgressService.ocultar();
+        }),
         catchError((error:HttpErrorResponse) => {
           if (error instanceof HttpErrorResponse && error.status === 401) {
             if(!error.error['messages']){
@@ -49,7 +59,12 @@ export class TokenInterceptor implements HttpInterceptor {
       );
     }
 
-    return next.handle(request).pipe(finalize(() => this.progressbarService.ocultar()));
+    return next.handle(request).pipe(
+      finalize(() => {
+        this.progressbarService.ocultar(),
+        this.buttonProgressService.ocultar();
+      })
+    );
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
@@ -71,7 +86,10 @@ export class TokenInterceptor implements HttpInterceptor {
           this.refreshTokenSubject.next(token.access);
           return next.handle(this.addToken(request, token.access));
         }),
-        finalize(() => this.progressbarService.ocultar())
+        finalize(() => {
+          this.progressbarService.ocultar(),
+          this.buttonProgressService.ocultar();
+        })
       );
 
     } else {
@@ -81,7 +99,10 @@ export class TokenInterceptor implements HttpInterceptor {
         switchMap((jwt: string) => {
           return next.handle(this.addToken(request, jwt));
         }),
-        finalize(() => this.progressbarService.ocultar())
+        finalize(() => {
+          this.progressbarService.ocultar(),
+          this.buttonProgressService.ocultar();
+        })
       );
     }
   }

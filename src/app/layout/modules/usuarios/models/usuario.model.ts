@@ -4,5 +4,9 @@ export interface Usuario{
     is_active: boolean,
     is_employee: boolean,
     is_staff: boolean,
-    is_superuser: boolean
+    is_superuser: boolean,
+
+    //Para filtrar en tabla
+    tipoDeUsuario?: string,
+    estaActivo?: string
 }

@@ -11,7 +11,7 @@ export class ProgressbarComponent implements OnInit {
 
   constructor(private progressBarService: ProgressbarService) { }
   
-  isLoading: Subject<boolean> = this.progressBarService.cargando;
+  isLoading : Subject<boolean> = this.progressBarService.cargando;
 
   ngOnInit(): void {
   }

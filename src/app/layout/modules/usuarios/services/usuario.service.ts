@@ -21,4 +21,8 @@ export class UsuarioService {
       );
   }
 
+  public eliminarUsuario(){
+    
+  }
+
 }

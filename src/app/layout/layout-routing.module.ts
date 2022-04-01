@@ -9,7 +9,9 @@ const routes: Routes = [
     children:[
       { path:'categoria', loadChildren: () => import('./modules/categorias/categorias.module').then( m => m.CategoriasModule )},
       { path:'usuario', loadChildren: () => import('./modules/usuarios/usuarios.module').then( m => m.UsuariosModule )},
-      { path:'', redirectTo:'', pathMatch:'full'}
+      { path:'', redirectTo:'', pathMatch:'full'},
+      { path:'**', redirectTo:''}
+
     ]
   }
 ];

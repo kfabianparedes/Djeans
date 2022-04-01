@@ -7,7 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TituloPaginaComponent implements OnInit {
   @Input() titulo: string = '';
-  @Input() subTitulo: string = '';
   
   constructor() { }
 

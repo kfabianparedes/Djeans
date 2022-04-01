@@ -6,17 +6,19 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TituloPaginaComponent } from './components/titulo-pagina/titulo-pagina.component';
+import { SubtituloPaginaComponent } from './components/subtitulo-pagina/subtitulo-pagina.component';
+import { ProgressbarComponent } from './components/progressbar/progressbar.component';
 
 //PrimeNg
-import {TableModule} from 'primeng/table';
-import {ToastModule} from 'primeng/toast';
-import {ToolbarModule} from 'primeng/toolbar';
-import {ProgressBarModule} from 'primeng/progressbar';
-import { ProgressbarComponent } from './components/progressbar/progressbar.component';
-import {BadgeModule} from 'primeng/badge';
-import { TagModule } from 'primeng/tag';
-import {ButtonModule} from 'primeng/button';
-import {InputTextModule} from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule  } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import {InputTextModule} from 'primeng/inputtext';
     FooterComponent,
     TituloPaginaComponent,
     ErrorComponent,
-    ProgressbarComponent
+    ProgressbarComponent,
+    SubtituloPaginaComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +41,8 @@ import {InputTextModule} from 'primeng/inputtext';
     BadgeModule,
     TagModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
+    DialogModule
   ],
   exports: [
     SidebarComponent,
@@ -47,7 +51,7 @@ import {InputTextModule} from 'primeng/inputtext';
     TituloPaginaComponent,
     ErrorComponent,
     ProgressbarComponent,
-
+    SubtituloPaginaComponent,
     //PrimeNg
     TableModule,
     ToastModule,
@@ -56,7 +60,8 @@ import {InputTextModule} from 'primeng/inputtext';
     BadgeModule,
     TagModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
+    DialogModule
   ]
 })
 export class SharedModule { }

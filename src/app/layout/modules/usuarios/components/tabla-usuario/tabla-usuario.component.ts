@@ -10,28 +10,25 @@ import { Roles } from '../../utils/Roles.model';
 export class TablaUsuarioComponent implements OnInit {
 
   @Input() usuarios: Usuario[] = [];
-  
+  public mostrarModal: boolean = false;
+  public filtroBusquedaUsuario: string = '';
   constructor() { }
 
   ngOnInit(): void {
   }
 
 
-  public obtenerRolDeUsuario($user: Usuario):string[]{
-    if ( $user.is_superuser === true){
-      return ['success',Roles.superuser];
-    }else if ($user.is_staff === true){
-      return ['warning',Roles.admin];
-    }else if ($user.is_employee === true){
-      return ['primary',Roles.employee];
-    }else
-      return ['danger','SIN ROL'];
+  public obtenerColorDelRolDeUsuario(tipoDeUsuario: string):string{
+    return tipoDeUsuario == Roles.superuser?
+      'warning':tipoDeUsuario == Roles.admin?
+      'success':tipoDeUsuario == Roles.employee?
+      'primary':'danger';
+
   }
 
-  loading = [false, false, false, false]
-
-  load(index: any) {
-      this.loading[index] = true;
-      setTimeout(() => this.loading[index] = false, 1000);
+  public abrirModalCrearUsuario():void {
+    this.mostrarModal = true;
   }
+
+
 }

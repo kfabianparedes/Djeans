@@ -1,1 +1,14 @@
-<p>home-categoria works!</p>
+<titulo-pagina [titulo]="'Categoría'"></titulo-pagina>
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Lista de categorías'"></subtitulo-pagina>
+
+<div class="container-fluid">
+    <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+    <div class="row">
+        <tabla-categoria 
+            [categoriasDeTabla]="categorias"
+            (categoriaEliminada)="eliminarCategoria($event)" 
+            (categoriaActualizarRegistrar)="guardarCategoria($event)">
+        </tabla-categoria>
+    </div>
+</div>

@@ -2,8 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
-import { validarCodigosDeErrorDelAPI, exitoAlerta, errorAlerta } from 'src/app/shared/models/reutilizables';
+import { exitoAlerta, errorAlerta } from 'src/app/shared/utils/reutilizables';
+import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -17,12 +19,17 @@ export class LoginComponent{
     username:    ['kfabianparedes', [ Validators.required]],
     password: ['010199Kf_', [ Validators.required]],
   });
+  
+  public cargando : Subject<boolean> = this.buttonProgressService.cargando;
 
   constructor( 
     private fb: FormBuilder,
     private router: Router, 
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private buttonProgressService: ButtonProgressService
+  ) { 
+    localStorage.clear();
+  }
 
 
   public login():void {
@@ -36,16 +43,18 @@ export class LoginComponent{
             this.router.navigateByUrl('/layout');
           }
         },  
-        error: (respuesta:HttpErrorResponse) => {
-          if(respuesta.status !== 0){
-            if(validarCodigosDeErrorDelAPI(respuesta.error['code'])){
-              errorAlerta(respuesta.error['code'],respuesta.error.message);
-            }
+        error: (respuestaError:HttpErrorResponse) => {
+          const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+
+          if(codigoHttp !== 0){
+            errorAlerta( respuesta.code.toString() , respuesta.message );
           }else{
-            errorAlerta('Error en el servidor',AuthService.mensajeErrorDelServidor);
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
           }
         }
+          
       }
-    )
+    );
   }
 }
