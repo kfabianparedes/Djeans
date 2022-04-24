@@ -8,11 +8,11 @@
     (onHide)="closeModal()"
     >
 
-        <ng-template pTemplate="header"> <!-- FALTA MODIFICAR TAMAÑO -->
+        <ng-template pTemplate="header"> 
             <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
-        <form [formGroup]="categoriaFormulario" (ngSubmit)="guardarCategoria()" class="from-group">
+        <form [formGroup]="modeloFormulario" (ngSubmit)="guardarModelo()" class="from-group">
             <div class="row p-1">
                 <label 
                     class="col-12 col-sm-4 col-lg-3 col-form-label"
@@ -71,11 +71,11 @@
                 <i class="pi pi-times"></i>
                 Cancelar
             </button>
-            <button *ngIf="categoriaFormulario.valid"
+            <button *ngIf="modeloFormulario.valid"
                 type="submit"
                 class="btn btn-outline-primary"
-                (click)="guardarCategoria()"
-                [disabled]="categoriaFormulario.invalid">
+                (click)="guardarModelo()"
+                [disabled]="modeloFormulario.invalid">
                 <i class="pi pi-check"></i>
                 Guardar
             </button>

@@ -8,6 +8,7 @@ const routes: Routes = [
     component:LayoutComponent,
     children:[
       { path:'categoria', loadChildren: () => import('./modules/categorias/categorias.module').then( m => m.CategoriasModule )},
+      { path:'modelo', loadChildren: () => import('./modules/modelos/modelos.module').then( m => m.ModelosModule )},
       { path:'usuario', loadChildren: () => import('./modules/usuarios/usuarios.module').then( m => m.UsuariosModule )},
       { path:'', redirectTo:'', pathMatch:'full'},
       { path:'**', redirectTo:''}

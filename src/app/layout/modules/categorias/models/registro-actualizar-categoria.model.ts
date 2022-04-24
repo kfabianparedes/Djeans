@@ -1,6 +1,6 @@
 import { Categoria } from "./categoria.model";
 
-export interface DataRegistroActualizar{
+export interface DataCategoriaRegistroActualizar{
     esRegistro: boolean,
     categoria : Categoria;
 }

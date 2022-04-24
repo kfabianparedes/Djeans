@@ -1,10 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { Categoria } from '../../models/categoria.model';
-import { DataRegistroActualizar } from '../../models/data-registro-actualizar';
+import { DataCategoriaRegistroActualizar } from '../../models/registro-actualizar-categoria.model';
 
 @Component({
   selector: 'tabla-categoria',
@@ -16,16 +15,17 @@ export class TablaCategoriaComponent{
   @Output() categoriaEliminada = new EventEmitter<number>();
   @Output() categoriaActualizarRegistrar = new EventEmitter();
 
-  @ViewChild('#tablaCategoria') private tablaCategoria! : Table;
-
+  //Variables tabla
   public filtroBusquedaCategoria: string = '';
-  public mostrarModal: boolean = false;
-  private esRegistro : boolean = true;
-  public cargando : Subject<boolean> = this.buttonProgressService.cargando;
-
-
+  
+  //Variables modal
   public objetoCategoriaUtilizado!: Categoria;
   public tituloModal : string = '';
+  public mostrarModal: boolean = false;
+  private esRegistro : boolean = true;
+
+  //Variable boton en carga
+  public cargando : Subject<boolean> = this.buttonProgressService.cargando;
 
   constructor(private buttonProgressService:ButtonProgressService){}
 
@@ -36,7 +36,6 @@ export class TablaCategoriaComponent{
 
   public eliminarCategoria(idCategoria: number): void {
     this.categoriaEliminada.emit(idCategoria);
-    this._reiniciarTabla();
   }
 
   public registroCategoria() : void {
@@ -52,7 +51,7 @@ export class TablaCategoriaComponent{
   }
   
   public guardarDataCategoria(categoria:Categoria){
-    const peticionCategoria : DataRegistroActualizar = {
+    const peticionCategoria : DataCategoriaRegistroActualizar = {
       esRegistro: this.esRegistro, 
       categoria: { ...categoria}
     }; 
@@ -60,8 +59,8 @@ export class TablaCategoriaComponent{
   }
 
 
-  private _reiniciarTabla(): void {
-    this.tablaCategoria?.reset();
+  public reiniciarTabla(tabla: Table): void {
+    tabla?.reset();
   }
   
 

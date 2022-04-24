@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
-                    <button [disabled]="cargando | async" (click)="registroCategoria()" class="btn-header-derecha btn btn-primary" type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo</button>
+                    <button [disabled]="cargando | async" (click)="registroCategoria();" class="btn-header-derecha btn btn-primary" type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo</button>
                 </div>
             </div>
         </ng-template>
@@ -37,8 +37,26 @@
                 <td class="text-center">{{categoria.cat_descripcion}}</td>
                 <td class="text-center"><p-tag value="{{categoria.categoriaEstado}}" severity="{{categoria.cat_estado?'success':'danger'}}"></p-tag></td>
                 <td class="text-center">
-                    <button [disabled]="cargando | async" (click)="actualizarCategoria(categoria)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-outlined"></button>
-                    <button [disabled]="cargando | async" (click)="eliminarCategoria(categoria.cat_id)" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                    <button 
+                        [disabled]="cargando | async" 
+                        (click)="actualizarCategoria(categoria);reiniciarTabla(tablaCategoria);" 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-pencil" 
+                        class="p-button-rounded p-button-warning p-button-outlined">
+                    </button>
+                    <button 
+                        [disabled]="cargando | async" 
+                        (click)="eliminarCategoria(categoria.cat_id);reiniciarTabla(tablaCategoria);" 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        [icon]="categoria.cat_estado?'pi pi-trash':'pi pi-check-circle'" 
+                        [class]="categoria.cat_estado?
+                            'p-button-danger p-button-rounded p-button-outlined':
+                            'p-button-primary p-button-rounded p-button-outlined'">
+                    </button>
                 </td>
             </tr>
         </ng-template>

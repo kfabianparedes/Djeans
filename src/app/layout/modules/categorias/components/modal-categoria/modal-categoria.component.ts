@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { Categoria } from '../../models/categoria.model';
+import { DataCategoriaRegistroActualizar } from '../../models/registro-actualizar-categoria.model';
 
 @Component({
   selector: 'modal-categoria',
@@ -10,17 +11,22 @@ import { Categoria } from '../../models/categoria.model';
   styleUrls: ['./modal-categoria.component.css']
 })
 export class ModalCategoriaComponent implements OnInit, OnChanges {
-
-  @Input() mostrarModal : boolean = false;
-  @Input() tituloModal : string = '';
-  @Output() cerrarModal = new EventEmitter<boolean>();
-  
   @Input() objetoCategoria!: Categoria;
   @Output() categoriaActualizarRegistrar = new EventEmitter();
-  
-  public cargando : Subject<boolean> = this.buttonProgressService.cargando;
+  //////////////////
+
   
   private validarDescripcion : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$/;
+  @Input() mostrarModal : boolean = false;
+  @Input() tituloModal : string = '';
+  @Input() categoriaUtilizadaEnModal! : Categoria;
+  @Output() cerrarModal = new EventEmitter<boolean>();
+  @Output() enviarInformacionCategoria = new EventEmitter<DataCategoriaRegistroActualizar>();
+
+  
+  public cargando : Subject<boolean> = this.buttonProgressService.cargando;
+  public esRegistro : boolean = true;
+  
   
   categoriaFormulario: FormGroup = this.fb.group({
     descripcion: ['', [ Validators.required,

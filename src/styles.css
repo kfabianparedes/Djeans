@@ -12946,6 +12946,7 @@ body {
 .btn-header-derecha{
     font-family: Montserrat-Bold;
 }
+
 @media screen and (min-width: 768px){
     .btn-header-derecha{
         float:right;
@@ -12962,4 +12963,10 @@ label{
 }
 .msj-error-form{
     font-family: Montserrat-Light;
+}
+
+
+.titulo-modal-crud{
+    font-family: Montserrat-Bold;
+    font-size: 20px ;
 }

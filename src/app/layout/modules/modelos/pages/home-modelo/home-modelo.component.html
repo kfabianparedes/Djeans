@@ -1,0 +1,26 @@
+<titulo-pagina [titulo]="'Modelo'"></titulo-pagina>
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Lista de modelos'"></subtitulo-pagina>
+
+<div class="container-fluid">
+    <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+    
+    <div class="row">
+        <tabla-modelo 
+            [modelosDeTabla]="modelos" 
+            (abrirModal)="modificarEstadoModal($event)"
+            (tituloModal)="guardarTituloModal($event)"
+            (modeloParaActualizar)="guardarModeloParaActualizar($event)"
+            (modeloEliminado)="eliminarModelo($event)">
+        </tabla-modelo>
+    </div>
+</div>
+
+
+<modal-modelo
+    [tituloModal]="tituloModal" 
+    [mostrarModal]="mostrarModal"
+    [modeloUtilizadoEnModal]="modeloParaActualizar"
+    (enviarInformacionModelo)="guardarModelo($event)"
+    (cerrarModal)="modificarEstadoModal($event)"> 
+</modal-modelo>
