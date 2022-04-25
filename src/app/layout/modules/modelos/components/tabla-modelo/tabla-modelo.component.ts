@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
@@ -9,7 +9,7 @@ import { Modelo } from '../../models/modelo.model';
   templateUrl: './tabla-modelo.component.html',
   styleUrls: ['./tabla-modelo.component.css']
 })
-export class TablaModeloComponent implements OnInit {
+export class TablaModeloComponent{
   
   @Input() modelosDeTabla : Modelo[] = [];
   @Output() modeloEliminado = new EventEmitter<number>();
@@ -24,19 +24,15 @@ export class TablaModeloComponent implements OnInit {
 
   constructor(private _buttonProgressService: ButtonProgressService) { }
 
-  ngOnInit(): void {
-  }
-
   public registroModelo(): void {
     this.tituloModal.emit('Registrar Nuevo Modelo');
     this.abrirModal.emit(true);
   }
 
   public actualizarModelo(modelo: Modelo): void {
-    this.tituloModal.emit('Registrar Nuevo Modelo');
+    this.tituloModal.emit('Actualizar Modelo');
     this.abrirModal.emit(true);
     this.modeloParaActualizar.emit(modelo);
-
   }
 
   public eliminarModelo(idModelo: number) : void {
@@ -46,7 +42,8 @@ export class TablaModeloComponent implements OnInit {
   public reiniciarTabla(tabla: Table): void {
     tabla?.reset();
   }
-  public filtrarBusqueda(tabla: Table): void{
+
+  public filtrarBusqueda(tabla: Table): void {
     tabla?.filterGlobal(this.filtroBusquedaModelo, 'contains');
   }
 }

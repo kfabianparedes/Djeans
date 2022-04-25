@@ -32,7 +32,7 @@ export class ModalModeloComponent implements OnInit, OnChanges {
     estado: [ true, Validators.required ],
   });
 
-  datosIniciales = {
+  private _datosIniciales = {
     descripcion: '',
     estado: true,
   };
@@ -88,7 +88,7 @@ export class ModalModeloComponent implements OnInit, OnChanges {
   }
 
   private _reiniciarFormulario(): void {
-    this.modeloFormulario.reset({...this.datosIniciales});
+    this.modeloFormulario.reset({...this._datosIniciales});
   }
 
   ngOnChanges(changes: SimpleChanges): void {

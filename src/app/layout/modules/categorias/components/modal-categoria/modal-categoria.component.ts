@@ -11,9 +11,6 @@ import { DataCategoriaRegistroActualizar } from '../../models/registro-actualiza
   styleUrls: ['./modal-categoria.component.css']
 })
 export class ModalCategoriaComponent implements OnInit, OnChanges {
-  @Input() objetoCategoria!: Categoria;
-  @Output() categoriaActualizarRegistrar = new EventEmitter();
-  //////////////////
 
   
   private validarDescripcion : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$/;
@@ -23,7 +20,6 @@ export class ModalCategoriaComponent implements OnInit, OnChanges {
   @Output() cerrarModal = new EventEmitter<boolean>();
   @Output() enviarInformacionCategoria = new EventEmitter<DataCategoriaRegistroActualizar>();
 
-  
   public cargando : Subject<boolean> = this.buttonProgressService.cargando;
   public esRegistro : boolean = true;
   
@@ -36,35 +32,15 @@ export class ModalCategoriaComponent implements OnInit, OnChanges {
     estado: [ true, Validators.required ],
   });
 
-  datosIniciales = {
+  private _datosIniciales = {
     descripcion: '',
     estado: true,
   };
-
-  esActualizarModal : boolean = false;
 
   constructor(
     private fb: FormBuilder,
     public buttonProgressService: ButtonProgressService
     ) { }
-
-  ngOnInit(): void {
-    this._reiniciarFormulario();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['objetoCategoria']){
-      this.esActualizarModal = true;
-      const categoria: Categoria = changes['objetoCategoria'].currentValue;
-      this.categoriaFormulario.reset({
-        descripcion: categoria?.cat_descripcion,
-        estado: categoria?.cat_estado
-      });
-      
-    }else{
-      this.esActualizarModal = false;
-    }
-  }
 
   get descripcion(){
     return this.categoriaFormulario.get('descripcion');
@@ -73,8 +49,35 @@ export class ModalCategoriaComponent implements OnInit, OnChanges {
     return this.categoriaFormulario.get('estado');
   }
 
-  private _reiniciarFormulario(): void {
-    this.categoriaFormulario.reset({...this.datosIniciales});
+  ngOnInit(): void {
+    this._reiniciarFormulario();
+  }
+
+  public guardarCategoria(): void {  //Guarda lo obtenido del formulario para update o create
+    if (this.categoriaFormulario.valid){
+      const categoria : Categoria = {
+        cat_id           :  this.categoriaUtilizadaEnModal?.cat_id,
+        cat_descripcion  :  this.descripcion?.value,
+        cat_estado       :  this.estado?.value
+      }
+      this._enviarInformacionDeCategoria(categoria);
+      this._culminarPeticion();
+    }
+    return;
+  }
+
+  private _enviarInformacionDeCategoria(categoria : Categoria){
+    const dataDePeticion : DataCategoriaRegistroActualizar = {
+      esRegistro: this.esRegistro, 
+      categoria: { ...categoria}
+    }; 
+    this.enviarInformacionCategoria.emit(dataDePeticion);
+  }
+
+  private _culminarPeticion(): void {
+    this.esRegistro==false?
+      this.closeModal():
+      this._reiniciarFormulario();
   }
 
   public closeModal(): void {
@@ -82,22 +85,25 @@ export class ModalCategoriaComponent implements OnInit, OnChanges {
     this.mostrarModal=false;
     this.cerrarModal.emit(false);
   }
-
-  public guardarCategoria(): void {  //Guarda lo obtenido del formulario para update o create
-    if (this.categoriaFormulario.valid){
-      const categoria : Categoria = {
-        cat_id           :  this.objetoCategoria?.cat_id,
-        cat_descripcion  :  this.descripcion?.value,
-        cat_estado       :  this.estado?.value
-      }
-      this.categoriaActualizarRegistrar.emit(categoria);
-      
-      if(this.esActualizarModal)
-        this.closeModal();
-      else
-        this._reiniciarFormulario()
-    }
-    return;
+  
+  private _reiniciarFormulario(): void {
+    this.categoriaFormulario.reset({...this._datosIniciales});
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['categoriaUtilizadaEnModal']){
+      this.esRegistro = false;
+      const categoria: Categoria = changes['categoriaUtilizadaEnModal'].currentValue;
+      console.log(categoria);
+      this.categoriaFormulario.reset({
+        descripcion: categoria?.cat_descripcion,
+        estado: categoria?.cat_estado
+      });
+      
+    }else{
+      this.esRegistro = true;
+    }
+  }
+
 
 }

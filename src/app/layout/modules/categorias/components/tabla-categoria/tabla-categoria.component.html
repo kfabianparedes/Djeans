@@ -1,5 +1,11 @@
 <div class="card p-1">
-    <p-table #tablaCategoria responsiveLayout="scroll"  [value]="categoriasDeTabla" [filterDelay]="0" [globalFilterFields]="['cat_id','cat_descripcion','categoriaEstado']">
+    <p-table 
+        #tablaCategoria 
+        responsiveLayout="scroll"  
+        [value]="categoriasDeTabla" 
+        [filterDelay]="0" 
+        [globalFilterFields]="['cat_descripcion','categoriaEstado']"
+        >
         <ng-template pTemplate="caption">
             <div class="flex row justify-content-between">
                 <div class="py-2 col-sm-12 col-md-5 col-lg-4">
@@ -11,17 +17,25 @@
                                         type="text" 
                                         [(ngModel)]="filtroBusquedaCategoria"
                                         class="input-busqueda form-control" 
-                                        (input)="tablaCategoria.filterGlobal(filtroBusquedaCategoria, 'contains')" 
+                                        (input)="filtrarBusqueda(tablaCategoria)" 
                                         placeholder="Nombre de categoría"
                                     >
-                                    <button [disabled]="cargando | async" (click)="tablaCategoria.filterGlobal(filtroBusquedaCategoria, 'contains')" type="button" class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i></button>
+                                    <button [disabled]="cargando | async" 
+                                            (click)="filtrarBusqueda(tablaCategoria)" 
+                                            type="button" 
+                                            class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
-                    <button [disabled]="cargando | async" (click)="registroCategoria();" class="btn-header-derecha btn btn-primary" type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo</button>
+                    <button [disabled]="cargando | async" 
+                            (click)="registroCategoria()" 
+                            class="btn-header-derecha btn btn-primary" 
+                            type="button"><i class="pi pi-user-plus">&nbsp;</i>Nuevo
+                    </button>
                 </div>
             </div>
         </ng-template>
@@ -35,7 +49,12 @@
         <ng-template pTemplate="body" let-categoria >
             <tr class="filas-tabla contenedor"> 
                 <td class="text-center">{{categoria.cat_descripcion}}</td>
-                <td class="text-center"><p-tag value="{{categoria.categoriaEstado}}" severity="{{categoria.cat_estado?'success':'danger'}}"></p-tag></td>
+                <td class="text-center">
+                    <p-tag 
+                        value="{{categoria.categoriaEstado}}" 
+                        severity="{{categoria.cat_estado?'success':'danger'}}">
+                    </p-tag>
+                </td>
                 <td class="text-center">
                     <button 
                         [disabled]="cargando | async" 
@@ -62,13 +81,3 @@
         </ng-template>
     </p-table>
 </div>
-
-<modal-categoria
-    [tituloModal]="tituloModal" 
-    [mostrarModal]="mostrarModal"
-    [objetoCategoria]="objetoCategoriaUtilizado"
-    (categoriaActualizarRegistrar)="guardarDataCategoria($event)"
-    
-    (cerrarModal)="mostrarModal=$event"> <!-- (cerrarModal) devuelve un boolean -->
-    
-</modal-categoria>

@@ -167,9 +167,6 @@ export class HomeModeloComponent implements OnInit {
     );
   }
 
-
-
-
   public guardarTituloModal(tituloDelModal : string): void{
     this.tituloModal= tituloDelModal;
   }

@@ -6,18 +6,20 @@
     <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
 
     <div class="row">
-        <tabla-categoria 
+        <tabla-categoria
             [categoriasDeTabla]="categorias"
-        >
-        
+            (abrirModal)="modificarEstadoModal($event)"
+            (tituloModal)="guardarTituloModal($event)"
+            (categoriaParaActualizar)="guardarCategoriaParaActualizar($event)"
+            (categoriaEliminada)="eliminarCategoria($event)">
         </tabla-categoria>
     </div>
 </div>
 
 <modal-categoria
-    [tituloModal]="tituloModal" 
+    [tituloModal]="tituloModal"
     [mostrarModal]="mostrarModal"
-
+    [categoriaUtilizadaEnModal]="categoriaParaActualizar"
+    (enviarInformacionCategoria)="guardarCategoria($event)"
     (cerrarModal)="modificarEstadoModal($event)">  
-
 </modal-categoria>
