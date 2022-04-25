@@ -1,0 +1,26 @@
+ <titulo-pagina [titulo]="'Talla'"></titulo-pagina> 
+ <progressbar></progressbar>
+ <subtitulo-pagina [subTitulo]="'Lista de tallas'"></subtitulo-pagina>
+
+ 
+<div class="container-fluid">
+    <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+
+    <div class="row">
+        <tabla-talla
+            [tallasDeTabla]="tallas"
+            (abrirModal) = modificarEstadoModal($event)
+            (tituloModal)="guardarTituloModal($event)"
+            (tallaParaActualizar) = "guardarTallaParaActualizar($event)"
+            (tallaEliminada) = "eliminarTalla($event)">
+        </tabla-talla>
+    </div>
+</div>
+
+<modal-talla
+    [tituloModal]="tituloModal" 
+    [mostrarModal]="mostrarModal"
+    [tallaUtilizadaEnModal]="tallaParaActualizar"
+    (enviarInformacionTalla)="guardarTalla($event)"
+    (cerrarModal)="modificarEstadoModal($event)"> 
+</modal-talla>
