@@ -10,6 +10,8 @@ const routes: Routes = [
       { path:'categoria', loadChildren: () => import('./modules/categorias/categorias.module').then( m => m.CategoriasModule )},
       { path:'modelo', loadChildren: () => import('./modules/modelos/modelos.module').then( m => m.ModelosModule )},
       { path:'usuario', loadChildren: () => import('./modules/usuarios/usuarios.module').then( m => m.UsuariosModule )},
+      { path:'color', loadChildren: () => import('./modules/colores/colores.module').then( m => m.ColoresModule )},
+      { path:'talla', loadChildren: () => import('./modules/tallas/tallas.module').then( m => m.TallasModule )},
       { path:'', redirectTo:'', pathMatch:'full'},
       { path:'**', redirectTo:''}
 
