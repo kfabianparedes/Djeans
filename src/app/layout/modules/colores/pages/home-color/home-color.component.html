@@ -1,1 +1,26 @@
-<p>home-color works!</p>
+<titulo-pagina [titulo]="'Color'"></titulo-pagina> 
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Lista de colores'"></subtitulo-pagina>
+
+ 
+<div class="container-fluid">
+    <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+
+    <div class="row">
+        <tabla-color
+            [coloresDeTabla]="colores"
+            (abrirModal) = modificarEstadoModal($event)
+            (tituloModal)="guardarTituloModal($event)"
+            (colorParaActualizar) = "guardarColorParaActualizar($event)"
+            (colorEliminado) = "_eliminarColor($event)">
+        </tabla-color>
+    </div>
+</div>
+
+<modal-color
+    [tituloModal]="tituloModal" 
+    [mostrarModal]="mostrarModal"
+    [colorUtilizadoEnModal]="colorParaActualizar"
+    (enviarInformacionColor)="guardarColor($event)"
+    (cerrarModal)="modificarEstadoModal($event)"> 
+</modal-color>

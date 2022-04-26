@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ColoresRoutingModule } from './colores-routing.module';
-import { SharedModule } from 'primeng/api';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalColorComponent } from './components/modal-color/modal-color.component';
 import { TablaColorComponent } from './components/tabla-color/tabla-color.component';
