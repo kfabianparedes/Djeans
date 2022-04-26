@@ -23,10 +23,11 @@ export class SucursalService {
     );
   }
 
-  public registrarSucursal({suc_nombre}:Sucursal):Observable<Respuesta>{
+  public registrarSucursal({suc_nombre,suc_direccion}:Sucursal):Observable<Respuesta>{
     const url  = `${ this._url }/sucursales/`;
     const body={
       suc_nombre:suc_nombre.toUpperCase(),
+      suc_direccion:suc_direccion.toUpperCase(),
       suc_estado:true
     }
     return this.http.post<Respuesta>(url,body)
@@ -39,10 +40,10 @@ export class SucursalService {
   public actualizarSucursal(sucursal: Sucursal): Observable<Respuesta>{
     const url  = `${ this._url }/sucursales/${sucursal.suc_id}/`;
     const body = {
-      suc_id: sucursal.suc_id,
-      suc_nombe: sucursal.suc_nombre.toUpperCase(),
-      suc_direccion:sucursal.suc_direccion.toUpperCase(),
-      suc_estado : sucursal.suc_estado
+      suc_id        : sucursal.suc_id,
+      suc_nombre     : sucursal.suc_nombre.toUpperCase(),
+      suc_direccion : sucursal.suc_direccion.toUpperCase(),
+      suc_estado    : sucursal.suc_estado
     }
     return this.http.put<Respuesta>( url, body )
       .pipe(

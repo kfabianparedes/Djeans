@@ -12,42 +12,79 @@
             <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
-        <form [formGroup]="modeloFormulario" (ngSubmit)="guardarSucursal()" class="from-group">
+        <form [formGroup]="sucursalFormulario" (ngSubmit)="guardarSucursal()" class="from-group">
+            <!-- INICIO CAMPO NOMBRE -->
             <div class="row p-1">
                 <label
                     class="col-12 col-sm-4 col-lg-3 col-form-label"
-                    for="descripcionCategoria">
-                    Descripción<small class="text-danger"><strong>(*)</strong></small>:
+                    for="nombreSucursal">
+                    Nombre<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
 
                 <div class="col-12 col-sm-8 col-lg-9">
                     <input
-                        id="descripcionCategoria"
+                        id="nombreSucursal"
                         autocomplete="off"
-                        formControlName="direccion"
+                        formControlName="nombre"
                         class="form-control"
                         type="text"
-                        placeholder="Ingrese una descripción...">
+                        placeholder="Ingrese un nombre...">
 
                 </div>
 
-                <div *ngIf="direccion?.invalid && (direccion?.dirty || direccion?.touched)"
+                <div *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)"
                     class="msj-error-form row text-danger text-end p-0">
-                        <small class="col-12" *ngIf="direccion?.errors?.['required']">
-                            *La descripción es requerida.
+                        <small class="col-12" *ngIf="nombre?.errors?.['required']">
+                            *El nombre es requerida.
                         </small>
-                        <small class="col-12" *ngIf="direccion?.errors?.['minlength']">
-                            *La descripción debe tener mínimo 4 caracteres.
+                        <small class="col-12" *ngIf="nombre?.errors?.['minlength']">
+                            *El nombre debe tener mínimo 4 caracteres.
                         </small>
-                        <small class="col-12" *ngIf="direccion?.errors?.['maxlength']">
-                            *La descripción debe tener máximo 30 caracteres.
+                        <small class="col-12" *ngIf="nombre?.errors?.['maxlength']">
+                            *El nombre debe tener máximo 30 caracteres.
                         </small>
-                        <small class="col-12" *ngIf="direccion?.errors?.['pattern']">
-                            *La descripción debe ser válida.
+                        <small class="col-12" *ngIf="nombre?.errors?.['pattern']">
+                            *El nombre debe ser válida.
                         </small>
                 </div>
 
             </div>
+            <!-- FIN CAMPO NOMBRE -->
+            <!-- INICIO CAMPO DIRECCION -->
+            <div class="row p-1">
+              <label
+                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    for="direccionSucursal">
+                    Direccion<small class="text-danger"><strong>(*)</strong></small>:
+              </label>
+              <div class="col-12 col-sm-8 col-lg-9">
+                <input
+                    id="direccionSucursal"
+                    autocomplete="off"
+                    formControlName="direccion"
+                    class="form-control"
+                    type="text"
+                    placeholder="Ingrese una direccion...">
+              </div>
+
+              <div *ngIf="direccion?.invalid && (direccion?.dirty || direccion?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="direccion?.errors?.['required']">
+                            *La direccion es requerida.
+                        </small>
+                        <small class="col-12" *ngIf="direccion?.errors?.['minlength']">
+                            *La direccion debe tener mínimo 4 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="direccion?.errors?.['maxlength']">
+                            *La direccion debe tener máximo 30 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="direccion?.errors?.['pattern']">
+                            *La direccion debe ser válida.
+                        </small>
+                </div>
+
+            </div>
+            <!-- FIN CAMPO DIRECCION -->
             <div class="row p-1"
                 *ngIf="!esRegistro">
                     <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoCategoria">Estado:</label>
@@ -71,11 +108,11 @@
                 <i class="pi pi-times"></i>
                 Cancelar
             </button>
-            <button *ngIf="modeloFormulario.valid"
+            <button *ngIf="sucursalFormulario.valid"
                 type="submit"
                 class="btn btn-outline-primary"
                 (click)="guardarSucursal()"
-                [disabled]="modeloFormulario.invalid">
+                [disabled]="sucursalFormulario.invalid">
                 <i class="pi pi-check"></i>
                 Guardar
             </button>

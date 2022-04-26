@@ -15,3 +15,11 @@
       </tabla-sucursal>
   </div>
 </div>
+
+<modal-sucursal
+[tituloModal]="tituloModal"
+[mostrarModal]="mostrarModal"
+[sucursalUtilizadoEnModal]="sucursalParaActualizar"
+(enviarInformacionSucursal)="guardarSucursal($event)"
+(cerrarModal)="modificarEstadoModal($event)">
+</modal-sucursal>

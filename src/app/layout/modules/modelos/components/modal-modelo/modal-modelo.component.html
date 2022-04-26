@@ -1,36 +1,36 @@
-<p-dialog 
-    [(visible)]="mostrarModal" 
-    [modal]="true" 
+<p-dialog
+    [(visible)]="mostrarModal"
+    [modal]="true"
     [style]="{width: '40vw'}"
-    [draggable]="false" 
-    [resizable]="false" 
+    [draggable]="false"
+    [resizable]="false"
     [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
     (onHide)="closeModal()"
     >
 
-        <ng-template pTemplate="header"> 
+        <ng-template pTemplate="header">
             <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
         <form [formGroup]="modeloFormulario" (ngSubmit)="guardarModelo()" class="from-group">
             <div class="row p-1">
-                <label 
+                <label
                     class="col-12 col-sm-4 col-lg-3 col-form-label"
                     for="descripcionCategoria">
                     Descripción<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
 
                 <div class="col-12 col-sm-8 col-lg-9">
-                    <input 
+                    <input
                         id="descripcionCategoria"
                         autocomplete="off"
-                        formControlName="descripcion" 
-                        class="form-control" 
-                        type="text" 
+                        formControlName="descripcion"
+                        class="form-control"
+                        type="text"
                         placeholder="Ingrese una descripción...">
-                    
+
                 </div>
-                    
+
                 <div *ngIf="descripcion?.invalid && (descripcion?.dirty || descripcion?.touched)"
                     class="msj-error-form row text-danger text-end p-0">
                         <small class="col-12" *ngIf="descripcion?.errors?.['required']">
@@ -45,10 +45,10 @@
                         <small class="col-12" *ngIf="descripcion?.errors?.['pattern']">
                             *La descripción debe ser válida.
                         </small>
-                </div>  
+                </div>
 
             </div>
-            <div class="row p-1" 
+            <div class="row p-1"
                 *ngIf="!esRegistro">
                     <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoCategoria">Estado:</label>
                     <div class="col-8 col-sm-8 col-lg-9">
@@ -60,13 +60,13 @@
                         </div>
                     </div>
             </div>
-            
+
         </form>
 
         <ng-template pTemplate="footer">
             <button
-                [disabled]="cargando | async" 
-                (click)="closeModal()" 
+                [disabled]="cargando | async"
+                (click)="closeModal()"
                 class="btn btn-outline-danger">
                 <i class="pi pi-times"></i>
                 Cancelar

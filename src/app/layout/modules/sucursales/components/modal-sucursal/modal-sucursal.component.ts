@@ -19,15 +19,15 @@ export class ModalSucursalComponent implements OnInit,OnChanges {
 
   @Input() mostrarModal : boolean = false;
   @Input() tituloModal : string = '';
-  @Input() modeloUtilizadoEnModal!: Sucursal;
+  @Input() sucursalUtilizadoEnModal!: Sucursal;
   @Output() cerrarModal = new EventEmitter<boolean>();
-  @Output() enviarInformacionModelo = new EventEmitter<DataSucursalRegistroActualizar>();
+  @Output() enviarInformacionSucursal = new EventEmitter<DataSucursalRegistroActualizar>();
 
   public cargando : Subject<boolean> = this.buttonProgressService.cargando;
   public esRegistro : boolean = true;
 
 
-  modeloFormulario: FormGroup = this.fb.group({
+  sucursalFormulario: FormGroup = this.fb.group({
     nombre:['', [ Validators.required,
                   Validators.minLength(4),
                   Validators.maxLength(30),
@@ -53,13 +53,13 @@ export class ModalSucursalComponent implements OnInit,OnChanges {
     ) { }
 
   get nombre(){
-    return this.modeloFormulario.get('nombre');
+    return this.sucursalFormulario.get('nombre');
   }
   get direccion(){
-    return this.modeloFormulario.get('direccion');
+    return this.sucursalFormulario.get('direccion');
   }
   get estado(){
-    return this.modeloFormulario.get('estado');
+    return this.sucursalFormulario.get('estado');
   }
 
 
@@ -68,25 +68,25 @@ export class ModalSucursalComponent implements OnInit,OnChanges {
   }
 
   public guardarSucursal(): void {  //Guarda lo obtenido del formulario para update o create
-    if (this.modeloFormulario.valid){
-      const modelo : Sucursal = {
-        suc_id           :  this.modeloUtilizadoEnModal?.suc_id,
+    if (this.sucursalFormulario.valid){
+      const sucursal : Sucursal = {
+        suc_id           :  this.sucursalUtilizadoEnModal?.suc_id,
         suc_nombre       :  this.nombre?.value,
         suc_direccion    :  this.direccion?.value,
         suc_estado       :  this.estado?.value
       }
-      this._enviarInformacionDeSucursal(modelo);
+      this._enviarInformacionDeSucursal(sucursal);
       this._culminarPeticion();
     }
     return;
   }
 
-  private _enviarInformacionDeSucursal(modelo : Sucursal){
+  private _enviarInformacionDeSucursal(sucursal : Sucursal){
     const dataDePeticion : DataSucursalRegistroActualizar = {
       esRegistro: this.esRegistro,
-      sucursal: { ...modelo}
+      sucursal: { ...sucursal}
     };
-    this.enviarInformacionModelo.emit(dataDePeticion);
+    this.enviarInformacionSucursal.emit(dataDePeticion);
   }
 
   private _culminarPeticion(): void {
@@ -102,18 +102,18 @@ export class ModalSucursalComponent implements OnInit,OnChanges {
   }
 
   private _reiniciarFormulario(): void {
-    this.modeloFormulario.reset({...this._datosIniciales});
+    this.sucursalFormulario.reset({...this._datosIniciales});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['modeloUtilizadoEnModal']){
+    if(changes['sucursalUtilizadoEnModal']){
       this.esRegistro = false;
-      const modelo: Sucursal = changes['modeloUtilizadoEnModal'].currentValue;
-      console.log(modelo);
-      this.modeloFormulario.reset({
-        nombre: modelo?.suc_nombre,
-        direccion: modelo?.suc_direccion,
-        estado: modelo?.suc_estado
+      const sucursal: Sucursal = changes['sucursalUtilizadoEnModal'].currentValue;
+      console.log(sucursal);
+      this.sucursalFormulario.reset({
+        nombre: sucursal?.suc_nombre,
+        direccion: sucursal?.suc_direccion,
+        estado: sucursal?.suc_estado
       });
 
     }else{
