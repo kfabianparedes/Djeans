@@ -1,0 +1,17 @@
+<titulo-pagina [titulo]="'Sucursal'"></titulo-pagina>
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Lista de Sucursal'"></subtitulo-pagina>
+
+<div class="container-fluid">
+  <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+
+  <div class="row">
+      <tabla-sucursal
+          [sucursalesDeTabla]="sucursales"
+          (abrirModal)="modificarEstadoModal($event)"
+          (tituloModal)="guardarTituloModal($event)"
+          (sucursalParaActualizar)="guardarSucursalParaActualizar($event)"
+          (sucursalEliminado)="eliminarSucursal($event)">
+      </tabla-sucursal>
+  </div>
+</div>

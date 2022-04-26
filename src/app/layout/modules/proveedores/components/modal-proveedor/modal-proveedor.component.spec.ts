@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MarcaComponent } from './marca.component';
+import { ModalProveedorComponent } from './modal-proveedor.component';
 
-describe('MarcaComponent', () => {
-  let component: MarcaComponent;
-  let fixture: ComponentFixture<MarcaComponent>;
+describe('ModalProveedorComponent', () => {
+  let component: ModalProveedorComponent;
+  let fixture: ComponentFixture<ModalProveedorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MarcaComponent ]
+      declarations: [ ModalProveedorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MarcaComponent);
+    fixture = TestBed.createComponent(ModalProveedorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

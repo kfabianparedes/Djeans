@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutComponent } from './layout.component';
-import { LayoutRoutingModule } from './layout-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { MarcasRoutingModule } from './marcas-routing.module';
+import { HomeMarcaComponent } from './pages/home-marca/home-marca.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 
 @NgModule({
   declarations: [
-    LayoutComponent
+    HomeMarcaComponent
   ],
   imports: [
     CommonModule,
+    MarcasRoutingModule,
     SharedModule,
-    LayoutRoutingModule,
     FormsModule,
     ReactiveFormsModule
   ]
 })
-export class LayoutModule { }
+export class MarcasModule { }

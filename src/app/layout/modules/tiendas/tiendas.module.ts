@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutComponent } from './layout.component';
-import { LayoutRoutingModule } from './layout-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { TiendasRoutingModule } from './tiendas-routing.module';
+import { HomeTiendaComponent } from './pages/home-tienda/home-tienda.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 
 @NgModule({
   declarations: [
-    LayoutComponent
+    HomeTiendaComponent
   ],
   imports: [
     CommonModule,
+    TiendasRoutingModule,
     SharedModule,
-    LayoutRoutingModule,
     FormsModule,
     ReactiveFormsModule
   ]
 })
-export class LayoutModule { }
+export class TiendasModule { }

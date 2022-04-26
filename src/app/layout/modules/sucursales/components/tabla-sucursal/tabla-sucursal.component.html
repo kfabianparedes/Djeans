@@ -1,0 +1,80 @@
+<div class="card p-1">
+  <p-table
+      #tablaModelo
+      responsiveLayout="scroll"
+      [value]="sucursalesDeTabla"
+      [filterDelay]="0"
+      [globalFilterFields]="['suc_nombre','sucursalEstado']"
+      >
+      <ng-template pTemplate="caption">
+          <div class="flex row justify-content-between">
+              <div class="py-2 col-sm-12 col-md-5 col-lg-4">
+                  <div class="row">
+                      <div class="col-md-9 col-sm-12">
+                          <div class="row flex">
+                              <div class="col-sm-8 col-md-11 col-lg-11 d-flex">
+                                  <input
+                                      type="text"
+                                      [(ngModel)]="filtroBusquedaModelo"
+                                      class="input-busqueda form-control"
+                                      (input)="filtrarBusqueda(tablaModelo)"
+                                      placeholder="Nombre de Sucursal"
+                                  >
+                                  <button [disabled]="cargando | async"
+                                          (click)="filtrarBusqueda(tablaModelo)"
+                                          type="button"
+                                          class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i></button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
+                  <button [disabled]="cargando | async" (click)="registroSucursal();" class="btn-header-derecha btn btn-primary" type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo</button>
+              </div>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr class="titulo-tabla contenedor">
+              <th class="text-center" pSortableColumn="suc_nombre">Nombre <p-sortIcon field="suc_nombre"></p-sortIcon></th>
+              <th class="text-center" pSortableColumn="suc_direccion">Direccion <p-sortIcon field="suc_direccion"></p-sortIcon></th>
+              <th class="text-center" pSortableColumn="sucursalEstado">Estado <p-sortIcon field="sucursalEstado"></p-sortIcon></th>
+              <th class="text-center"></th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-modelo >
+          <tr class="filas-tabla contenedor">
+              <td class="text-center">{{modelo.suc_nombre}}</td>
+              <td class="text-center">{{modelo.suc_direccion}}</td>
+              <td class="text-center">
+                  <p-tag
+                      value="{{modelo.sucursalEstado}}"
+                      severity="{{modelo.suc_estado?'success':'danger'}}">
+                  </p-tag>
+              </td>
+              <td class="text-center">
+                  <button
+                      [disabled]="cargando | async"
+                      (click)="actualizarSucursal(modelo);reiniciarTabla(tablaModelo);"
+                      pButton
+                      pRipple
+                      type="button"
+                      icon="pi pi-pencil"
+                      class="p-button-rounded p-button-warning p-button-outlined">
+                  </button>
+                  <button
+                      [disabled]="cargando | async"
+                      (click)="eliminarSucursal(modelo.suc_id);reiniciarTabla(tablaModelo);"
+                      pButton
+                      pRipple
+                      type="button"
+                      [icon]="modelo.suc_estado?'pi pi-trash':'pi pi-check-circle'"
+                      [class]="modelo.suc_estado?
+                          'p-button-danger p-button-rounded p-button-outlined':
+                          'p-button-primary p-button-rounded p-button-outlined'">
+                  </button>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+</div>
