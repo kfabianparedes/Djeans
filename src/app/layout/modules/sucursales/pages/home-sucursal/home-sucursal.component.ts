@@ -105,7 +105,7 @@ export class HomeSucursalComponent implements OnInit {
         next:(respuesta:Respuesta)=>{
           this.messageService.add({
             severity:'success',
-            summary:'Actualiza...',
+            summary:'Actualizado...',
             detail:respuesta.message
           });
           this._listarSucursales();
