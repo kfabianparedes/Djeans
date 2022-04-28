@@ -9,7 +9,7 @@ import { Roles } from '../../utils/Roles.model';
 })
 export class TablaUsuarioComponent implements OnInit {
 
-  @Input() usuarios: Usuario[] = [];
+  @Input() usuariosDeTabla: Usuario[] = [];
   public mostrarModal: boolean = false;
   public filtroBusquedaUsuario: string = '';
   constructor() { }

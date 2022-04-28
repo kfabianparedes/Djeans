@@ -5,16 +5,9 @@ import { ListarUsuarioComponent } from './pages/listar-usuario/listar-usuario.co
 import { PerfilComponent } from './pages/perfil/perfil.component';
 
 const routes: Routes = [
-  {
-    path:'',
-    component: HomeUsuarioComponent,
-    children: [
-      {path:'perfil',component: PerfilComponent},
-      {path:'listar',component: ListarUsuarioComponent},
-      {path:'',redirectTo:'listar'},
-      {path:'**',redirectTo:'listar'},
-    ]
-  },
+  { path:'', component: HomeUsuarioComponent },
+  { path: 'perfil', component: PerfilComponent },
+  { path: '**', redirectTo:'' },
 ];
 
 @NgModule({
