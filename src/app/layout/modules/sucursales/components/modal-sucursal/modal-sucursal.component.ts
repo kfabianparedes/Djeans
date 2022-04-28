@@ -14,8 +14,8 @@ import { Sucursal } from '../../models/sucursal.model';
 })
 export class ModalSucursalComponent implements OnInit,OnChanges {
 
-  private validarDescripcion : RegExp = /^[a-zñáéíóú#°/,. A-ZÑÁÉÍÓÚ  0-9]+$/;
-  private validarNombre: RegExp = /[a-zñáéíóú A-ZÑÁÉÍÓÚ 0-9]+/;
+  private validarNombre: RegExp = /[a-zñáéíóú\- A-ZÑÁÉÍÓÚ 0-9]+$/;
+  private validarDescripcion : RegExp = /[a-zñáéíóú\-.# A-ZÑÁÉÍÓÚ 0-9]+$/;
 
   @Input() mostrarModal : boolean = false;
   @Input() tituloModal : string = '';

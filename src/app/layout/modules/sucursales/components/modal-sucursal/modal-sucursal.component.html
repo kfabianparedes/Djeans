@@ -44,7 +44,7 @@
                             *El nombre debe tener máximo 30 caracteres.
                         </small>
                         <small class="col-12" *ngIf="nombre?.errors?.['pattern']">
-                            *El nombre debe ser válida.
+                            *El nombre debe ser válida. Caracteres validos: "-" .
                         </small>
                 </div>
 
@@ -79,7 +79,7 @@
                             *La direccion debe tener máximo 30 caracteres.
                         </small>
                         <small class="col-12" *ngIf="direccion?.errors?.['pattern']">
-                            *La direccion debe ser válida.
+                            *La direccion debe ser válida. Caracteres validos: "#", "-" o "." .
                         </small>
                 </div>
 
