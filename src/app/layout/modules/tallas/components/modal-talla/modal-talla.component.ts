@@ -73,7 +73,6 @@ export class ModalTallaComponent implements OnInit {
       talla : {...talla}
     }
     this.enviarInformacionTalla.emit(dataPeticion);
-    console.log(dataPeticion);
   }
 
   private _reiniciarFormulario() : void {

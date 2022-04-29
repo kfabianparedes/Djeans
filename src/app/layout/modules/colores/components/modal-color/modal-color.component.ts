@@ -68,6 +68,7 @@ export class ModalColorComponent implements OnInit {
         col_descripcion : this.descripcion?.value, 
         col_estado : this.estado?.value
       }
+      
       this._enviarInformacionDeColor(talla);
       this._culminarPeticion();
     }
@@ -91,9 +92,9 @@ export class ModalColorComponent implements OnInit {
   }  
 
   ngOnChanges(changes:SimpleChanges) : void{
-    if(changes['ColorUtilizadoEnModal']){
+    if(changes['colorUtilizadoEnModal']){
       this.esRegistro = false; 
-      const color : Color = changes['ColorUtilizadoEnModal'].currentValue; 
+      const color : Color = changes['colorUtilizadoEnModal'].currentValue; 
       this.colorFormulario.reset({
         descripcion: color?.col_descripcion,
         estado : color?.col_estado

@@ -44,7 +44,7 @@ export class ColorService {
         const url = `${ this._url }/colores/${ color.col_id }/`; 
         const body = {
             col_id : color.col_id,
-            col_descripciom : color.col_descripcion.toUpperCase(),
+            col_descripcion : color.col_descripcion.toUpperCase(),
             col_estado : color.col_estado
         }
 
