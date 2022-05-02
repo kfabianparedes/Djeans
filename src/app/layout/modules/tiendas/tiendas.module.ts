@@ -4,11 +4,15 @@ import { TiendasRoutingModule } from './tiendas-routing.module';
 import { HomeTiendaComponent } from './pages/home-tienda/home-tienda.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ModalTiendaComponent } from './components/modal-tienda/modal-tienda.component';
+import { TablaTiendaComponent } from './components/tabla-tienda/tabla-tienda.component';
 
 
 @NgModule({
   declarations: [
-    HomeTiendaComponent
+    HomeTiendaComponent,
+    ModalTiendaComponent,
+    TablaTiendaComponent
   ],
   imports: [
     CommonModule,

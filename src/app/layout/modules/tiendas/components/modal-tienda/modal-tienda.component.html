@@ -1,0 +1,113 @@
+<p>modal-tienda works!</p>
+<p-dialog
+    [(visible)]="mostrarModal"
+    [modal]="true"
+    [style]="{width: '40vw'}"
+    [draggable]="false"
+    [resizable]="false"
+    [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+    (onHide)="closeModal()"
+    >
+
+        <ng-template pTemplate="header">
+            <span class="titulo-modal-crud">{{tituloModal}}</span>
+        </ng-template>
+
+        <form [formGroup]="tiendaFormulario" (ngSubmit)="guardarTienda()" class="from-group">
+            <!-- INICIO CAMPO NOMBRE -->
+            <div class="row p-1">
+                <label
+                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    for="nombreSucursal">
+                    Nombre<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="nombreTienda"
+                        autocomplete="off"
+                        formControlName="nombre"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese un nombre...">
+
+                </div>
+
+                <div *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="nombre?.errors?.['required']">
+                            *El nombre es requerida.
+                        </small>
+                        <small class="col-12" *ngIf="nombre?.errors?.['minlength']">
+                            *El nombre debe tener mínimo 4 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="nombre?.errors?.['maxlength']">
+                            *El nombre debe tener máximo 30 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="nombre?.errors?.['pattern']">
+                            *El nombre debe ser válida. Caracteres validos: "-" .
+                        </small>
+                </div>
+
+            </div>
+            <!-- FIN CAMPO NOMBRE -->
+            <!-- INICIO CAMPO SUCURSAL -->
+            <div class="row p-1">
+              <label
+                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    for="tiendaSucursal">
+                    SUCURSAL<small class="text-danger"><strong>(*)</strong></small>:
+              </label>
+              <div class="col-12 col-sm-8 col-lg-9">
+                <input
+                    id="valorsucursal"
+                    autocomplete="off"
+                    formControlName="valorsucursal"
+                    class="form-control"
+                    type="text"
+                    placeholder="Ingrese una sucursal...">
+              </div>
+              <div *ngIf="valorsucursal?.invalid && (valorsucursal?.dirty || valorsucursal?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="valorsucursal?.errors?.['required']">
+                            *La direccion es requerida.
+                        </small>
+                </div>
+            </div>
+            <!-- FIN CAMPO DIRECCION -->
+            <div class="row p-1"
+                *ngIf="!esRegistro">
+                    <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoCategoria">Estado:</label>
+                    <div class="col-8 col-sm-8 col-lg-9">
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input"
+                                type="checkbox"
+                                formControlName="estado"
+                                id="estadoCategoria">
+                        </div>
+                    </div>
+            </div>
+
+        </form>
+
+        <ng-template pTemplate="footer">
+            <button
+                [disabled]="cargando | async"
+                (click)="closeModal()"
+                class="btn btn-outline-danger">
+                <i class="pi pi-times"></i>
+                Cancelar
+            </button>
+            <button *ngIf="tiendaFormulario.valid"
+                type="submit"
+                class="btn btn-outline-primary"
+                (click)="guardarTienda()"
+                [disabled]="tiendaFormulario.invalid">
+                <i class="pi pi-check"></i>
+                Guardar
+            </button>
+        </ng-template>
+
+</p-dialog>
+
+

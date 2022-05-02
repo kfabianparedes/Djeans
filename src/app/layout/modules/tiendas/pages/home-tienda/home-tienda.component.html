@@ -1,1 +1,17 @@
-<p>home-tienda works!</p>
+<titulo-pagina [titulo]="'Tienda'"></titulo-pagina>
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Lista de Tienda'"></subtitulo-pagina>
+
+<div class="container-fluid">
+  <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+
+  <div class="row">
+      <tabla-tienda
+          [tiendasDeTabla]="tiendas"
+          (abrirModal)="modificarEstadoModal($event)"
+          (tituloModal)="guardarTituloModal($event)"
+          (tiendaParaActualizar)="guardarTiendaParaActualizar($event)"
+          (tiendaEliminado)="eliminarTienda($event)">
+      </tabla-tienda>
+  </div>
+</div>
