@@ -44,7 +44,7 @@ export class TablaTallaComponent implements OnInit {
   }
 
   public filtrarBusqueda(tabla:Table) : void {
-    tabla?.filterGlobal(this.filtroBusquedaTalla, 'constains')
+    tabla?.filterGlobal(this.filtroBusquedaTalla, 'contains')
   }
 
 }

@@ -45,7 +45,7 @@ export class TablaColorComponent implements OnInit {
   }
 
   public filtrarBusqueda(tabla:Table) : void {
-    tabla?.filterGlobal(this.filtroBusquedaColor, 'constains')
+    tabla?.filterGlobal(this.filtroBusquedaColor, 'contains')
   }
 
 }
