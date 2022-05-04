@@ -23,10 +23,11 @@ export class TiendaService {
     );
   }
 
-  public registrarTienda({tie_nombre}:Tienda):Observable<Respuesta>{
+  public registrarTienda({tie_nombre,tie_suc_id}:Tienda):Observable<Respuesta>{
     const url  = `${ this._url }/tiendas/`;
     const body={
       tie_nombre:tie_nombre.toUpperCase(),
+      tie_suc_id:tie_suc_id,
       tie_estado:true
     }
     return this.http.post<Respuesta>(url,body)

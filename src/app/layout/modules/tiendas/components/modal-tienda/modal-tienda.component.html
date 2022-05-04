@@ -59,13 +59,21 @@
                     SUCURSAL<small class="text-danger"><strong>(*)</strong></small>:
               </label>
               <div class="col-12 col-sm-8 col-lg-9">
+                  <!--INPUT -- SE CAMBIARA POR COMBO-->
+                <!--
                 <input
-                    id="valorsucursal"
+                    id="tiendaSucursal"
                     autocomplete="off"
                     formControlName="valorsucursal"
                     class="form-control"
                     type="text"
                     placeholder="Ingrese una sucursal...">
+              </div>
+                -->
+                <select id="tiendaSucursal" formControlName="valorsucursal" class="form-control" >
+                    <!--OBTENER EN LISTA -->
+                    <option value="1">asa</option>
+                </select>
               </div>
               <div *ngIf="valorsucursal?.invalid && (valorsucursal?.dirty || valorsucursal?.touched)"
                     class="msj-error-form row text-danger text-end p-0">

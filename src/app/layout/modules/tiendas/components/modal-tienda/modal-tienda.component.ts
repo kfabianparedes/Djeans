@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { SucursalService } from 'src/app/services/sucursal.service';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { DataTiendaRegistroActualizar } from '../../models/registro-actualizar-tienda';
 import { Tienda } from '../../models/tienda.models';
@@ -43,7 +44,9 @@ export class ModalTiendaComponent implements OnInit,OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    public buttonProgressService: ButtonProgressService
+    public buttonProgressService: ButtonProgressService,
+    //SE AGREGO VARIABLE obtencionServicioSucursal --> PARA VISUALIZAR LOS NOMBRES DE CUCURSALES EN EL MODULO
+    private obtencionServicioSucursal:SucursalService
   ) { }
 
     get nombre(){
@@ -105,7 +108,7 @@ export class ModalTiendaComponent implements OnInit,OnChanges {
       console.log(tienda);
       this.tiendaFormulario.reset({
         nombre: tienda?.tie_nombre,
-        sucursal: tienda?.tie_suc_id,
+        valorsucursal: tienda?.tie_suc_id,
         estado: tienda?.tie_estado
       });
 
