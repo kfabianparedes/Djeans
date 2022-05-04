@@ -1,15 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Table } from 'primeng/table';
+import { Subject } from 'rxjs';
+import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { Proveedor } from '../../models/proveedor.model';
 
 @Component({
-  selector: 'app-tabla-proveedor',
+  selector: 'tabla-proveedor',
   templateUrl: './tabla-proveedor.component.html',
   styleUrls: ['./tabla-proveedor.component.css']
 })
-export class TablaProveedorComponent implements OnInit {
+export class TablaProveedorComponent {
 
-  constructor() { }
+  @Input() proveedoresDeTabla : Proveedor[] = [];
+  @Output() proveedorEliminado = new EventEmitter<number>();
 
-  ngOnInit(): void {
+  public cargando : Subject<boolean> = this._buttonProgressService.cargando;
+  public filtroBusquedaProveedor : string = '';
+
+  @Output() abrirModal = new EventEmitter<boolean>();
+  @Output() tituloModal = new EventEmitter<string>();
+  @Output() proveedorParaActualizar = new EventEmitter<Proveedor>();
+  
+  constructor(private _buttonProgressService : ButtonProgressService) { }
+
+  
+
+  public registroProveedor() : void {
+    this.tituloModal.emit('Registrar Proveedor');
+    this.abrirModal.emit(true);
+  }
+  
+  public actualizarProveedor(proveedor : Proveedor) : void {
+    this.tituloModal.emit('Actualizar Proveedor');
+    console.log(proveedor);
+    this.abrirModal.emit(true);
+    this.proveedorParaActualizar.emit(proveedor);
+    
+  }
+
+  public reiniciarTabla(tabla : Table): void {
+    tabla?.reset();
+    
+  }
+
+  public eliminarProveedor(idProveedor: number) : void {
+    this.proveedorEliminado.emit(idProveedor);
+  }
+
+  public filtrarBusqueda(tabla: Table): void {
+    tabla?.filterGlobal(this.filtroBusquedaProveedor, 'contains');
   }
 
 }

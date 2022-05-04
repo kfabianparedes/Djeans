@@ -1,1 +1,17 @@
-<p>home-proveedor works!</p>
+<titulo-pagina [titulo]="'Proveedor'"></titulo-pagina>
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Lista de proveedores'"></subtitulo-pagina>
+
+<div class="container-fluid">
+    <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+    
+    <div class="row">
+        <tabla-proveedor 
+            [proveedoresDeTabla]="proveedores" 
+            (abrirModal)="modificarEstadoModal($event)"
+            (tituloModal)="guardarTituloModal($event)"
+            (proveedorParaActualizar)="guardarProveedorParaActualizar($event)"
+            (proveedorEliminado)="eliminarProveedor($event)">
+        </tabla-proveedor>
+    </div>
+</div>
