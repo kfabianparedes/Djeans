@@ -15,3 +15,11 @@
       </tabla-tienda>
   </div>
 </div>
+<modal-tienda
+[tituloModal]="tituloModal"
+[mostrarModal]="mostrarModal"
+[tiendaUtilizadoEnModal]="tiendaParaActualizar"
+(enviarInformacionTienda)="guardarTienda($event)"
+(cerrarModal)="modificarEstadoModal($event)">
+>
+</modal-tienda>

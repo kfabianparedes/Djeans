@@ -87,17 +87,17 @@ export class HomeTiendaComponent implements OnInit {
     );
   }
 
-  public guardarSucursal({esRegistro,tienda}:DataTiendaRegistroActualizar):void{
+  public guardarTienda({esRegistro,tienda}:DataTiendaRegistroActualizar):void{
     if(esRegistro){
       console.log('Registrar');
-      this._registrarSucursal(tienda);
+      this._registrarTienda(tienda);
     }else{
       console.log('actualizar');
-      this._actualizarSucursal(tienda);
+      this._actualizarTienda(tienda);
     }
   }
 
-  private _actualizarSucursal(tienda:Tienda):void{
+  private _actualizarTienda(tienda:Tienda):void{
     console.log('actualizar Tienda: ');
     console.log(tienda);
     this.tiendaService.actualizarTienda(tienda).subscribe(
@@ -127,7 +127,7 @@ export class HomeTiendaComponent implements OnInit {
     );
   }
 
-  private _registrarSucursal(tienda:Tienda):void{
+  private _registrarTienda(tienda:Tienda):void{
     console.log('nuevo Tienda');
     console.log(tienda);
     this.tiendaService.registrarTienda(tienda).subscribe(
