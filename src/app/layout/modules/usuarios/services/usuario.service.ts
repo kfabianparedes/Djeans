@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, retry, throwError} from 'rxjs';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { environment } from 'src/environments/environment';
+import { Usuario } from '../models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,48 @@ export class UsuarioService {
       );
   }
 
-  public eliminarUsuario(){
+  public registrarUsuario({username, password, rol}: Usuario): Observable<Respuesta>{
+    const url  = `${ this._url }/usuarios/`;
+    const body = {
+      username: username,
+      password : password,
+      rol: rol
+    }
+    console.log('BODY REGISTRO');
+    console.log(body);
     
+    return this.http.post<Respuesta>( url, body )
+      .pipe(
+        map(respuesta => respuesta),
+        catchError(err => throwError(()=>err))
+      );
   }
 
+  public actualizarUsuario({id, username, is_active, rol}: Usuario): Observable<Respuesta>{
+    const url  = `${ this._url }/usuarios/${id}/`;
+    const body = {
+      id: id,
+      username: username,
+      is_active: is_active,
+      rol: rol
+    }
+    console.log('BODY ACTUALIZAR');
+    console.log(body);
+
+    return this.http.put<Respuesta>( url, body )
+      .pipe(
+        map(respuesta => respuesta),
+        catchError(err => throwError(()=>err))
+      );
+  }
+
+
+  public eliminarUsuario(idUsuario: number): Observable<Respuesta>{
+    const url  = `${ this._url }/usuarios/${idUsuario}/`;
+    return this.http.delete<Respuesta>( url )
+      .pipe(
+        map(respuesta => respuesta),
+        catchError(err => throwError(()=>err))
+      );
+  }
 }

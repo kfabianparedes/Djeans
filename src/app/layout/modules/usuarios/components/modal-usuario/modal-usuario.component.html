@@ -1,37 +1,137 @@
 <p-dialog 
     [(visible)]="mostrarModal" 
     [modal]="true" 
-    [style]="{width: '50vw'}"
+    [style]="{width: '20vw'}"
     [draggable]="false" 
     [resizable]="false" 
-    [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+    [breakpoints]="{'1280px': '40vw', '1024px': '45vw', '960px': '75vw', '640px': '100vw'}"
     (onHide)="closeModal()"
     >
 
         <ng-template pTemplate="header"> <!-- FALTA MODIFICAR TAMAÑO -->
-            <span class="titulo">{{tituloModal}}</span>
+            <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
-        <div class="fila m-0"> <!-- FALTA TERMINAR -->
-            <form (ngSubmit)="guardarUsuario()">
-                
-            </form> 
-        </div>
+        <form [formGroup]="usuarioFormulario" (ngSubmit)="guardarUsuario()" class="from-group">
+            <div class="row p-1">
+                <label 
+                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    for="usernameUsuario">
+                    Usuario<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input 
+                        id="usernameUsuario"
+                        autocomplete="off"
+                        formControlName="username" 
+                        class="form-control" 
+                        type="text" 
+                        placeholder="Ingrese nombre de usuario ... ">
+                </div>
+
+                <div *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="username?.errors?.['required']">
+                            *El nombre de usuario es requerido.
+                        </small>
+                        <small class="col-12" *ngIf="username?.errors?.['minlength']">
+                            *El nombre de usuario debe tener mínimo 5 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="username?.errors?.['maxlength']">
+                            *El nombre de usuario debe tener máximo 50 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="username?.errors?.['pattern']">
+                            *El nombre de usuario debe ser válido.
+                        </small>
+                </div>
+
+            </div>
+
+            <div class="row p-1" *ngIf="esRegistro">
+                <label 
+                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    for="passwordUsuario">
+                    Password<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input 
+                        id="passwordUsuario"
+                        autocomplete="off"
+                        formControlName="password" 
+                        class="form-control" 
+                        type="password" 
+                        placeholder="Ingrese password ... ">
+                </div>
+
+                <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="password?.errors?.['required']">
+                            *La contraseña es requerida.
+                        </small>
+                        <small class="col-12" *ngIf="password?.errors?.['minlength']">
+                            *La contraseña debe tener mínimo 8 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="password?.errors?.['maxlength']">
+                            *La contraseña debe tener máximo 50 caracteres.
+                        </small>
+                        
+                </div>
+            </div>
+            
+            <div class="row p-1">
+                <label 
+                    class="col-12 col-sm-4 col-lg-3 col-form-label form-label"
+                    for="rolUsuario">
+                    Rol<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+                <div class="col-12 col-md-8 col-lg-9">
+                    <select id="rolUsuario" class="form-control form-select" formControlName="rol">
+                        <option value=""> -- Seleccione Rol -- </option>
+                        <option *ngFor="let rol of roles ; let i = index" [value]="rol.rol_id"> {{ rol.rol_tipo }} </option>
+                    </select>   
+                </div>
+
+                <div *ngIf="rol?.invalid && (rol?.dirty || rol?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="rol?.errors?.['required']">
+                            *El rol es requerido.
+                        </small>
+                </div>
+            </div>
+
+            <div class="row p-1" 
+                *ngIf="!esRegistro">
+                    <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoUsuario">Estado:</label>
+                    <div class="col-8 col-sm-8 col-lg-9">
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input"
+                                type="checkbox"
+                                formControlName="is_active"
+                                id="estadoUsuario">
+                        </div>
+                    </div>
+            </div>
+
+        </form> 
 
         <ng-template pTemplate="footer">
-            <p-button 
-                icon="pi pi-times" 
-                (click)="mostrarModal=false" 
-                label="Cancelar" 
-                styleClass="p-button-text p-button-danger">
-            </p-button>
-            <p-button 
-                icon="pi pi-check" 
+            <button
+                [disabled]="cargando | async" 
+                (click)="closeModal()" 
+                class="btn btn-outline-danger">
+                <i class="pi pi-times"></i>
+                Cancelar
+            </button>
+            <button *ngIf="usuarioFormulario.valid"
                 type="submit"
-                label="Guardar" 
-                styleClass="p-button-text p-button-primary">
-            </p-button>
+                class="btn btn-outline-primary"
+                (click)="guardarUsuario()"
+                [disabled]="usuarioFormulario.invalid">
+                <i class="pi pi-check"></i>
+                Guardar
+            </button>
         </ng-template>
-
 
 </p-dialog>

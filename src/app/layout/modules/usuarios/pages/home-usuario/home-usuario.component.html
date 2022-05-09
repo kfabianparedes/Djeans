@@ -7,7 +7,21 @@
     
     <div class="row">
         <tabla-usuario 
-            [usuariosDeTabla]="usuarios">
+            [usuariosDeTabla]="usuarios"
+            (abrirModal)="modificarEstadoModal($event)"
+            (tituloModal)="guardarTituloModal($event)"
+            (usuarioParaActualizar)="guardarUsuarioParaActualizar($event)"
+            (usuarioEliminado)="eliminarUsuario($event)">
         </tabla-usuario>
     </div>
 </div>
+
+<modal-usuario
+    [roles]="roles"
+    [tituloModal]="tituloModal"
+    [mostrarModal]="mostrarModal"
+    [usuarioUtilizadoEnModal]="usuarioParaActualizar"
+    (enviarInformacionUsuario)="guardarUsuario($event)"
+    (cerrarModal)="modificarEstadoModal($event)">  
+</modal-usuario>
+    

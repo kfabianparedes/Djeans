@@ -2,11 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { RolService } from 'src/app/auth/services/rol.service';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { errorAlerta, validarCodigosDeErrorDelAPI } from 'src/app/shared/utils/reutilizables';
+import { DataUsuarioRegistroActualizar } from '../../models/registro-actualizar-usuario.model';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
-import { Roles } from '../../utils/Roles.model';
+import { Rol, Roles } from '../../utils/Roles.model';
 
 @Component({
   selector: 'app-home-usuario',
@@ -20,13 +22,16 @@ export class HomeUsuarioComponent implements OnInit {
   public tituloModal: string = '';
   public usuarioParaActualizar: Usuario = {} as Usuario;
 
+  public roles: Rol[] = [];
+
   constructor(
     private usuarioService:UsuarioService,
-    public messageService: MessageService
-
+    public messageService: MessageService,
+    private rolService: RolService
     ) { }
 
   ngOnInit(): void {
+    this._listarRoles();
     this._listarUsuarios();
   }
 
@@ -35,6 +40,7 @@ export class HomeUsuarioComponent implements OnInit {
   }
 
   private _listarUsuarios(): void{
+    this.usuarios = [];
     this.usuarioService.listarUsuarios().subscribe({
       next: (respuesta: Respuesta)=>{
         (respuesta.data).forEach((usuario: Usuario) => {
@@ -44,6 +50,8 @@ export class HomeUsuarioComponent implements OnInit {
             estaActivo: usuario.is_active?'ACTIVO':'INACTIVO'
           })
         });
+        console.log(this.usuarios);
+        
       },
       error: (respuesta:HttpErrorResponse) => {
         if(respuesta.status !== 0){
@@ -57,13 +65,165 @@ export class HomeUsuarioComponent implements OnInit {
     });
   }
 
+  public eliminarUsuario(idUsuario : number){
+    this.usuarioService.eliminarUsuario(idUsuario).subscribe(
+      {
+        next: (respuesta: Respuesta)=>{
+
+          this.messageService.add({
+            severity:'success', 
+            summary: 'Excelente', 
+            detail: respuesta.message
+          });
+          
+          this._listarUsuarios();
+        },
+        error: (respuestaError:HttpErrorResponse) => {
+          const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+  
+          if(codigoHttp !== 0){
+            
+            codigoHttp===403?
+              errorAlerta(`${respuesta.code}`, respuesta.message ):
+              this.messageService.add({
+                severity:'error', 
+                summary: `Código de error: ${respuesta.code}`, 
+                detail: respuesta.message
+              });
+
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+        }
+      }
+    );
+
+  }
+
+  private _registrarUsuario(usuario : Usuario): void {
+    
+    console.log( 'nueva usuario: ' );
+    console.log( usuario );
+    this.usuarioService.registrarUsuario(usuario).subscribe(
+      {
+        next: (respuesta: Respuesta)=>{
+
+          this.messageService.add({
+            severity:'success', 
+            summary: 'Registrado...', 
+            detail: respuesta.message
+          });
+          
+          this._listarUsuarios();
+        },
+        error: (respuestaError:HttpErrorResponse) => {
+          const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+          if(codigoHttp !== 0){
+            this.messageService.add({
+              severity:'error', 
+              summary: `Código de error: ${respuesta.code}`, 
+              detail: respuesta.message
+            });
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+        }
+      }
+    );
+  }
+
+  private _actualizarUsuario(usuario : Usuario): void {
+    console.log( 'actualizar usuario: ' );
+    console.log( usuario );
+    this.usuarioService.actualizarUsuario(usuario).subscribe(
+      {
+        next: (respuesta: Respuesta)=>{
+
+          this.messageService.add({
+            severity:'success', 
+            summary: 'Actualizado...', 
+            detail: respuesta.message
+          });
+          
+          this._listarUsuarios();
+        },
+        error: (respuestaError:HttpErrorResponse) => {
+          const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+          if(codigoHttp !== 0){
+
+            codigoHttp===403?
+              errorAlerta(`${respuesta.code}`, respuesta.message ):
+              this.messageService.add({
+                severity:'error', 
+                summary: `Código de error: ${respuesta.code}`, 
+                detail: respuesta.message
+              });
+
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+        }
+      }
+    );
+  }
+
+  public guardarUsuario({esRegistro, usuario}: DataUsuarioRegistroActualizar ): void {
+    if( esRegistro ){
+      this._registrarUsuario(usuario);
+    }else{
+      this._actualizarUsuario(usuario);
+    }
+  }
+
   private _obtenerRolDeUsuario(user: Usuario):string{
-    return user.is_superuser? Roles.superuser:
-                                user.is_staff?
-                                  Roles.admin:
-                                  user.is_employee?
-                                    Roles.employee:
-                                    Roles.noRol;
+    let tipoDeUsuario = 'SIN ROL';
+    this.roles.forEach((rol)=>{
+      if(rol.rol_id == user.rol)
+        tipoDeUsuario = rol.rol_tipo;
+    });
+    return tipoDeUsuario;
+  }
+
+  public guardarTituloModal(tituloDelModal : string): void {
+    this.tituloModal= tituloDelModal;
+  }
+
+  public modificarEstadoModal(estadoModal: boolean): void {
+    this.mostrarModal = estadoModal;
+  }
+
+  public guardarUsuarioParaActualizar( usuario: Usuario): void { 
+    this.usuarioParaActualizar = {...usuario};
+  }
+
+  private _listarRoles(): void{
+    this.roles = [];
+    this.rolService.listarRoles().subscribe({
+      next: (respuesta: Respuesta)=>{
+        (respuesta.data).forEach((rol: Rol) => {
+          this.roles.push({...rol})
+        });
+        console.log(this.roles);
+      },
+      error: ( respuestaError : HttpErrorResponse ) => {
+        const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+          if(codigoHttp !== 0){
+            codigoHttp===403?
+              errorAlerta(`${respuesta.code}`, respuesta.message ):
+              this.messageService.add({
+                severity:'error', 
+                summary: `Código de error: ${respuesta.code}`, 
+                detail: respuesta.message
+              });
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+      }
+    });
   }
 
 }

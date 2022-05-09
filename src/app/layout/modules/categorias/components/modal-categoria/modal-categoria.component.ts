@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { validarCaracteresAlfabeticosConEspacios } from 'src/app/shared/utils/reutilizables';
 import { Categoria } from '../../models/categoria.model';
 import { DataCategoriaRegistroActualizar } from '../../models/registro-actualizar-categoria.model';
 
@@ -13,7 +14,6 @@ import { DataCategoriaRegistroActualizar } from '../../models/registro-actualiza
 export class ModalCategoriaComponent implements OnInit, OnChanges {
 
   
-  private validarDescripcion : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$/;
   @Input() mostrarModal : boolean = false;
   @Input() tituloModal : string = '';
   @Input() categoriaUtilizadaEnModal! : Categoria;
@@ -28,7 +28,7 @@ export class ModalCategoriaComponent implements OnInit, OnChanges {
     descripcion: ['', [ Validators.required,
                         Validators.minLength(4),
                         Validators.maxLength(30),
-                        Validators.pattern(this.validarDescripcion)]],
+                        Validators.pattern(validarCaracteresAlfabeticosConEspacios)]],
     estado: [ true, Validators.required ],
   });
 

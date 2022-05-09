@@ -1,5 +1,11 @@
 <div class="card p-1">
-    <p-table #tablaUsuarios responsiveLayout="scroll" [value]="usuariosDeTabla" [filterDelay]="0" [globalFilterFields]="['id','username','tipoDeUsuario','estaActivo']">
+    <p-table 
+        #tablaUsuario 
+        responsiveLayout="scroll" 
+        [value]="usuariosDeTabla" 
+        [filterDelay]="0" 
+        [globalFilterFields]="['username','tipoDeUsuario','estaActivo']"
+        >
         <ng-template pTemplate="caption">
             <div class="flex row justify-content-between">
                 <div class="py-2 col-sm-12 col-md-5 col-lg-4">
@@ -11,23 +17,31 @@
                                         type="text" 
                                         [(ngModel)]="filtroBusquedaUsuario"
                                         class="input-busqueda form-control" 
-                                        (input)="tablaUsuarios.filterGlobal(filtroBusquedaUsuario, 'contains')" 
+                                        (input)="filtrarBusqueda(tablaUsuario)" 
                                         placeholder="Nombre de usuario"
                                     >
-                                    <button (click)="tablaUsuarios.filterGlobal(filtroBusquedaUsuario, 'contains')" type="button" class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i></button>
+                                    <button [disabled]="cargando | async" 
+                                            (click)="filtrarBusqueda(tablaUsuario)" 
+                                            type="button" 
+                                            class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
-                    <button (click)="abrirModalCrearUsuario()" class="btn-header-derecha btn btn-primary" type="button"><i class="pi pi-user-plus">&nbsp;</i>Nuevo</button>
+                    <button [disabled]="cargando | async"
+                            (click)="registroUsuario()" 
+                            class="btn-header-derecha btn btn-primary" 
+                            type="button"><i class="pi pi-user-plus">&nbsp;</i>Nuevo
+                    </button>
                 </div>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr class="titulo-tabla contenedor">
-                <th class="text-center" pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <!-- <th class="text-center" pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th> -->
                 <th class="text-center" pSortableColumn="username">Nombre de usuario <p-sortIcon field="username"></p-sortIcon></th>
                 <th class="text-center" pSortableColumn="tipoDeUsuario">Tipo de usuario <p-sortIcon field="tipoDeUsuario"></p-sortIcon></th>
                 <th class="text-center" pSortableColumn="estaActivo">Estado <p-sortIcon field="estaActivo"></p-sortIcon></th>
@@ -36,17 +50,43 @@
         </ng-template>
         <ng-template  pTemplate="body" let-usuario >
             <tr class="filas-tabla contenedor" > 
-                <td class="text-center">{{usuario.id}}</td>
+                <!-- <td class="text-center">{{usuario.id}}</td> -->
                 <td class="text-center">{{usuario.username  | uppercase}}</td>
-                <td class="text-center"><p-tag value="{{usuario.tipoDeUsuario}}" severity={{obtenerColorDelRolDeUsuario(usuario.tipoDeUsuario)}}></p-tag></td>
-                <td class="text-center"><p-tag value="{{usuario.estaActivo}}" severity="{{usuario.is_active?'success':'danger'}}"></p-tag></td>
                 <td class="text-center">
-                    <button pButton pRipple type="button" icon="pi pi-user-edit" class="p-button-rounded p-button-warning p-button-outlined"></button>
-                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                    <p-tag 
+                        value="{{usuario.tipoDeUsuario}}" 
+                        severity={{obtenerColorDelRolDeUsuario(usuario.tipoDeUsuario)}}>
+                    </p-tag>
+                </td>
+                <td class="text-center">
+                    <p-tag 
+                        value="{{usuario.estaActivo}}"
+                        severity="{{usuario.is_active?'success':'danger'}}">
+                    </p-tag>
+                </td>
+                <td class="text-center">
+                    <button 
+                        [disabled]="cargando | async" 
+                        (click)="actualizarUsuario(usuario);reiniciarTabla(tablaUsuario);"
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-user-edit" 
+                        class="p-button-rounded p-button-warning p-button-outlined">
+                    </button>
+                    <button 
+                        [disabled]="cargando | async" 
+                        (click)="eliminarUsuario(usuario.id);reiniciarTabla(tablaUsuario);" 
+                        pButton 
+                        pRipple 
+                        type="button"
+                        [icon]="usuario.is_active?'pi pi-trash':'pi pi-check-circle'" 
+                        [class]="usuario.is_active?
+                            'p-button-danger p-button-rounded p-button-outlined':
+                            'p-button-primary p-button-rounded p-button-outlined'">
+                    </button>
                 </td>
             </tr>
         </ng-template>
     </p-table>
 </div>
-
-<modal-usuario (cerrarModal)="mostrarModal=$event" [tituloModal]="'Registrar Nuevo Usuario :'" [mostrarModal]="mostrarModal" ></modal-usuario>
