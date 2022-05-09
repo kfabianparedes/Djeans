@@ -1,5 +1,4 @@
-import { Sucursal } from "src/app/models/sucursal";
-
+import { Sucursal } from "../../sucursales/models/sucursal.model";
 export interface Tienda{
   tie_id:number;
   tie_nombre:string;

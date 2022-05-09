@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { SucursalService } from 'src/app/services/sucursal.service';
+import { SucursalService } from 'src/app/layout/modules/sucursales/services/sucursal.service';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { DataTiendaRegistroActualizar } from '../../models/registro-actualizar-tienda';
 import { Tienda } from '../../models/tienda.models';

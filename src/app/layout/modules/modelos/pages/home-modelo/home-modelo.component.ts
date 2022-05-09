@@ -80,11 +80,15 @@ export class HomeModeloComponent implements OnInit {
           const codigoHttp : number = respuestaError.status;
   
           if(codigoHttp !== 0){
-            this.messageService.add({
-              severity:'error', 
-              summary: `Código de error: ${respuesta.code}`, 
-              detail: respuesta.message
-            });
+            
+            codigoHttp===403?
+              errorAlerta(`${respuesta.code}`, respuesta.message ):
+              this.messageService.add({
+                severity:'error', 
+                summary: `Código de error: ${respuesta.code}`, 
+                detail: respuesta.message
+              });
+              
           }else{
             errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
           }

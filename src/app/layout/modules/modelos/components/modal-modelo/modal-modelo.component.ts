@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { datosInicialesDescripcionEstado, validarCaracteresAlfanumericosConEspaciosMasSimbolos } from 'src/app/shared/utils/reutilizables';
 import { Modelo } from '../../models/modelo.model';
 import { DataModeloRegistroActualizar } from '../../models/registro-actualizar-modelo.model';
 
@@ -12,8 +13,6 @@ import { DataModeloRegistroActualizar } from '../../models/registro-actualizar-m
 })
 export class ModalModeloComponent implements OnInit, OnChanges {
 
-
-  private validarDescripcion : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$/;
   @Input() mostrarModal : boolean = false;
   @Input() tituloModal : string = '';
   @Input() modeloUtilizadoEnModal!: Modelo;
@@ -23,19 +22,13 @@ export class ModalModeloComponent implements OnInit, OnChanges {
   public cargando : Subject<boolean> = this.buttonProgressService.cargando;
   public esRegistro : boolean = true;
 
-
   modeloFormulario: FormGroup = this.fb.group({
     descripcion: ['', [ Validators.required,
                         Validators.minLength(4),
                         Validators.maxLength(30),
-                        Validators.pattern(this.validarDescripcion)]],
+                        Validators.pattern(validarCaracteresAlfanumericosConEspaciosMasSimbolos)]],
     estado: [ true, Validators.required ],
   });
-
-  private _datosIniciales = {
-    descripcion: '',
-    estado: true,
-  };
 
   constructor(
     private fb: FormBuilder,
@@ -88,7 +81,7 @@ export class ModalModeloComponent implements OnInit, OnChanges {
   }
 
   private _reiniciarFormulario(): void {
-    this.modeloFormulario.reset({...this._datosIniciales});
+    this.modeloFormulario.reset({...datosInicialesDescripcionEstado});
   }
 
   ngOnChanges(changes: SimpleChanges): void {

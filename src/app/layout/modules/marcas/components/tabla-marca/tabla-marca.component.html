@@ -1,0 +1,82 @@
+<div class="card p-1">
+    <p-table 
+        #tablaMarca 
+        responsiveLayout="scroll"  
+        [value]="marcasDeTabla" 
+        [filterDelay]="0" 
+        [globalFilterFields]="['mar_descripcion','marcaEstado']"
+        >
+        <ng-template pTemplate="caption">
+            <div class="flex row justify-content-between">
+                <div class="py-2 col-sm-12 col-md-5 col-lg-4">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-12">
+                            <div class="row flex">
+                                <div class="col-sm-8 col-md-11 col-lg-11 d-flex">
+                                    <input 
+                                        type="text" 
+                                        [(ngModel)]="filtroBusquedaMarca"
+                                        class="input-busqueda form-control" 
+                                        (input)="filtrarBusqueda(tablaMarca)" 
+                                        placeholder="Nombre de marca"
+                                    >
+                                    <button [disabled]="cargando | async" 
+                                            (click)="filtrarBusqueda(tablaMarca)" 
+                                            type="button" 
+                                            class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
+                    <button [disabled]="cargando | async" 
+                            (click)="registroMarca()" 
+                            class="btn-header-derecha btn btn-primary"
+                            type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr class="titulo-tabla contenedor">
+                <th class="text-center" pSortableColumn="mar_descripcion">Descripción <p-sortIcon field="mar_descripcion"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="marcaEstado">Estado <p-sortIcon field="marcaEstado"></p-sortIcon></th>
+                <th class="text-center"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-marca >
+            <tr class="filas-tabla contenedor"> 
+                <td class="text-center">{{marca.mar_descripcion}}</td>
+                <td class="text-center">
+                    <p-tag 
+                        value="{{marca.marcaEstado}}" 
+                        severity="{{marca.mar_estado?'success':'danger'}}">
+                    </p-tag>
+                </td>
+                <td class="text-center">
+                    <button 
+                        [disabled]="cargando | async" 
+                        (click)="actualizarMarca(marca);reiniciarTabla(tablaMarca);" 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-pencil" 
+                        class="p-button-rounded p-button-warning p-button-outlined">
+                    </button>
+                    <button 
+                        [disabled]="cargando | async" 
+                        (click)="eliminarMarca(marca.mar_id);reiniciarTabla(tablaMarca);" 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        [icon]="marca.mar_estado?'pi pi-trash':'pi pi-check-circle'" 
+                        [class]="marca.mar_estado?
+                            'p-button-danger p-button-rounded p-button-outlined':
+                            'p-button-primary p-button-rounded p-button-outlined'">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

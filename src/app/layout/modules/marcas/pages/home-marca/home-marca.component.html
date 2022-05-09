@@ -1,1 +1,25 @@
-<p>home-marca works!</p>
+<titulo-pagina [titulo]="'Marca'"></titulo-pagina>
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Lista de marcas'"></subtitulo-pagina>
+
+<div class="container-fluid">
+    <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+    
+    <div class="row">
+        <tabla-marca 
+            [marcasDeTabla]="marcas" 
+            (abrirModal)="modificarEstadoModal($event)"
+            (tituloModal)="guardarTituloModal($event)"
+            (marcaParaActualizar)="guardarMarcaParaActualizar($event)"
+            (marcaEliminada)="eliminarMarca($event)">
+        </tabla-marca>
+    </div>
+</div>
+
+<modal-marca
+    [tituloModal]="tituloModal" 
+    [mostrarModal]="mostrarModal"
+    [marcaUtilizadaEnModal]="marcaParaActualizar"
+    (enviarInformacionMarca)="guardarMarca($event)"
+    (cerrarModal)="modificarEstadoModal($event)"> 
+</modal-marca>
