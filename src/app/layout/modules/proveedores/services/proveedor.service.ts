@@ -23,32 +23,47 @@ export class ProveedorService {
         );
     }
 
-//   public registrarModelo({mod_descripcion}: Modelo): Observable<Respuesta>{
-//     const url  = `${ this._url }/modelos/`;
-//     const body = {
-//       mod_descripcion: mod_descripcion.toUpperCase(),
-//       mod_estado : true
-//     }
-//     return this.http.post<Respuesta>( url, body )
-//       .pipe(
-//         map(respuesta => respuesta),
-//         catchError(err => throwError(()=>err))
-//       );
-//   }
+    public registrarProveedor(proveedor: Proveedor): Observable<Respuesta>{
+        const url  = `${ this._url }/proveedores/`;
+        const body = {
 
-//   public actualizarModelo(modelo: Modelo): Observable<Respuesta>{
-//     const url  = `${ this._url }/modelos/${modelo.mod_id}/`;
-//     const body = {
-//       mod_id: modelo.mod_id,
-//       mod_descripcion: modelo.mod_descripcion.toUpperCase(),
-//       mod_estado : modelo.mod_estado
-//     }
-//     return this.http.put<Respuesta>( url, body )
-//       .pipe(
-//         map(respuesta => respuesta),
-//         catchError(err => throwError(()=>err))
-//       );
-//   }
+        pro_ruc: proveedor.pro_ruc.toUpperCase(),
+        pro_nombre: proveedor.pro_nombre.toUpperCase(),
+        pro_razon_social: proveedor.pro_razon_social.toUpperCase(),
+        pro_email: proveedor.pro_email.toUpperCase(),
+        pro_telefono1: proveedor.pro_telefono1.toUpperCase(),
+        pro_telefono2: proveedor.pro_telefono2.toUpperCase(),
+        pro_direccion1: proveedor.pro_direccion1.toUpperCase(),
+        pro_direccion2: proveedor.pro_direccion2.toUpperCase(),
+        pro_estado : true
+        }
+        return this.http.post<Respuesta>( url, body )
+        .pipe(
+            map(respuesta => respuesta),
+            catchError(err => throwError(()=>err))
+        );
+    }
+
+    public actualizarProveedor(proveedor: Proveedor): Observable<Respuesta>{
+        const url  = `${ this._url }/proveedores/${proveedor.pro_id}/`;
+        const body = {
+            pro_id : proveedor.pro_id,
+            pro_ruc: proveedor.pro_ruc.toUpperCase(),
+            pro_nombre: proveedor.pro_nombre.toUpperCase(),
+            pro_razon_social: proveedor.pro_razon_social.toUpperCase(),
+            pro_email: proveedor.pro_email.toUpperCase(),
+            pro_telefono1: proveedor.pro_telefono1.toUpperCase(),
+            pro_telefono2: proveedor.pro_telefono2.toUpperCase(),
+            pro_direccion1: proveedor.pro_direccion1.toUpperCase(),
+            pro_direccion2: proveedor.pro_direccion2.toUpperCase(),
+            pro_estado : proveedor.pro_estado
+            }
+        return this.http.put<Respuesta>( url, body )
+        .pipe(
+            map(respuesta => respuesta),
+            catchError(err => throwError(()=>err))
+        );
+    }
 
 
     public eliminarModelo(idProveedor: number): Observable<Respuesta>{

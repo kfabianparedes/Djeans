@@ -15,3 +15,11 @@
         </tabla-proveedor>
     </div>
 </div>
+
+<modal-proveedor
+    [tituloModal]="tituloModal" 
+    [mostrarModal]="mostrarModal"
+    [proveedorUtilizadoEnModal]="proveedorParaActualizar"
+    (enviarInformacionProveedor)="guardarProveedor($event)"
+    (cerrarModal)="modificarEstadoModal($event)"> 
+</modal-proveedor>

@@ -30,6 +30,7 @@ export class HomeProveedorComponent implements OnInit {
 
   ngOnInit(): void {
     this._listarProveedores();
+    
   }
 
   private _listarProveedores() : void {
@@ -94,10 +95,71 @@ export class HomeProveedorComponent implements OnInit {
   private _registrarProveedor(proveedor : Proveedor):void{
     console.log(proveedor);
     
+    this.proveedorService.registrarProveedor(proveedor).subscribe(
+      {
+        next: (respuesta: Respuesta)=>{
+
+          this.messageService.add({
+            severity:'success', 
+            summary: 'Registrado...', 
+            detail: respuesta.message
+          });
+          
+          this._listarProveedores();
+        },
+        error: (respuestaError:HttpErrorResponse) => {
+          const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+          if(codigoHttp !== 0){
+            this.messageService.add({
+              severity:'error', 
+              summary: `Código de error: ${respuesta.code}`, 
+              detail: respuesta.message
+            });
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+        }
+      }
+    );
+
   }
 
   private _actualizarProveedor(proveedor : Proveedor):void{
-    console.log(proveedor);}
+    
+    this.proveedorService.actualizarProveedor(proveedor).subscribe(
+      {
+        next: (respuesta: Respuesta)=>{
+
+          this.messageService.add({
+            severity:'success', 
+            summary: 'Actualizado...', 
+            detail: respuesta.message
+          });
+          
+          this._listarProveedores();
+        },
+        error: (respuestaError:HttpErrorResponse) => {
+          const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+          console.log(codigoHttp);
+          if(codigoHttp !== 0){
+            
+            codigoHttp===403?
+              errorAlerta(`${respuesta.code}`, respuesta.message ):
+              this.messageService.add({
+                severity:'error', 
+                summary: `Código de error: ${respuesta.code}`, 
+                detail: respuesta.message
+              });
+              
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+        }
+      }
+    );
+  }
 
   public guardarProveedor({esRegistro, proveedor}: DataProveedorRegistroActualizar ): void {
     

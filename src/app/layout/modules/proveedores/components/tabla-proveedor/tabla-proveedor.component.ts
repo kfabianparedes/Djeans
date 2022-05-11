@@ -19,6 +19,8 @@ export class TablaProveedorComponent {
 
   @Output() abrirModal = new EventEmitter<boolean>();
   @Output() tituloModal = new EventEmitter<string>();
+  @Output() esVisualizar = new EventEmitter<boolean>();
+
   @Output() proveedorParaActualizar = new EventEmitter<Proveedor>();
   
   constructor(private _buttonProgressService : ButtonProgressService) { }
@@ -35,9 +37,12 @@ export class TablaProveedorComponent {
     console.log(proveedor);
     this.abrirModal.emit(true);
     this.proveedorParaActualizar.emit(proveedor);
+    this.esVisualizar.emit(false);
     
   }
-
+  public visualizar() : void{
+    this.esVisualizar.emit(true);
+  }
   public reiniciarTabla(tabla : Table): void {
     tabla?.reset();
     

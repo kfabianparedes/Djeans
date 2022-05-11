@@ -1,1 +1,347 @@
-<p>modal-proveedor works!</p>
+<p-dialog
+    [(visible)]="mostrarModal"
+    [modal]="true"
+    [style]="{width:'40vw'}"
+    [draggable]="false"
+    [resizable]="false"
+    [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+    (onHide)="closeModal()"
+    >
+        <ng-template pTemplate="header">
+            <span class="titulo-modal-crud">{{tituloModal}}</span>
+        </ng-template>
+
+        <form [formGroup]="proveedorFormulario" (ngSubmit)="guardarProveedor()" class="form-group">
+            
+            <!-- //RUC -->
+            <div class="row p-1">
+
+                <label
+                class="col-12 col-sm-4 col-lg-3 col-form-label"
+                for="rucProveedor">
+                RUC<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="rucProveedor"
+                        autocomplete="off"
+                        formControlName="pro_ruc"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese RUC...">
+
+                </div>
+
+                <div *ngIf="ruc?.invalid && (ruc?.dirty || ruc?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="ruc?.errors?.['required']">
+                            *El RUC es requerido.
+                        </small>
+                        <small class="col-12" *ngIf="ruc?.errors?.['minlength']">
+                            *El RUC debe tener mínimo 11 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="ruc?.errors?.['maxlength']">
+                            *El RUC debe tener máximo 11 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="ruc?.errors?.['pattern']">
+                            *El RUC debe ser válido.
+                        </small>
+                </div>
+
+            </div>
+
+            <!-- //NOMBRE -->
+            <div class="row p-1">
+
+                <label
+                class="col-12 col-sm-4 col-lg-3 col-form-label"
+                for="nombreProveedor">
+                Nombre<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="nombreProveedor"
+                        autocomplete="off"
+                        formControlName="pro_nombre"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese el nombre...">
+
+                </div>
+
+                <div *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="nombre?.errors?.['required']">
+                            *El nombre es requerido.
+                        </small>
+                        <small class="col-12" *ngIf="nombre?.errors?.['minlength']">
+                            *El nombre debe tener mínimo 4 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="nombre?.errors?.['maxlength']">
+                            *El nombre debe tener máximo 50 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="nombre?.errors?.['pattern']">
+                            *El nombre debe ser válido.
+                        </small>
+                </div>
+
+            </div>
+
+            <!-- //RAZON SOCIAL -->
+            <div class="row p-1">
+
+                <label
+                class="col-12 col-sm-4 col-lg-3 col-form-label"
+                for="razonSocialProveedor">
+                Razón social<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="razonSocialProveedor"
+                        autocomplete="off"
+                        formControlName="pro_razon_social"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese la razón social...">
+
+                </div>
+
+                <div *ngIf="razon_social?.invalid && (razon_social?.dirty || razon_social?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="razon_social?.errors?.['required']">
+                            *La razón social es requerida.
+                        </small>
+                        <small class="col-12" *ngIf="razon_social?.errors?.['minlength']">
+                            *La razón social debe tener mínimo 5 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="razon_social?.errors?.['maxlength']">
+                            *La razón social debe tener máximo 50 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="razon_social?.errors?.['pattern']">
+                            *La razón social debe ser válida.
+                        </small>
+                </div>
+
+            </div>
+
+            <!-- //EMAIL -->
+            <div class="row p-1">
+
+                <label
+                class="col-12 col-sm-4 col-lg-3 col-form-label"
+                for="emailProveedor">
+                Email<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="emailProveedor"
+                        autocomplete="off"
+                        formControlName="pro_email"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese el email...">
+
+                </div>
+
+                <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="email?.errors?.['required']">
+                            *El email es requerido.
+                        </small>
+                        <small class="col-12" *ngIf="email?.errors?.['minlength']">
+                            *El email debe tener mínimo 11 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="email?.errors?.['maxlength']">
+                            *El email debe tener máximo 50 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="email?.errors?.['pattern']">
+                            *El email debe ser válido.
+                        </small>
+                </div>
+
+            </div>
+
+            <!-- //Telefono 1 -->
+            <div class="row p-1">
+
+                <label
+                class="col-12 col-sm-4 col-lg-3 col-form-label"
+                for="telefono1Proveedor">
+                Telefono 1<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="telefono1Proveedor"
+                        autocomplete="off"
+                        formControlName="pro_telefono1"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese el telefono 1...">
+
+                </div>
+
+                <div *ngIf="telefono1?.invalid && (telefono1?.dirty || telefono1?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="telefono1?.errors?.['required']">
+                            *El telefono1 es requerido.
+                        </small>
+                        <small class="col-12" *ngIf="telefono1?.errors?.['minlength']">
+                            *El telefono1 debe tener mínimo 9 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="telefono1?.errors?.['maxlength']">
+                            *El telefono1 debe tener máximo 9 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="telefono1?.errors?.['pattern']">
+                            *El telefono1 debe ser válido.
+                        </small>
+                </div>
+
+            </div>
+
+            <!-- //Telefono 2 -->
+            <div class="row p-1">
+
+                <label
+                class="col-12 col-sm-4 col-lg-3 col-form-label"
+                for="telefono2Proveedor">
+                Telefono 2<small class="text-danger"></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="telefono2Proveedor"
+                        autocomplete="off"
+                        formControlName="pro_telefono2"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese el telefono 2...">
+
+                </div>
+
+                <div *ngIf="telefono2?.invalid && (telefono2?.dirty || telefono2?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="telefono2?.errors?.['minlength']">
+                            *El telefono2 debe tener mínimo 9 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="telefono2?.errors?.['maxlength']">
+                            *El telefono2 debe tener máximo 9 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="telefono2?.errors?.['pattern']">
+                            *El telefono2 debe ser válido.
+                        </small>
+                </div>
+
+            </div>
+
+            <!-- //DIRECCION 1 -->
+            <div class="row p-1">
+
+                <label
+                class="col-12 col-sm-4 col-lg-3 col-form-label"
+                for="direccion1Proveedor">
+                Dirección 1<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="direccion1Proveedor"
+                        autocomplete="off"
+                        formControlName="pro_direccion1"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese la direccón 1...">
+
+                </div>
+
+                <div *ngIf="direccion1?.invalid && (direccion1?.dirty || direccion1?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="telefono1?.errors?.['required']">
+                            *La direccion1 es requerida.
+                        </small>
+                        <small class="col-12" *ngIf="direccion1?.errors?.['minlength']">
+                            *La direccion1 debe tener mínimo 5 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="direccion1?.errors?.['maxlength']">
+                            *La direccion1 debe tener máximo 50 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="direccion1?.errors?.['pattern']">
+                            *La direccion1 debe ser válida.
+                        </small>
+                </div>
+
+            </div>
+
+            <!-- //DIRECCION2 -->
+            <div class="row p-1">
+
+                <label
+                class="col-12 col-sm-4 col-lg-3 col-form-label"
+                for="direccion2Proveedor">
+                Dirección 2<small class="text-danger"></small>:
+                </label>
+
+                <div class="col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="direccion2Proveedor"
+                        autocomplete="off"
+                        formControlName="pro_direccion2"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese la direccón 2...">
+
+                </div>
+
+                <div *ngIf="direccion2?.invalid && (direccion2?.dirty || direccion2?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="direccion2?.errors?.['minlength']">
+                            *La direccion2 debe tener mínimo 5 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="direccion2?.errors?.['maxlength']">
+                            *La direccion2 debe tener máximo 50 caracteres.
+                        </small>
+                        <small class="col-12" *ngIf="direccion2?.errors?.['pattern']">
+                            *La direccion2 debe ser válida.
+                        </small>
+                </div>
+
+            </div>
+
+            <div class="row p-1"
+                *ngIf="!esRegistro">
+                    <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoProveedor">Estado:</label>
+                    <div class="col-8 col-sm-8 col-lg-9">
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input"
+                                type="checkbox"
+                                formControlName="pro_estado"
+                                id="estadoProveedor">
+                        </div>
+                    </div>
+            </div>
+
+        </form>
+
+        <ng-template pTemplate="footer">
+            <button
+                [disabled]="cargando | async"
+                (click)="closeModal()"
+                class="btn btn-outline-danger">
+                <i class="pi pi-times"></i>
+                Cancelar
+            </button>
+            <button *ngIf="proveedorFormulario.valid"
+                type="submit"
+                class="btn btn-outline-primary"
+                (click)="guardarProveedor()"
+                [disabled]="proveedorFormulario.invalid">
+                <i class="pi pi-check"></i>
+                Guardar
+            </button>
+        </ng-template>
+
+</p-dialog>
