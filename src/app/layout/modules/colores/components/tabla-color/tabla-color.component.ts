@@ -3,6 +3,7 @@ import { Color } from '../../models/color.model';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 @Component({
   selector: 'tabla-color',
   templateUrl: './tabla-color.component.html',
@@ -21,6 +22,7 @@ export class TablaColorComponent implements OnInit {
   @Output() colorParaActualizar = new EventEmitter<Color>();
 
   constructor(
+    public rolPermissionService: RolPermissionService,
     private _buttonProgressService: ButtonProgressService
   ) { }
 

@@ -3,6 +3,7 @@ import { Talla } from '../../models/talla.models';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 
 @Component({
   selector: 'tabla-talla',
@@ -21,7 +22,9 @@ export class TablaTallaComponent implements OnInit {
   @Output() tituloModal = new EventEmitter<string>();
   @Output() tallaParaActualizar = new EventEmitter<Talla>();
 
-  constructor(private _buttonProgressService: ButtonProgressService) { }
+  constructor(
+    public rolPermissionService: RolPermissionService,
+    private _buttonProgressService: ButtonProgressService) { }
 
   ngOnInit(): void {
   }

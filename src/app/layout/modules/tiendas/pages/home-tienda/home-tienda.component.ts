@@ -1,9 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { forkJoin, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { errorAlerta } from 'src/app/shared/utils/reutilizables';
+import { Sucursal } from '../../../sucursales/models/sucursal.model';
+import { SucursalService } from '../../../sucursales/services/sucursal.service';
 import { DataTiendaRegistroActualizar } from '../../models/registro-actualizar-tienda';
 import { Tienda } from '../../models/tienda.models';
 import { TiendaService } from '../../services/tienda.service';
@@ -14,8 +17,8 @@ import { TiendaService } from '../../services/tienda.service';
   styleUrls: ['./home-tienda.component.css'],
   providers:[MessageService]
 })
-export class HomeTiendaComponent implements OnInit {
-
+export class HomeTiendaComponent implements OnInit , OnDestroy{
+  public sucursalesModal: Sucursal[] = [];
   public tiendas:Tienda[]=[];
   public mostrarModal:boolean=false;
   public tituloModal:string='';
@@ -23,23 +26,23 @@ export class HomeTiendaComponent implements OnInit {
 
   constructor(
     private tiendaService:TiendaService,
-    public messageService:MessageService
+    public messageService:MessageService,
+    private _sucursalService: SucursalService
   ) { }
-
+  
   ngOnInit(): void {
-    this._listarTiendas();
+    this._listarTiendasConSucursal();
   }
 
   public closeAlert(): void{
     this.messageService.clear();
   }
 
-  public _listarTiendas():void{
+  private _listarTiendas():void{
     this.tiendas=[];
     this.tiendaService.listarTiendas().subscribe({
       next:(respuesta:Respuesta)=>{
         (respuesta.data).forEach((tienda:Tienda)=>{
-          console.log(tienda);
           this.tiendas.push({
             ...tienda,
             tiendaEstado:tienda.tie_estado?'ACTIVO':'INACTIVO'
@@ -67,7 +70,7 @@ export class HomeTiendaComponent implements OnInit {
             summary:'Excelente',
             detail:respuesta.message
           });
-          this._listarTiendas();
+          this._listarTiendasConSucursal();
         },
         error:(respuestaError:HttpErrorResponse)=>{
           const respuesta:Respuesta={...respuestaError.error};
@@ -88,8 +91,10 @@ export class HomeTiendaComponent implements OnInit {
   }
 
   public guardarTienda({esRegistro,tienda}:DataTiendaRegistroActualizar):void{
+    console.log('tienda', tienda)
     if(esRegistro){
-      console.log('Registrar');
+      console.log('registro');
+      
       this._registrarTienda(tienda);
     }else{
       console.log('actualizar');
@@ -98,8 +103,6 @@ export class HomeTiendaComponent implements OnInit {
   }
 
   private _actualizarTienda(tienda:Tienda):void{
-    console.log('actualizar Tienda: ');
-    console.log(tienda);
     this.tiendaService.actualizarTienda(tienda).subscribe(
       {
         next:(respuesta:Respuesta)=>{
@@ -108,7 +111,7 @@ export class HomeTiendaComponent implements OnInit {
             summary:'Actualizado...',
             detail:respuesta.message
           });
-          this._listarTiendas();
+          this._listarTiendasConSucursal();
         },
         error:(respuestaError:HttpErrorResponse)=>{
           const respuesta:Respuesta={...respuestaError.error};
@@ -128,8 +131,6 @@ export class HomeTiendaComponent implements OnInit {
   }
 
   private _registrarTienda(tienda:Tienda):void{
-    console.log('nuevo Tienda');
-    console.log(tienda);
     this.tiendaService.registrarTienda(tienda).subscribe(
       {
         next:(respuesta:Respuesta)=>{
@@ -138,7 +139,7 @@ export class HomeTiendaComponent implements OnInit {
             summary:'Registrado...',
             detail:respuesta.message
           });
-          this._listarTiendas();
+          this._listarTiendasConSucursal();
         },
         error:(respuestaError:HttpErrorResponse)=>{
           const respuesta:Respuesta={...respuestaError.error};
@@ -170,5 +171,58 @@ export class HomeTiendaComponent implements OnInit {
   }
 
 
+  private infoTiendaSucursal: Subscription = new Subscription;
+  private _listarTiendasConSucursal(): void {
+    this.sucursalesModal = [] as Sucursal [];
+    this.tiendas = [] as Tienda[];
+
+    this.infoTiendaSucursal = forkJoin([this._sucursalService.listarSucursales() ,this.tiendaService.listarTiendas()]).subscribe(
+      {
+        next: (respuestas: Respuesta[])=>{
+          const sucursalesData = [...respuestas[0].data];
+          const tiendasData = [...respuestas[1].data];
+
+          (tiendasData).forEach((tienda:Tienda)=>{
+            (sucursalesData).forEach((sucursal:Sucursal)=>{
+              if(tienda.tie_suc_id === sucursal.suc_id){
+                this.tiendas.push({
+                  ...tienda,
+                  tiendaEstado:tienda.tie_estado?'ACTIVO':'INACTIVO',
+                  sucursal: sucursal.suc_nombre,
+                  sucursalDireccion: sucursal.suc_direccion
+                })
+              }
+            });
+          });
+
+          ([...sucursalesData]).forEach((sucursal:Sucursal)=>{
+            this.sucursalesModal.push({
+              ...sucursal,
+              sucursalEstado:sucursal.suc_estado?'ACTIVO':'INACTIVO'
+            })
+          });
+
+
+        },
+        error:(respuestaError:HttpErrorResponse)=>{
+        const respuesta:Respuesta={...respuestaError.error};
+        const codigoHttp:number=respuestaError.status;
+        if(codigoHttp!==0){
+          this.messageService.add({
+            severity:'error',
+            summary:`Codigo de error.${respuesta.code}`,
+            detail:respuesta.message
+          });
+        }else{
+          errorAlerta('Error en el servidor',AuthService.mensajeErrorDelServidor);
+        }
+      }
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.infoTiendaSucursal.unsubscribe();
+  }
 
 }

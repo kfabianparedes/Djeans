@@ -94,7 +94,6 @@ export class ModalCategoriaComponent implements OnInit, OnChanges {
     if(changes['categoriaUtilizadaEnModal']){
       this.esRegistro = false;
       const categoria: Categoria = changes['categoriaUtilizadaEnModal'].currentValue;
-      console.log(categoria);
       this.categoriaFormulario.reset({
         descripcion: categoria?.cat_descripcion,
         estado: categoria?.cat_estado

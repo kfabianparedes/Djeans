@@ -88,7 +88,6 @@ export class ModalModeloComponent implements OnInit, OnChanges {
     if(changes['modeloUtilizadoEnModal']){
       this.esRegistro = false;
       const modelo: Modelo = changes['modeloUtilizadoEnModal'].currentValue;
-      console.log(modelo);
       this.modeloFormulario.reset({
         descripcion: modelo?.mod_descripcion,
         estado: modelo?.mod_estado

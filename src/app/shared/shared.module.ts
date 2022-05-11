@@ -19,6 +19,7 @@ import { TagModule  } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
+import { RolDirective } from './directives/rol.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DialogModule } from 'primeng/dialog';
     ErrorComponent,
     ProgressbarComponent,
     SubtituloPaginaComponent,
+    RolDirective,
   ],
   imports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { DialogModule } from 'primeng/dialog';
     TagModule,
     ButtonModule,
     InputTextModule,
-    DialogModule
+    DialogModule,
+    RolDirective,
   ]
 })
 export class SharedModule { }

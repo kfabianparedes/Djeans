@@ -1,26 +1,28 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, retry, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { Usuario } from 'src/app/layout/modules/usuarios/models/usuario.model';
+import { ACCESS_TOKEN, REFRESH_TOKEN,USU_ID,USU_USERNAME, USU_ROLE, TYPE_ROLE } from 'src/app/layout/modules/usuarios/utils/Roles.model';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { environment } from 'src/environments/environment';
 import { Token } from '../models/token.model';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   public static readonly mensajeErrorDelServidor = 'Hubo un error de conexión en el servidor. Póngase en contacto con el administrador para obtener más información.';
-  private readonly ACCESS_TOKEN = 'ACCESS_TOKEN';
-  private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
-  private readonly USU_ID = 'USU_ID';
-  private readonly USU_USERNAME = 'USU_USERNAME';
+
   private _url: string = environment.url;
   private _autenticacion!: Token;
+  private _userData : Usuario = {} as Usuario;
 
   get autenticacion(): Token {
     return { ...this._autenticacion };
   }
 
+  get userData(): Usuario {
+    return {...this._userData};
+  }
   constructor(private http: HttpClient) { }
 
   public login( username: string, password: string ) : Observable<Respuesta>{
@@ -31,7 +33,7 @@ export class AuthService {
         tap(respuesta => {
           this._autenticacion = {...respuesta.data}
           this._guardarInfoUsuario(this._autenticacion);
-          this._guardarRespuestaLogin(this.autenticacion) // usamos el getter
+          this._guardarRespuestaLogin(this.autenticacion);
         }),
         map(respuesta => respuesta),
         catchError(err => throwError(()=>err))
@@ -44,12 +46,19 @@ export class AuthService {
   }
   
   private _guardarInfoUsuario(info: Token){
-    localStorage.setItem(this.USU_ID, this.encode(info.id.toString()));
-    localStorage.setItem(this.USU_USERNAME, this.encode(info.username));
+    this._userData.id = info.id;
+    this._userData.username = info.username;
+    this._userData.rol = info.rol;
+    this._userData.tipoRol = info.tipoRol;
+    localStorage.setItem(USU_ID, this.encode(info.id.toString()));
+    localStorage.setItem(USU_USERNAME, this.encode(info.username));
+    localStorage.setItem(USU_ROLE, this.encode(info.rol.toString()));
+    localStorage.setItem(TYPE_ROLE, this.encode(info.tipoRol));
   }
+
   private _guardarTokens(tokens: Token) {
-    localStorage.setItem(this.ACCESS_TOKEN, tokens.access);
-    localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh);
+    localStorage.setItem(ACCESS_TOKEN, tokens.access);
+    localStorage.setItem(REFRESH_TOKEN, tokens.refresh);
   }
 
   public estaLogeado() {
@@ -57,15 +66,15 @@ export class AuthService {
   }
 
   public getAccessToken() {
-    return localStorage.getItem(this.ACCESS_TOKEN);
+    return localStorage.getItem(ACCESS_TOKEN);
   }
   
 
   public logout(): Observable<Respuesta> {
     const url  = `${ this._url }/logout`;
     const body = {
-      "username": this.decode(localStorage.getItem(this.USU_USERNAME)!),
-      "id": this.decode(localStorage.getItem(this.USU_ID)!)
+      username: this._userData.username || this.decode(localStorage.getItem(USU_USERNAME)!),
+      id: this.userData.id || +this.decode(localStorage.getItem(USU_ID)!)
     };
     return this.http.post<Respuesta>( url, body ).pipe(
       tap(() => this._desloguearUsuario()),
@@ -73,12 +82,20 @@ export class AuthService {
       catchError(err => throwError(()=>err))
     );
   }
-  // private _getUserInfo(): void{
-  //   this._username = localStorage.getItem('USU_ID') || '';
-  //   this._id = Number(localStorage.getItem('USU_ID')) || 0;
-  // }
+  
   private _getRefreshToken() {
-    return localStorage.getItem(this.REFRESH_TOKEN);
+    return localStorage.getItem(REFRESH_TOKEN);
+  }
+
+  public getUserInfo(): Usuario {
+    const usuarioInfo : Usuario = {
+      id: this.userData.id || +this.decode(localStorage.getItem(USU_ID)!), 
+      username: this.userData.username || this.decode(localStorage.getItem(USU_USERNAME)!),
+      rol: this.userData.rol || +this.decode(localStorage.getItem(USU_ROLE)!),
+      is_active: this.userData.is_superuser || Boolean(this.decode(localStorage.getItem(USU_ROLE)!)),
+      tipoRol: this.userData.tipoRol || this.decode(localStorage.getItem(TYPE_ROLE)!)
+    }
+    return usuarioInfo;
   }
 
   private _desloguearUsuario() {
@@ -103,8 +120,5 @@ export class AuthService {
   public decode(valor:string) {
     return decodeURIComponent(atob(valor));
   };
-
-  // b64EncodeUnicode("✓ à la mode"); // "JUUyJTlDJTkzJTIwJUMzJUEwJTIwbGElMjBtb2Rl"
-  // UnicodeDecodeB64("JUUyJTlDJTkzJTIwJUMzJUEwJTIwbGElMjBtb2Rl"); // "✓ à la mode"
 
 }

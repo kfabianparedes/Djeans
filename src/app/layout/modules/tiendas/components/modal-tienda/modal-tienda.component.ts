@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { SucursalService } from 'src/app/layout/modules/sucursales/services/sucursal.service';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { Sucursal } from '../../../sucursales/models/sucursal.model';
 import { DataTiendaRegistroActualizar } from '../../models/registro-actualizar-tienda';
 import { Tienda } from '../../models/tienda.models';
 
@@ -16,7 +17,7 @@ import { Tienda } from '../../models/tienda.models';
 export class ModalTiendaComponent implements OnInit,OnChanges {
 
   private validarNombre:RegExp=/[a-zñáéíóú\- A-ZÑÁÉÍÓÚ 0-9]+$/;
-
+  @Input() sucursales : Sucursal[] = [];
   @Input() mostrarModal : boolean = false;
   @Input() tituloModal : string = '';
   @Input() tiendaUtilizadoEnModal!: Tienda;
@@ -31,29 +32,27 @@ export class ModalTiendaComponent implements OnInit,OnChanges {
                   Validators.minLength(4),
                   Validators.maxLength(30),
                   Validators.pattern(this.validarNombre)]],
-    valorsucursal:['',[Validators.required]],
+    sucursal:['',[Validators.required]],
     estado: [ true, Validators.required ],
   });
 
   private _datosIniciales = {
     nombre:'',
-    valorsucursal: '',
     estado: true,
+    sucursal: '',
   };
 
 
   constructor(
     private fb: FormBuilder,
     public buttonProgressService: ButtonProgressService,
-    //SE AGREGO VARIABLE obtencionServicioSucursal --> PARA VISUALIZAR LOS NOMBRES DE CUCURSALES EN EL MODULO
-    private obtencionServicioSucursal:SucursalService
   ) { }
 
     get nombre(){
       return this.tiendaFormulario.get('nombre');
     }
-    get valorsucursal(){
-      return this.tiendaFormulario.get('valorsucursal')
+    get sucursal(){
+      return this.tiendaFormulario.get('sucursal')
     }
     get estado(){
       return this.tiendaFormulario.get('estado');
@@ -65,13 +64,16 @@ export class ModalTiendaComponent implements OnInit,OnChanges {
 
   public guardarTienda(): void {  //Guarda lo obtenido del formulario para update o create
     if (this.tiendaFormulario.valid){
-      const sucursal : Tienda = {
+      console.log(this.sucursal?.value)
+      const tienda : Tienda = {
         tie_id           :  this.tiendaUtilizadoEnModal?.tie_id,
         tie_nombre       :  this.nombre?.value,
-        tie_suc_id       :  this.valorsucursal?.value,
+        tie_suc_id       :  +this.sucursal?.value,
         tie_estado       :  this.estado?.value
       }
-      this._enviarInformacionDeSucursal(sucursal);
+      console.log(tienda);
+      
+      this._enviarInformacionDeSucursal(tienda);
       this._culminarPeticion();
     }
     return;
@@ -105,10 +107,9 @@ export class ModalTiendaComponent implements OnInit,OnChanges {
     if(changes['tiendaUtilizadoEnModal']){
       this.esRegistro = false;
       const tienda: Tienda = changes['tiendaUtilizadoEnModal'].currentValue;
-      console.log(tienda);
       this.tiendaFormulario.reset({
         nombre: tienda?.tie_nombre,
-        valorsucursal: tienda?.tie_suc_id,
+        sucursal: tienda?.tie_suc_id,
         estado: tienda?.tie_estado
       });
 

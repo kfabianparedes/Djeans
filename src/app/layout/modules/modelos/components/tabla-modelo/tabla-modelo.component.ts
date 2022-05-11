@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 import { Modelo } from '../../models/modelo.model';
 
 @Component({
@@ -22,7 +23,9 @@ export class TablaModeloComponent{
   @Output() tituloModal = new EventEmitter<string>();
   @Output() modeloParaActualizar = new EventEmitter<Modelo>();
 
-  constructor(private _buttonProgressService: ButtonProgressService) { }
+  constructor(
+    public rolPermissionService: RolPermissionService, 
+    private _buttonProgressService: ButtonProgressService) { }
 
   public registroModelo(): void {
     this.tituloModal.emit('Registrar Nuevo Modelo');

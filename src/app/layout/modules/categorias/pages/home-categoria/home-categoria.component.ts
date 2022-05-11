@@ -103,8 +103,6 @@ export class HomeCategoriaComponent implements OnInit {
   }
 
   private _actualizarCategoria(categoria : Categoria): void {
-    console.log( 'actualizar categoria: ' );
-    console.log( categoria );
     this.categoriaService.actualizarCategoria(categoria).subscribe(
       {
         next: (respuesta: Respuesta)=>{
@@ -140,8 +138,6 @@ export class HomeCategoriaComponent implements OnInit {
 
   private _registrarCategoria(categoria : Categoria): void {
     
-    console.log( 'nueva categoria: ' );
-    console.log( categoria );
     this.categoriaService.registrarCategoria(categoria).subscribe(
       {
         next: (respuesta: Respuesta)=>{

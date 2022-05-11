@@ -1,11 +1,10 @@
-<p>modal-tienda works!</p>
 <p-dialog
     [(visible)]="mostrarModal"
     [modal]="true"
-    [style]="{width: '40vw'}"
+    [style]="{width: '25vw'}"
     [draggable]="false"
     [resizable]="false"
-    [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+    [breakpoints]="{'1280px': '40vw', '1024px': '45vw', '960px': '75vw', '640px': '100vw'}"
     (onHide)="closeModal()"
     >
 
@@ -53,34 +52,25 @@
             <!-- FIN CAMPO NOMBRE -->
             <!-- INICIO CAMPO SUCURSAL -->
             <div class="row p-1">
-              <label
-                    class="col-12 col-sm-4 col-lg-3 col-form-label"
-                    for="tiendaSucursal">
-                    SUCURSAL<small class="text-danger"><strong>(*)</strong></small>:
-              </label>
-              <div class="col-12 col-sm-8 col-lg-9">
-                  <!--INPUT -- SE CAMBIARA POR COMBO-->
-                <!--
-                <input
-                    id="tiendaSucursal"
-                    autocomplete="off"
-                    formControlName="valorsucursal"
-                    class="form-control"
-                    type="text"
-                    placeholder="Ingrese una sucursal...">
-              </div>
-                -->
-                <select id="tiendaSucursal" formControlName="valorsucursal" class="form-control" >
-                    <!--OBTENER EN LISTA -->
-                    <option value="1">asa</option>
-                </select>
-              </div>
-              <div *ngIf="valorsucursal?.invalid && (valorsucursal?.dirty || valorsucursal?.touched)"
+                <label 
+                    class="col-12 col-sm-4 col-lg-3 col-form-label form-label"
+                    for="sucuralDeTienda">
+                    Sucursal<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+                <div class="col-12 col-md-8 col-lg-9">
+                    <select id="sucuralDeTienda" class="form-control form-select" formControlName="sucursal">
+                        <option value=""> -- Seleccione Sucursal -- </option>
+                        <option *ngFor="let sucursal of sucursales ; let i = index" [value]="sucursal.suc_id"> {{ sucursal.suc_nombre }} ({{ sucursal.suc_direccion }}) </option>
+                    </select>   
+                </div>
+
+                <div *ngIf="sucursal?.invalid && (sucursal?.dirty || sucursal?.touched)"
                     class="msj-error-form row text-danger text-end p-0">
-                        <small class="col-12" *ngIf="valorsucursal?.errors?.['required']">
+                        <small class="col-12" *ngIf="sucursal?.errors?.['required']">
                             *La sucursal es requerida.
                         </small>
                 </div>
+
             </div>
             <!-- FIN CAMPO SUCURSAL -->
             <div class="row p-1"

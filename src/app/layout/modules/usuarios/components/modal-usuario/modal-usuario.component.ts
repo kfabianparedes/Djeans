@@ -84,7 +84,6 @@ export class ModalUsuarioComponent implements OnInit {
     
 
     if(this.usuarioFormulario.valid){
-      console.log(this.rol?.value);
       
       const usuario: Usuario = {
         id        : this.usuarioUtilizadoEnModal?.id,
@@ -93,7 +92,6 @@ export class ModalUsuarioComponent implements OnInit {
         rol       : Number(this.rol?.value),
         is_active : this.is_active?.value
       }
-      console.log(usuario);
       
       this._enviarInformacionDeUsuario(usuario);
       this._culminarPeticion();

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 import { Categoria } from '../../models/categoria.model';
 
 @Component({
@@ -24,7 +25,10 @@ export class TablaCategoriaComponent{
   @Output() tituloModal = new EventEmitter<string>();
   @Output() categoriaParaActualizar = new EventEmitter<Categoria>();
 
-  constructor(private _buttonProgressService: ButtonProgressService){ }
+  constructor(
+    public rolPermissionService: RolPermissionService,
+    private _buttonProgressService: ButtonProgressService
+  ){ }
 
   public registroCategoria() : void {
     this.tituloModal.emit('Registrar Nueva Categoría');

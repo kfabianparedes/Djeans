@@ -39,6 +39,11 @@ export class TiendaService {
 
   public actualizarTienda(tienda: Tienda): Observable<Respuesta>{
     const url  = `${ this._url }/tiendas/${tienda.tie_id}/`;
+
+    console.log('service');
+    console.log(tienda);
+    
+    
     const body = {
       tie_id        : tienda.tie_id,
       tie_nombre    : tienda.tie_nombre.toUpperCase(),

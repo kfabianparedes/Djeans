@@ -44,7 +44,6 @@ export class LoginComponent{
           }
         },  
         error: (respuestaError:HttpErrorResponse) => {
-          console.log(respuestaError);
           const respuesta: Respuesta = {...respuestaError.error};
           const codigoHttp : number = respuestaError.status;
 

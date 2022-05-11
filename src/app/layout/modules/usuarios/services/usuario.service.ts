@@ -29,9 +29,6 @@ export class UsuarioService {
       password : password,
       rol: rol
     }
-    console.log('BODY REGISTRO');
-    console.log(body);
-    
     return this.http.post<Respuesta>( url, body )
       .pipe(
         map(respuesta => respuesta),
@@ -47,8 +44,6 @@ export class UsuarioService {
       is_active: is_active,
       rol: rol
     }
-    console.log('BODY ACTUALIZAR');
-    console.log(body);
 
     return this.http.put<Respuesta>( url, body )
       .pipe(

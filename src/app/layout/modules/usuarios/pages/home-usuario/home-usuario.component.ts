@@ -1,9 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Subscription, take } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { RolService } from 'src/app/auth/services/rol.service';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
+import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 import { errorAlerta, validarCodigosDeErrorDelAPI } from 'src/app/shared/utils/reutilizables';
 import { DataUsuarioRegistroActualizar } from '../../models/registro-actualizar-usuario.model';
 import { Usuario } from '../../models/usuario.model';
@@ -16,7 +18,8 @@ import { Rol, Roles } from '../../utils/Roles.model';
   styleUrls: ['./home-usuario.component.css'],
   providers: [MessageService]
 })
-export class HomeUsuarioComponent implements OnInit {
+export class HomeUsuarioComponent implements OnInit{
+
   public usuarios: Usuario[] = [];
   public mostrarModal: boolean = false;
   public tituloModal: string = '';
@@ -24,17 +27,23 @@ export class HomeUsuarioComponent implements OnInit {
 
   public roles: Rol[] = [];
 
+
   constructor(
     private usuarioService:UsuarioService,
     public messageService: MessageService,
-    private rolService: RolService
-    ) { }
+    private _rolService: RolService,
+    public rolPermissionService: RolPermissionService
+    ) {
+      
+    }
 
   ngOnInit(): void {
+    // this.obtenerInfoUsuarioLogeado();
     this._listarRoles();
     this._listarUsuarios();
-  }
 
+  }
+  
   public closeAlert(): void{
     this.messageService.clear();
   }
@@ -50,8 +59,6 @@ export class HomeUsuarioComponent implements OnInit {
             estaActivo: usuario.is_active?'ACTIVO':'INACTIVO'
           })
         });
-        console.log(this.usuarios);
-        
       },
       error: (respuesta:HttpErrorResponse) => {
         if(respuesta.status !== 0){
@@ -103,8 +110,6 @@ export class HomeUsuarioComponent implements OnInit {
 
   private _registrarUsuario(usuario : Usuario): void {
     
-    console.log( 'nueva usuario: ' );
-    console.log( usuario );
     this.usuarioService.registrarUsuario(usuario).subscribe(
       {
         next: (respuesta: Respuesta)=>{
@@ -135,8 +140,6 @@ export class HomeUsuarioComponent implements OnInit {
   }
 
   private _actualizarUsuario(usuario : Usuario): void {
-    console.log( 'actualizar usuario: ' );
-    console.log( usuario );
     this.usuarioService.actualizarUsuario(usuario).subscribe(
       {
         next: (respuesta: Respuesta)=>{
@@ -201,12 +204,11 @@ export class HomeUsuarioComponent implements OnInit {
 
   private _listarRoles(): void{
     this.roles = [];
-    this.rolService.listarRoles().subscribe({
+    this._rolService.listarRoles().subscribe({
       next: (respuesta: Respuesta)=>{
         (respuesta.data).forEach((rol: Rol) => {
           this.roles.push({...rol})
         });
-        console.log(this.roles);
       },
       error: ( respuestaError : HttpErrorResponse ) => {
         const respuesta: Respuesta = {...respuestaError.error};

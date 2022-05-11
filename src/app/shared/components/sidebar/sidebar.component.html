@@ -9,24 +9,90 @@
 
             <div class="sb-sidenav-menu-heading">Interface</div>
 
-            <a class="seleccion nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#opcionesAdministracion" aria-expanded="false" aria-controls="opcionesAdministracion">
+            <a *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" class="seleccion nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#opcionesAdministracion" aria-expanded="false" aria-controls="opcionesAdministracion">
                 <div class="sb-nav-link-icon"><i class="pi pi-sitemap"></i></div>
                 Administración
                 <div class="sb-sidenav-collapse-arrow"><i class="pi pi-chevron-down"></i></div>
             </a>
             <div class="collapse" id="opcionesAdministracion" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" [routerLink]="['/layout','usuario']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" >Usuarios</a>
-                    <a class="nav-link" [routerLink]="['/layout','categoria']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Categorías</a>
-                    <a class="nav-link" [routerLink]="['/layout','modelo']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Modelos</a>
-                    <a class="nav-link" [routerLink]="['/layout','sucursal']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Sucursales</a>
-                    <a class="nav-link" [routerLink]="['/layout','tienda']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Tienda</a>
-                    <a class="nav-link" [routerLink]="['/layout','proveedor']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Proveedores</a>
-                    <a class="nav-link" [routerLink]="['/layout','marca']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Marcas</a>
-                    <a class="nav-link" [routerLink]="['/layout','talla']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Tallas</a>
-                    <a class="nav-link" [routerLink]="['/layout','color']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Colores</a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su]"
+                        class="nav-link" 
+                        [routerLink]="['/layout','usuario']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Usuarios
+                    </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','categoria']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Categorías
+                    </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','modelo']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Modelos
+                    </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','sucursal']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Sucursales
+                    </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','tienda']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Tienda
+                    </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','proveedor']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Proveedores
+                    </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','marca']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Marcas
+                    </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','talla']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Tallas
+                    </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','color']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Colores
+                    </a>
                 </nav>
             </div>
+
+
+
             <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                 Pages

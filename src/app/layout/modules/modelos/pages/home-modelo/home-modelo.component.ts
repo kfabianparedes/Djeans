@@ -40,7 +40,6 @@ export class HomeModeloComponent implements OnInit {
       next: (respuesta: Respuesta)=>{
         
         (respuesta.data).forEach((modelo: Modelo) => {
-          console.log(modelo);
           this.modelos.push({
             ...modelo, 
             modeloEstado: modelo.mod_estado?'ACTIVO':'INACTIVO'
@@ -99,17 +98,13 @@ export class HomeModeloComponent implements OnInit {
 
   public guardarModelo({esRegistro, modelo}: DataModeloRegistroActualizar ): void {
     if( esRegistro ){
-      console.log('registrar');
       this._registrarModelo(modelo);
     }else{
-      console.log('actualizar');
       this._actualizarModelo(modelo);
     }
   }
 
   private _actualizarModelo(modelo : Modelo): void {
-    console.log( 'actualizar Modelo: ' );
-    console.log( modelo );
     this.modeloService.actualizarModelo(modelo).subscribe(
       {
         next: (respuesta: Respuesta)=>{
@@ -125,7 +120,6 @@ export class HomeModeloComponent implements OnInit {
         error: (respuestaError:HttpErrorResponse) => {
           const respuesta: Respuesta = {...respuestaError.error};
           const codigoHttp : number = respuestaError.status;
-          console.log(codigoHttp);
           if(codigoHttp !== 0){
             
             codigoHttp===403?
@@ -145,8 +139,6 @@ export class HomeModeloComponent implements OnInit {
   }
 
   private _registrarModelo(modelo : Modelo): void {
-    console.log( 'nueva Modelo: ' );
-    console.log( modelo );
     this.modeloService.registrarModelo(modelo).subscribe(
       {
         next: (respuesta: Respuesta)=>{

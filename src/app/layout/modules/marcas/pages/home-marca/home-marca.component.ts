@@ -39,7 +39,6 @@ export class HomeMarcaComponent implements OnInit {
 
       next: (respuesta: Respuesta)=>{
         (respuesta.data).forEach((marca: Marca) => {
-          console.log(marca);
           this.marcas.push({
             ...marca, 
             marcaEstado: marca.mar_estado?'ACTIVO':'INACTIVO'
@@ -96,17 +95,13 @@ export class HomeMarcaComponent implements OnInit {
 
   public guardarMarca({esRegistro, marca}: DataMarcaRegistroActualizar ): void {
     if( esRegistro ){
-      console.log('registrar');
       this._registrarMarca(marca);
     }else{
-      console.log('actualizar');
       this._actualizarMarca(marca);
     }
   }
 
   private _actualizarMarca(marca : Marca): void {
-    console.log( 'actualizar Marca: ' );
-    console.log( marca );
     this.marcaService.actualizarMarca(marca).subscribe(
       {
         next: (respuesta: Respuesta)=>{
@@ -122,7 +117,6 @@ export class HomeMarcaComponent implements OnInit {
         error: (respuestaError:HttpErrorResponse) => {
           const respuesta: Respuesta = {...respuestaError.error};
           const codigoHttp : number = respuestaError.status;
-          console.log(codigoHttp);
           if(codigoHttp !== 0){
             
             codigoHttp===403?
@@ -142,8 +136,6 @@ export class HomeMarcaComponent implements OnInit {
   }
 
   private _registrarMarca(marca : Marca): void {
-    console.log( 'nueva Marca: ' );
-    console.log( marca );
     this.marcaService.registrarMarca(marca).subscribe(
       {
         next: (respuesta: Respuesta)=>{

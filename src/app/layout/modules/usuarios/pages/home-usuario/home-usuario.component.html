@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
     
-    <div class="row">
+    <div *appRol="[rolPermissionService.ROL_USER.su]" class="row">
         <tabla-usuario 
             [usuariosDeTabla]="usuarios"
             (abrirModal)="modificarEstadoModal($event)"

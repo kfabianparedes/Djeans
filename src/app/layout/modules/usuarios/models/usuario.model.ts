@@ -9,5 +9,6 @@ export interface Usuario{
     estaActivo?: string,
     //Para saber el tipo de usuario
     password?: string,
+    tipoRol?: string
 
 }

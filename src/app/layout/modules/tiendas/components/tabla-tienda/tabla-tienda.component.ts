@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 import { Tienda } from '../../models/tienda.models';
 
 
@@ -23,7 +24,9 @@ export class TablaTiendaComponent implements OnInit {
   @Output() tituloModal = new EventEmitter<string>();
   @Output() tiendaParaActualizar = new EventEmitter<Tienda>();
 
-  constructor(private _buttonProgressService: ButtonProgressService) { }
+  constructor(
+    public rolPermissionService: RolPermissionService,
+    private _buttonProgressService: ButtonProgressService) { }
 
   ngOnInit(): void {
   }

@@ -87,7 +87,6 @@ export class ModalMarcaComponent implements OnInit {
     if(changes['marcaUtilizadaEnModal']){
       this.esRegistro = false;
       const marca: Marca = changes['marcaUtilizadaEnModal'].currentValue;
-      console.log(marca);
       this.marcaFormulario.reset({
         descripcion: marca?.mar_descripcion,
         estado: marca?.mar_estado
