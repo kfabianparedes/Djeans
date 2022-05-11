@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 import { Proveedor } from '../../models/proveedor.model';
 
 @Component({
@@ -23,7 +24,9 @@ export class TablaProveedorComponent {
 
   @Output() proveedorParaActualizar = new EventEmitter<Proveedor>();
   
-  constructor(private _buttonProgressService : ButtonProgressService) { }
+  constructor(
+    public rolPermissionService: RolPermissionService,
+    private _buttonProgressService : ButtonProgressService) { }
 
   
 
@@ -40,8 +43,12 @@ export class TablaProveedorComponent {
     this.esVisualizar.emit(false);
     
   }
-  public visualizar() : void{
+  public visualizarProveedor(proveedor : Proveedor) : void{
     this.esVisualizar.emit(true);
+    this.tituloModal.emit('Ver Proveedor');
+    this.abrirModal.emit(true);
+    this.proveedorParaActualizar.emit(proveedor);
+    
   }
   public reiniciarTabla(tabla : Table): void {
     tabla?.reset();

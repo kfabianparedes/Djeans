@@ -4,6 +4,9 @@ import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { Proveedor } from '../../models/proveedor.model';
 import { DataProveedorRegistroActualizar } from '../../models/registro-actualizar-proveedor.model';
+import { Respuesta } from 'src/app/shared/models/respuesta.model';
+import { MessageService } from 'primeng/api';
+import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 
 @Component({
   selector: 'modal-proveedor',
@@ -23,7 +26,9 @@ export class ModalProveedorComponent implements OnInit {
   @Input() mostrarModal : boolean = false ;
   @Input() tituloModal : string = '' ; 
   @Input() proveedorUtilizadoEnModal!: Proveedor; 
+  @Input() esVisualizarModal: boolean = false ; 
   @Output() cerrarModal = new EventEmitter<boolean>();
+  @Output() esVisualizar = new EventEmitter<boolean>();
   @Output() enviarInformacionProveedor = new EventEmitter<DataProveedorRegistroActualizar>();
 
   public cargando : Subject<boolean> = this.buttonProgressService.cargando;
@@ -31,7 +36,7 @@ export class ModalProveedorComponent implements OnInit {
 
   proveedorFormulario : FormGroup = this.fb.group({
 
-    pro_ruc:['',[Validators.required,
+    pro_ruc:[{value: '', disabled: this.esVisualizarModal},[Validators.required,
                 Validators.minLength(11),
                 Validators.maxLength(11),
                 Validators.pattern(this.validarRuc)]],
@@ -88,31 +93,37 @@ export class ModalProveedorComponent implements OnInit {
 
   
   constructor(
+    public rolPermissionService: RolPermissionService,
     private fb: FormBuilder,
-    public buttonProgressService: ButtonProgressService
+    public buttonProgressService: ButtonProgressService,
+    private messageService: MessageService
     ) { }
 
   ngOnInit(): void {
     this._reiniciarFormulario();
+    console.log(this.esVisualizarModal);
+    
   }
 
   public guardarProveedor() : void {
-    if (this.proveedorFormulario.valid){
-      const proveedor : Proveedor = {
-        pro_id : this.proveedorUtilizadoEnModal?.pro_id,
-        pro_ruc : this.ruc?.value,
-        pro_nombre : this.nombre?.value,
-        pro_razon_social : this.razon_social?.value,
-        pro_email : this.email?.value,
-        pro_telefono1 : this.telefono1?.value,
-        pro_telefono2 : this.telefono2?.value,
-        pro_direccion1 : this.direccion1?.value,
-        pro_direccion2 : this.direccion2?.value,
-        pro_estado : this.estado?.value
+        if (this.proveedorFormulario.valid){
+          const proveedor : Proveedor = {
+            pro_id : this.proveedorUtilizadoEnModal?.pro_id,
+            pro_ruc : this.ruc?.value,
+            pro_nombre : this.nombre?.value,
+            pro_razon_social : this.razon_social?.value,
+            pro_email : this.email?.value,
+            pro_telefono1 : this.telefono1?.value,
+            pro_telefono2 : this.telefono2?.value,
+            pro_direccion1 : this.direccion1?.value,
+            pro_direccion2 : this.direccion2?.value,
+            pro_estado : this.estado?.value
+          }
+          
+          this._enviarInformacionDeProveedor(proveedor);
+          
+          this._culminarPeticion();
       }
-      this._enviarInformacionDeProveedor(proveedor);
-      this._culminarPeticion();
-    }
     return;
   }
 
@@ -127,8 +138,11 @@ export class ModalProveedorComponent implements OnInit {
   //cerrarModal
   public closeModal(): void {
     this._reiniciarFormulario();
+    this.esVisualizarModal = false ;
     this.mostrarModal=false;
+    this.esVisualizar.emit(false);
     this.cerrarModal.emit(false);
+
   }
 
   //reiniciar Formulario
@@ -171,41 +185,49 @@ export class ModalProveedorComponent implements OnInit {
     return this.proveedorFormulario.get('pro_estado');
   }
 
-  public tel1: string = "";
+  public tel1: string = '';
   public tel2: string = '';
 
 
 
   ngOnChanges(changes: SimpleChanges) : void{
-    if(changes['proveedorUtilizadoEnModal']){
-      this.esRegistro = false ; 
-      const proveedor : Proveedor = changes['proveedorUtilizadoEnModal'].currentValue;
 
-      if (proveedor?.pro_telefono1 !== undefined){
-        this.tel1 = proveedor?.pro_telefono1.slice(3,12);
-        console.log(this.tel1);
+      if(changes['esVisualizarModal']){
+        const visualizar : boolean = changes['esVisualizarModal'].currentValue; 
+        visualizar? this.proveedorFormulario.disable():this.proveedorFormulario.enable()
       }
+      if(changes['proveedorUtilizadoEnModal']){
+        this.esRegistro = false ; 
+        const proveedor : Proveedor = changes['proveedorUtilizadoEnModal'].currentValue;
 
-      if (proveedor?.pro_telefono2 !== undefined && proveedor?.pro_telefono2 !== ''){
-        this.tel2 = proveedor?.pro_telefono2.slice(3,12);
-        console.log(this.tel1);
+        
+        if (proveedor?.pro_telefono1 !== undefined){
+          this.tel1 = proveedor?.pro_telefono1.slice(3,12);
+        }
+
+        if (proveedor?.pro_telefono2 !== undefined && proveedor?.pro_telefono2 !== ''){
+          this.tel2 = proveedor?.pro_telefono2.slice(3,12);
+        }
+        
+
+        this.proveedorFormulario.reset({
+          pro_ruc : proveedor?.pro_ruc,
+          pro_nombre : proveedor?.pro_nombre,
+          pro_razon_social : proveedor?.pro_razon_social,
+          pro_email : proveedor?.pro_email,
+          pro_telefono1 : this.tel1,
+          pro_telefono2 :this.tel2,
+          pro_direccion1 : proveedor?.pro_direccion1,
+          pro_direccion2 : proveedor?.pro_direccion2,
+          pro_estado : proveedor?.pro_estado
+        });
+
+        this.tel1 = '';
+        this.tel2 = '';
+      }else{
+        this.esRegistro = true ; 
       }
-      
-
-      this.proveedorFormulario.reset({
-        pro_ruc : proveedor?.pro_ruc,
-        pro_nombre : proveedor?.pro_nombre,
-        pro_razon_social : proveedor?.pro_razon_social,
-        pro_email : proveedor?.pro_email,
-        pro_telefono1 : this.tel1,
-        pro_telefono2 :this.tel2,
-        pro_direccion1 : proveedor?.pro_direccion1,
-        pro_direccion2 : proveedor?.pro_direccion2,
-        pro_estado : proveedor?.pro_estado
-      });
-    }else{
-      this.esRegistro = true ; 
-    }
+    
   }  
 
 }

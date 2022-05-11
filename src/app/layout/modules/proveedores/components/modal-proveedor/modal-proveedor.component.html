@@ -11,7 +11,7 @@
             <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
-        <form [formGroup]="proveedorFormulario" (ngSubmit)="guardarProveedor()" class="form-group">
+        <form [formGroup]="proveedorFormulario"  (ngSubmit)="guardarProveedor()" class="form-group">
             
             <!-- //RUC -->
             <div class="row p-1">
@@ -219,7 +219,7 @@
                         formControlName="pro_telefono2"
                         class="form-control"
                         type="text"
-                        placeholder="Ingrese el telefono 2...">
+                        placeholder="{{esVisualizarModal?'':'Ingrese la dirección 2...'}}">
 
                 </div>
 
@@ -292,7 +292,7 @@
                         formControlName="pro_direccion2"
                         class="form-control"
                         type="text"
-                        placeholder="Ingrese la direccón 2...">
+                        placeholder="{{esVisualizarModal?'':'Ingrese la dirección 2...'}}">
 
                 </div>
 
@@ -334,11 +334,11 @@
                 <i class="pi pi-times"></i>
                 Cancelar
             </button>
-            <button *ngIf="proveedorFormulario.valid"
+            <button *ngIf="proveedorFormulario.valid && !esVisualizarModal"
                 type="submit"
                 class="btn btn-outline-primary"
                 (click)="guardarProveedor()"
-                [disabled]="proveedorFormulario.invalid">
+                [disabled]="proveedorFormulario.invalid || esVisualizarModal">
                 <i class="pi pi-check"></i>
                 Guardar
             </button>

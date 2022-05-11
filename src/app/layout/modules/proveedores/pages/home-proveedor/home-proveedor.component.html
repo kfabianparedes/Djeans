@@ -11,6 +11,7 @@
             (abrirModal)="modificarEstadoModal($event)"
             (tituloModal)="guardarTituloModal($event)"
             (proveedorParaActualizar)="guardarProveedorParaActualizar($event)"
+            (esVisualizar) = "visualizarProveedor($event)"
             (proveedorEliminado)="eliminarProveedor($event)">
         </tabla-proveedor>
     </div>
@@ -19,7 +20,9 @@
 <modal-proveedor
     [tituloModal]="tituloModal" 
     [mostrarModal]="mostrarModal"
+    [esVisualizarModal]="esVisualizar"
     [proveedorUtilizadoEnModal]="proveedorParaActualizar"
     (enviarInformacionProveedor)="guardarProveedor($event)"
-    (cerrarModal)="modificarEstadoModal($event)"> 
+    (cerrarModal)="modificarEstadoModal($event)"
+    (esVisualizar)="modificarEstadoVisualizar($event)"> 
 </modal-proveedor>

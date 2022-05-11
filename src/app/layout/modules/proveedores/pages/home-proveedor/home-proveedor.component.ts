@@ -20,6 +20,7 @@ export class HomeProveedorComponent implements OnInit {
 
   public proveedores : Proveedor[] = [] ;
   public mostrarModal : boolean = false ; 
+  public esVisualizar : boolean = false ;
   public tituloModal : string = '' ;
   public proveedorParaActualizar : Proveedor = {} as Proveedor ; 
   
@@ -162,11 +163,22 @@ export class HomeProveedorComponent implements OnInit {
   }
 
   public guardarProveedor({esRegistro, proveedor}: DataProveedorRegistroActualizar ): void {
-    
-    if( esRegistro ){
-      this._registrarProveedor(proveedor);
+    if(!this.esVisualizar){
+
+      if( esRegistro ){
+        this._registrarProveedor(proveedor);
+      }else{
+        this._actualizarProveedor(proveedor);
+      }
+
     }else{
-      this._actualizarProveedor(proveedor);
+
+      this.messageService.add({
+        severity:'error', 
+        summary: 'Peligro', 
+        detail: 'No se puede realizar esta actividad.'
+      });
+
     }
   }
 
@@ -177,8 +189,15 @@ export class HomeProveedorComponent implements OnInit {
   public modificarEstadoModal(estadoModal: boolean): void {
     this.mostrarModal = estadoModal;
   }
+  public modificarEstadoVisualizar(esVisualizar : boolean) : void {
+    this.esVisualizar = esVisualizar ; 
+  }
 
   public guardarProveedorParaActualizar( proveedor: Proveedor): void{ 
     this.proveedorParaActualizar = {...proveedor};
+  }
+
+  public visualizarProveedor( esVisualizar: boolean) : void{
+    this.esVisualizar = esVisualizar ;
   }
 }

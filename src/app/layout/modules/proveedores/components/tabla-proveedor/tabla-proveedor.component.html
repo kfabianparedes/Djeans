@@ -31,7 +31,9 @@
                     </div>
                 </div>
                 <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
-                    <button [disabled]="cargando | async" 
+                    <button 
+                            *appRol="[rolPermissionService.ROL_USER.su]"
+                            [disabled]="cargando | async" 
                             (click)="registroProveedor()" 
                             class="btn-header-derecha btn btn-primary"
                             type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo
@@ -59,6 +61,7 @@
                 </td>
                 <td class="text-center">
                     <button 
+                        *appRol="[rolPermissionService.ROL_USER.su]"
                         [disabled]="cargando | async" 
                         (click)="actualizarProveedor(proveedor);reiniciarTabla(tablaProveedor);" 
                         pButton 
@@ -68,6 +71,7 @@
                         class="p-button-rounded p-button-warning p-button-outlined">
                     </button>
                     <button 
+                        *appRol="[rolPermissionService.ROL_USER.su]"    
                         [disabled]="cargando | async" 
                         (click)="eliminarProveedor(proveedor.pro_id);reiniciarTabla(tablaProveedor);" 
                         pButton 
@@ -77,6 +81,15 @@
                         [class]="proveedor.pro_estado?
                             'p-button-danger p-button-rounded p-button-outlined':
                             'p-button-primary p-button-rounded p-button-outlined'">
+                    </button>
+                    <button 
+                        [disabled]="cargando | async" 
+                        (click)="visualizarProveedor(proveedor);" 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-eye" 
+                        class="p-button-rounded p-button-success p-button-outlined">
                     </button>
                 </td>
             </tr>
