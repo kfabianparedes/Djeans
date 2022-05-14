@@ -29,7 +29,7 @@ export class HomeTiendaComponent implements OnInit , OnDestroy{
     public messageService:MessageService,
     private _sucursalService: SucursalService
   ) { }
-  
+
   ngOnInit(): void {
     this._listarTiendasConSucursal();
   }
@@ -62,6 +62,7 @@ export class HomeTiendaComponent implements OnInit , OnDestroy{
   }
 
   public eliminarTienda(idTienda:number):void{
+    console.log("eliminarTienda  ",idTienda)
     this.tiendaService.eliminarTienda(idTienda).subscribe(
       {
         next:(respuesta:Respuesta)=>{
@@ -94,7 +95,7 @@ export class HomeTiendaComponent implements OnInit , OnDestroy{
     console.log('tienda', tienda)
     if(esRegistro){
       console.log('registro');
-      
+
       this._registrarTienda(tienda);
     }else{
       console.log('actualizar');

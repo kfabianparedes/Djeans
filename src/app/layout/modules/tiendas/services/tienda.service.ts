@@ -42,8 +42,8 @@ export class TiendaService {
 
     console.log('service');
     console.log(tienda);
-    
-    
+
+
     const body = {
       tie_id        : tienda.tie_id,
       tie_nombre    : tienda.tie_nombre.toUpperCase(),
@@ -60,6 +60,7 @@ export class TiendaService {
 
   public eliminarTienda(idTienda: number): Observable<Respuesta>{
     const url  = `${ this._url }/tiendas/${idTienda}/`;
+    console.log(idTienda)
     return this.http.delete<Respuesta>( url )
       .pipe(
         map(respuesta => respuesta),
