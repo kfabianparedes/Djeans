@@ -12,7 +12,7 @@ import {DataTallaRegistroActualizar} from '../../models/registro-actualizar-tall
 })
 export class ModalTallaComponent implements OnInit {
 
-  private validarDescripcion : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ 0-9]+$/;
+  private validarDescripcion : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ0-9]+$/;
   @Input() mostrarModal : boolean = false; 
   @Input() tituloModal : string = '';
   @Input() tallaUtilizadaEnModal!: Talla; 
