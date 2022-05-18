@@ -112,51 +112,58 @@ export class HomeProductoComponent implements OnInit {
     
     //hacemos la mega subscripción
 
-    this.listarSubs = forkJoin([this.productoService.listarProductos(),this.proveedorService.listarModelos(),this.tallaService.listarTallas(),
-                                this.categoriaService.listarCategorias(),this.modeloService.listarModelos(),
-                              this.colorService.listarColores(),this.marcaService.listarMarcas()]).subscribe({
-                                
-                                next:(respuestas: Respuesta[])=>{
-                                  const productosData = [...respuestas[0].data];
-                                  const proveedoresData = [...respuestas[1].data];
-                                  const tallasData = [...respuestas[2].data];
-                                  const categoriasData = [...respuestas[3].data];
-                                  const modelosData = [...respuestas[4].data];
-                                  const coloresData = [...respuestas[5].data];
-                                  const marcasData = [...respuestas[6].data];
+    this.listarSubs = forkJoin(
+      [
+        this.productoService.listarProductos(),
+        this.proveedorService.listarModelos(),
+        this.tallaService.listarTallas(),
+        this.categoriaService.listarCategorias(),
+        this.modeloService.listarModelos(),
+        this.colorService.listarColores(),
+        this.marcaService.listarMarcas()
+      ])
+      .subscribe({
+        next:(respuestas: Respuesta[])=>{
+          const productosData = [...respuestas[0].data];
+          const proveedoresData = [...respuestas[1].data];
+          const tallasData = [...respuestas[2].data];
+          const categoriasData = [...respuestas[3].data];
+          const modelosData = [...respuestas[4].data];
+          const coloresData = [...respuestas[5].data];
+          const marcasData = [...respuestas[6].data];
 
-                                  (productosData).forEach((producto:Producto)=>{
-                                    
-                                    this.productos.push({
-                                      ...producto,
-                                      productoEstado:producto.prod_estado?'ACTIVO':'INACTIVO',
-                                      proveedorDescripcion: proveedoresData.find(Element => {(Element.pro_id === producto.proveedor)return Element.pro_name })
-                                      // tallaDesc: tallasData.find(Element => {if(Element.tal_id === producto.talla)return Element.tal_descripcion }),
-                                      // categoriaDesc: categoriasData.find(Element => {if(Element.cat_id === producto.categoria)return Element.mod_descripcion }),
-                                      // modeloDesc: modelosData.find(Element => {if(Element.mod_id === producto.modelo)return Element.pro_name }),
-                                      // colorDesc: coloresData.find(Element => {if(Element.col_id === producto.color)return Element.col_descripcion }),
-                                      // marcaDesc: marcasData.find(Element => {if(Element.mar_id === producto.marca)return Element.marca_name })
-                                    });
-                                  
-                                  });
-                                  console.log(this.productos);
-                                  
-                                  
-                                },
-                                error:(respuestaError:HttpErrorResponse)=>{
-                                  const respuesta:Respuesta={...respuestaError.error};
-                                  const codigoHttp:number=respuestaError.status;
-                                  if(codigoHttp!==0){
-                                    this.messageService.add({
-                                      severity:'error',
-                                      summary:`Codigo de error.${respuesta.code}`,
-                                      detail:respuesta.message
-                                    });
-                                  }else{
-                                    errorAlerta('Error en el servidor',AuthService.mensajeErrorDelServidor);
-                                  }
-                                }
-                              });
+          (productosData).forEach((producto:Producto)=>{
+            
+            this.productos.push({
+              ...producto,
+              productoEstado:producto.prod_estado?'ACTIVO':'INACTIVO',
+              proveedorDescripcion: (proveedoresData.find((proveedor:Proveedor) => proveedor.pro_id === producto.proveedor)).pro_nombre || '',
+              tallaDescripcion: (tallasData.find((talla:Talla) =>talla.tal_id === producto.talla)).tal_descripcion || '',
+              categoriaDescripcion: (categoriasData.find((categoria:Categoria) => categoria.cat_id === producto.categoria)).cat_descripcion || '',
+              modeloDescripcion: (modelosData.find((modelo:Modelo) => modelo.mod_id === producto.modelo)).mod_descripcion || '',
+              colorDescripcion: (coloresData.find((color:Color) => color.col_id === producto.color)).col_descripcion || '',
+              marcaDescripcion: (marcasData.find((marca:Marca) => marca.mar_id === producto.marca)).mar_descripcion || ''
+            });
+          
+          });
+          console.log(this.productos);
+          
+          
+        },
+        error:(respuestaError:HttpErrorResponse)=>{
+          const respuesta:Respuesta={...respuestaError.error};
+          const codigoHttp:number=respuestaError.status;
+          if(codigoHttp!==0){
+            this.messageService.add({
+              severity:'error',
+              summary:`Codigo de error.${respuesta.code}`,
+              detail:respuesta.message
+            });
+          }else{
+            errorAlerta('Error en el servidor',AuthService.mensajeErrorDelServidor);
+          }
+        }
+      });
 
   }
 

@@ -171,7 +171,6 @@ export class HomeTiendaComponent implements OnInit , OnDestroy{
     this.tiendaParaActualizar = {...tienda};
   }
 
-
   private infoTiendaSucursal: Subscription = new Subscription;
   private _listarTiendasConSucursal(): void {
     this.sucursalesModal = [] as Sucursal [];

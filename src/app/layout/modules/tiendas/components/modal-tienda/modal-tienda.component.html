@@ -60,7 +60,7 @@
                 <div class="col-12 col-md-8 col-lg-9">
                     <select id="sucuralDeTienda" class="form-control form-select" formControlName="sucursal">
                         <option value=""> -- Seleccione Sucursal -- </option>
-                        <option *ngFor="let sucursal of sucursales ; let i = index" [value]="sucursal.suc_id"> {{ sucursal.suc_nombre }} ({{ sucursal.suc_direccion }}) </option>
+                        <option *ngFor="let sucursal of sucursales" [value]="sucursal.suc_id"> {{ sucursal.suc_nombre }} ({{ sucursal.suc_direccion }}) </option>
                     </select>   
                 </div>
 
