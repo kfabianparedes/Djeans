@@ -16,6 +16,7 @@ const routes: Routes = [
       { path:'marca', loadChildren: () => import('./modules/marcas/marcas.module').then( m => m.MarcasModule )},
       { path:'color', loadChildren: () => import('./modules/colores/colores.module').then( m => m.ColoresModule )},
       { path:'talla', loadChildren: () => import('./modules/tallas/tallas.module').then( m => m.TallasModule )},
+      { path:'producto', loadChildren: () => import('./modules/productos/productos.module').then( m => m.ProductosModule )},
       { path:'', redirectTo:'', pathMatch:'full'},
       { path:'**', redirectTo:''}
 

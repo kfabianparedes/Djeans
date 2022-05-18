@@ -88,6 +88,14 @@
                         [routerLinkActiveOptions]="{exact:true}">
                         Colores
                     </a>
+                    <a 
+                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                        class="nav-link" 
+                        [routerLink]="['/layout','producto']" 
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact:true}">
+                        Productos
+                    </a>
                 </nav>
             </div>
 
