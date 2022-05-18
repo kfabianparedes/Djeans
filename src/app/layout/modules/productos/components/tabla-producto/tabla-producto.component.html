@@ -78,14 +78,14 @@
                     <button 
                         *appRol="[rolPermissionService.ROL_USER.su]"    
                         [disabled]="cargando | async" 
-                        (click)="eliminarProducto(producto.pro_id);reiniciarTabla(tablaProducto);" 
+                        (click)="eliminarProducto(producto.prod_id);reiniciarTabla(tablaProducto);" 
                         pButton 
                         pRipple 
                         type="button" 
                         [icon]="producto.prod_estado?'pi pi-trash':'pi pi-check-circle'" 
                         [class]="producto.prod_estado?
                             'p-button-danger p-button-rounded p-button-outlined':
-                            'p-button-primary p-button-rounded p-bsutton-outlined'">
+                            'p-button-primary p-button-rounded p-button-outlined'">
                     </button>
                     <button 
                         [disabled]="cargando | async" 

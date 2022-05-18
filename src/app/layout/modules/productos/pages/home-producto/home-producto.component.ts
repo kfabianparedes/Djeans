@@ -146,9 +146,49 @@ export class HomeProductoComponent implements OnInit {
             });
           
           });
+
+          (proveedoresData).forEach((proveedor:Proveedor)=>{
+            this.proveedores.push({
+              ...proveedor, 
+              proveedorEstado:proveedor.pro_estado?'ACTIVO':'INACTIVO'
+            })
+          });
+
+          (tallasData).forEach((talla:Talla)=>{
+            this.tallas.push({
+              ...talla, 
+              tallaEstado:talla.tal_estado?'ACTIVO':'INACTIVO'
+            })
+          });
+
+          (categoriasData).forEach((categoria:Categoria)=>{
+            this.categorias.push({
+              ...categoria, 
+              categoriaEstado:categoria.cat_estado?'ACTIVO':'INACTIVO'
+            })
+          });
+
+          (modelosData).forEach((modelo:Modelo)=>{
+            this.modelos.push({
+              ...modelo, 
+              modeloEstado:modelo.mod_estado?'ACTIVO':'INACTIVO'
+            })
+          });
+
+          (coloresData).forEach((color:Color)=>{
+            this.colores.push({
+              ...color, 
+              colorEstado:color.col_estado?'ACTIVO':'INACTIVO'
+            })
+          });
+
+          (marcasData).forEach((marca:Marca)=>{
+            this.marcas.push({
+              ...marca, 
+              marcaEstado:marca.mar_estado?'ACTIVO':'INACTIVO'
+            })
+          });
           console.log(this.productos);
-          
-          
         },
         error:(respuestaError:HttpErrorResponse)=>{
           const respuesta:Respuesta={...respuestaError.error};
