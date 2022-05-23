@@ -60,6 +60,7 @@
                         formControlName="descripcion"
                         class="form-control"
                         type="text"
+                        disable 
                         placeholder="Ingrese la descripción...">
 
                 </div>
@@ -216,29 +217,6 @@
 
             </div>
 
-            <!-- INICIO CAMPO talla -->
-            <div class="row p-1">
-                <label 
-                    class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
-                    for="tallaProducto">
-                    Talla<small class="text-danger"><strong>(*)</strong></small>:
-                </label>
-                <div class="col-12 col-md-8 col-lg-8">
-                    <select id="tallaProducto" class="form-control form-select" formControlName="talla">
-                        <option value=""> -- Seleccione la talla -- </option>
-                        <option *ngFor="let talla of tallas" [value]="talla.tal_id"> {{ talla.tal_descripcion }}</option>
-                    </select>   
-                </div>
-
-                <div *ngIf="talla?.invalid && (talla?.dirty || talla?.touched)"
-                    class="msj-error-form row text-danger text-end p-0">
-                        <small class="col-12" *ngIf="talla?.errors?.['required']">
-                            *La talla es requerida.
-                        </small>
-                </div>
-
-            </div>
-
             <!-- INICIO CAMPO CATEGORÍA -->
             <div class="row p-1">
                 <label 
@@ -247,7 +225,7 @@
                     Categoría<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
                 <div class="col-12 col-md-8 col-lg-8">
-                    <select id="categoriaProducto" class="form-control form-select" formControlName="categoria">
+                    <select id="categoriaProducto" class="form-control form-select" formControlName="categoria" (change)="cambiarDatosDescripcion()">
                         <option value=""> -- Seleccione la categoría -- </option>
                         <option *ngFor="let categoria of categorias" [value]="categoria.cat_id"> {{ categoria.cat_descripcion }}</option>
                     </select>   
@@ -262,7 +240,9 @@
 
             </div>
 
-            <!-- INICIO CAMPO CATEGORÍA -->
+            
+
+            <!-- INICIO CAMPO MARCA -->
             <div class="row p-1">
                 <label 
                     class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
@@ -270,7 +250,7 @@
                     Marca<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
                 <div class="col-12 col-md-8 col-lg-8">
-                    <select id="marcaProducto" class="form-control form-select" formControlName="marca">
+                    <select id="marcaProducto" class="form-control form-select" formControlName="marca" (change)="cambiarDatosDescripcion()">
                         <option value=""> -- Seleccione la marca -- </option>
                         <option *ngFor="let marca of marcas" [value]="marca.mar_id"> {{ marca.mar_descripcion }}</option>
                     </select>   
@@ -285,6 +265,7 @@
 
             </div>
 
+            
             <!-- INICIO CAMPO MODELO -->
             <div class="row p-1">
                 <label 
@@ -293,7 +274,7 @@
                     Modelo<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
                 <div class="col-12 col-md-8 col-lg-8">
-                    <select id="modeloProducto" class="form-control form-select" formControlName="modelo">
+                    <select id="modeloProducto" class="form-control form-select" formControlName="modelo" (change)="cambiarDatosDescripcion()">
                         <option value=""> -- Seleccione el modelo -- </option>
                         <option *ngFor="let modelo of modelos" [value]="modelo.mod_id"> {{ modelo.mod_descripcion }}</option>
                     </select>   
@@ -308,6 +289,30 @@
 
             </div>
 
+            <!-- INICIO CAMPO talla -->
+            <div class="row p-1">
+                <label 
+                    class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
+                    for="tallaProducto">
+                    Talla<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+                <div class="col-12 col-md-8 col-lg-8">
+                    <select id="tallaProducto" class="form-control form-select" formControlName="talla" (change)="cambiarDatosDescripcion()">
+                        <option value=""> -- Seleccione la talla -- </option>
+                        <option *ngFor="let talla of tallas" [value]="talla.tal_id" (change)="capturarTalla(talla.tal_descripcion);cambiarDatosDescripcion();" > {{ talla.tal_descripcion }}</option>
+                    </select>   
+                </div>
+
+                <div *ngIf="talla?.invalid && (talla?.dirty || talla?.touched)"
+                    class="msj-error-form row text-danger text-end p-0">
+                        <small class="col-12" *ngIf="talla?.errors?.['required']">
+                            *La talla es requerida.
+                        </small>
+                </div>
+
+            </div>
+
+
             <!-- INICIO CAMPO COLOR -->
             <div class="row p-1">
                 <label 
@@ -316,7 +321,7 @@
                     Color<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
                 <div class="col-12 col-md-8 col-lg-8">
-                    <select id="modeloProducto" class="form-control form-select" formControlName="color">
+                    <select id="modeloProducto" class="form-control form-select" formControlName="color" (change)="cambiarDatosDescripcion()">
                         <option value=""> -- Seleccione el color -- </option>
                         <option *ngFor="let color of colores" [value]="color.col_id"> {{ color.col_descripcion }}</option>
                     </select>   

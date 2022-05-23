@@ -56,6 +56,13 @@ export class ModalProductoComponent implements OnInit {
   @Output() esVisualizar = new EventEmitter<boolean>();
   @Output() enviarInformacionProducto = new EventEmitter<DataProductoRegistroActualizar>();
 
+
+  private categorriaSeleccionada : string = '';
+  private marcaSeleccionada : string = ''; 
+  private modeloSeleccionado : string = '' ; 
+  private tallaSeleccionada : string = '' ; 
+  private colorSeleccionado : string = '' ; 
+
   @Input() mostrarModal : boolean = false;
   @Input() tituloModal : string = '';
   @Input() productoUtilizadoEnModal!: Producto;
@@ -101,9 +108,11 @@ export class ModalProductoComponent implements OnInit {
     estado:true
   }
 
+  
+
   ngOnInit(): void {
     this._reiniciarFormulario();
-    console.log("valor de es visualizar modal inicizalizado: " + this.esVisualizarModal);
+    this.reiniciarSeleccionDescripcion();
   }
 
   get codigo(){
@@ -153,6 +162,8 @@ export class ModalProductoComponent implements OnInit {
     return this.productoFormulario.get('estado');
   }
 
+
+
   public guardarProducto() : void {
     if(this.productoFormulario.valid){
       const producto : Producto = {
@@ -162,8 +173,8 @@ export class ModalProductoComponent implements OnInit {
         prod_precio_compra: this.precio_compra?.value,
         prod_precio_venta: this.precio_venta?.value,
         prod_descuento_promocion: this.precio_promocion?.value,
-        prod_precio_compra_base: this.precio_compra?.value * IGV,
-        prod_precio_venta_base: this.precio_venta?.value * IGV,
+        prod_precio_compra_base: +(this.precio_compra?.value * IGV).toFixed(2),
+        prod_precio_venta_base: +(this.precio_venta?.value * IGV).toFixed(2),
         proveedor : this.proveedor?.value,
         talla : this.talla?.value,
         marca : this.marca?.value, 
@@ -178,6 +189,54 @@ export class ModalProductoComponent implements OnInit {
     }
   return;
   } 
+
+  private reiniciarSeleccionDescripcion() : void { 
+    this.categorriaSeleccionada = '' ; 
+    this.marcaSeleccionada = '' ; 
+    this.modeloSeleccionado = '' ; 
+    this.tallaSeleccionada = '' ; 
+    this.colorSeleccionado = '' ; 
+  }
+
+  public cambiarDatosDescripcion() : void {
+    
+    if (this.categoria!.value != '')
+      this.categorriaSeleccionada = (this.categorias.find((categoria:Categoria) => categoria.cat_id == this.categoria?.value))!.cat_descripcion || " ";
+    if(this.marca!.value != '')
+      this.marcaSeleccionada =  (this.marcas.find((marca:Marca) => marca.mar_id == this.marca?.value))!.mar_descripcion || "";
+    if(this.modelo!.value != '')
+      this.modeloSeleccionado = (this.modelos.find((modelo:Modelo) => modelo.mod_id == this.modelo?.value))!.mod_descripcion || "";
+    if(this.talla!.value != '')
+      this.tallaSeleccionada =  `- ${(this.tallas.find((talla:Talla) => talla.tal_id == this.talla?.value))!.tal_descripcion} -`;
+    if(this.color!.value != '')
+      this.colorSeleccionado = (this.colores.find((color:Color) => color.col_id == this.color?.value))!.col_descripcion || "" ;
+
+    this.descripcion?.setValue(this.categorriaSeleccionada + " " + this.marcaSeleccionada + " " 
+    + this.modeloSeleccionado + " " + this.tallaSeleccionada + " " + this.colorSeleccionado );
+    console.log(this.categoria);
+    
+  }
+  
+  public capturarCategoria(categoria:string) : void {
+    this.categorriaSeleccionada = categoria
+  }
+
+  public capturarMarca(marca: string) : void {
+    this.marcaSeleccionada = marca;
+  }
+
+  public capturarModelo(modelo:string) : void {
+    this.modeloSeleccionado = modelo;
+  }
+
+  public capturarTalla(talla:string){
+    this.tallaSeleccionada = talla;
+  }
+
+  public capturarColor(color:string) : void { 
+    this.colorSeleccionado = color
+  }
+
 
   private _enviarInformacionDeProducto(producto:Producto) : void {
     const dataPeticion : DataProductoRegistroActualizar = {
@@ -211,7 +270,7 @@ export class ModalProductoComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) : void {
-
+    this.descripcion?.disable();
     if(changes['esVisualizarModal']){
       const visualizar : boolean = changes['esVisualizarModal'].currentValue
       console.log(changes['esVisualizarModal']);
@@ -238,7 +297,7 @@ export class ModalProductoComponent implements OnInit {
         estado : producto?.prod_estado,
       });
     }else{
-      this.esRegistro = false ; 
+      this.esRegistro = true ; 
     }
 
   }
