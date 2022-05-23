@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { Color } from '../../models/color.model';
 import {DataColorRegistroActualizar} from '../../models/registro-actualizar-color.model';
+import { COLOR_MODAL_RESPONSIVE } from '../../utils/breakpoint-color-modal';
 
 @Component({
   selector: 'modal-color',
@@ -44,6 +45,7 @@ export class ModalColorComponent implements OnInit {
     this._reiniciarFormulario();
   }
 
+  public readonly COLOR_MODAL_RESPONSIVE = COLOR_MODAL_RESPONSIVE;
   constructor(private fb: FormBuilder,
     private buttonProgressService: ButtonProgressService) { }
 

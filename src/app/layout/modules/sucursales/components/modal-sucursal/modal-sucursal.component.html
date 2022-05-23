@@ -2,9 +2,10 @@
     [(visible)]="mostrarModal"
     [modal]="true"
     [style]="{width: '30vw'}"
+    [closeOnEscape]="false"
     [draggable]="false"
     [resizable]="false"
-    [breakpoints]="{'1280px': '40vw', '1024px': '45vw', '960px': '75vw', '640px': '100vw'}"
+    [breakpoints]="BRANCH_MODAL_RESPONSIVE"
     (onHide)="closeModal()"
     >
 
@@ -12,7 +13,7 @@
             <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
-        <form [formGroup]="sucursalFormulario" (ngSubmit)="guardarSucursal()" class="from-group">
+        <form [formGroup]="sucursalFormulario" (ngSubmit)="guardarSucursal()" class="form-group">
             <!-- INICIO CAMPO NOMBRE -->
             <div class="row p-1">
                 <label
@@ -21,7 +22,7 @@
                     Nombre<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
 
-                <div class="col-12 col-sm-8 col-lg-9">
+                <div class="div-descripcion col-12 col-sm-8 col-lg-9">
                     <input
                         id="nombreSucursal"
                         autocomplete="off"
@@ -35,7 +36,7 @@
                 <div *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)"
                     class="msj-error-form row text-danger text-end p-0">
                         <small class="col-12" *ngIf="nombre?.errors?.['required']">
-                            *El nombre es requerida.
+                            *El nombre es requerido.
                         </small>
                         <small class="col-12" *ngIf="nombre?.errors?.['minlength']">
                             *El nombre debe tener mínimo 4 caracteres.
@@ -52,34 +53,34 @@
             <!-- FIN CAMPO NOMBRE -->
             <!-- INICIO CAMPO DIRECCION -->
             <div class="row p-1">
-              <label
-                    class="col-12 col-sm-4 col-lg-3 col-form-label"
-                    for="direccionSucursal">
-                    Direccion<small class="text-danger"><strong>(*)</strong></small>:
-              </label>
-              <div class="col-12 col-sm-8 col-lg-9">
-                <input
-                    id="direccionSucursal"
-                    autocomplete="off"
-                    formControlName="direccion"
-                    class="form-control"
-                    type="text"
-                    placeholder="Ingrese una direccion...">
-              </div>
+                <label
+                        class="col-12 col-sm-4 col-lg-3 col-form-label"
+                        for="direccionSucursal">
+                        Dirección<small class="text-danger"><strong>(*)</strong></small>:
+                </label>
+                <div class="div-descripcion col-12 col-sm-8 col-lg-9">
+                    <input
+                        id="direccionSucursal"
+                        autocomplete="off"
+                        formControlName="direccion"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese una direccion...">
+                </div>
 
               <div *ngIf="direccion?.invalid && (direccion?.dirty || direccion?.touched)"
                     class="msj-error-form row text-danger text-end p-0">
                         <small class="col-12" *ngIf="direccion?.errors?.['required']">
-                            *La direccion es requerida.
+                            *La dirección es requerida.
                         </small>
                         <small class="col-12" *ngIf="direccion?.errors?.['minlength']">
-                            *La direccion debe tener mínimo 4 caracteres.
+                            *La dirección debe tener mínimo 4 caracteres.
                         </small>
                         <small class="col-12" *ngIf="direccion?.errors?.['maxlength']">
-                            *La direccion debe tener máximo 30 caracteres.
+                            *La dirección debe tener máximo 30 caracteres.
                         </small>
                         <small class="col-12" *ngIf="direccion?.errors?.['pattern']">
-                            *La direccion debe ser válida. Caracteres validos: "#", "-" o "." .
+                            *La dirección debe ser válida. Caracteres validos: "#", "-" o "." .
                         </small>
                 </div>
 
@@ -87,16 +88,17 @@
             <!-- FIN CAMPO DIRECCION -->
             <div class="row p-1"
                 *ngIf="!esRegistro">
-                    <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoCategoria">Estado:</label>
-                    <div class="col-8 col-sm-8 col-lg-9">
-                        <div class="form-check form-switch mt-2">
+                    <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoSucursal">Estado:</label>
+                    <div class="col-8 col-sm-8 col-lg-9 mt-2 ">
+                        <div class="div-form-check form-check form-switch">
                             <input class="form-check-input"
                                 type="checkbox"
                                 formControlName="estado"
-                                id="estadoCategoria">
+                                id="estadoSucursal">
                         </div>
                     </div>
             </div>
+
 
         </form>
 

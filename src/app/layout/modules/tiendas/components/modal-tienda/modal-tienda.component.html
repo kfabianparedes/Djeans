@@ -1,10 +1,10 @@
 <p-dialog
     [(visible)]="mostrarModal"
     [modal]="true"
-    [style]="{width: '25vw'}"
+    [closeOnEscape]="false"
     [draggable]="false"
     [resizable]="false"
-    [breakpoints]="{'1280px': '40vw', '1024px': '45vw', '960px': '75vw', '640px': '100vw'}"
+    [breakpoints]="STORE_MODAL_RESPONSIVE"
     (onHide)="closeModal()"
     >
 
@@ -12,7 +12,7 @@
             <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
-        <form [formGroup]="tiendaFormulario" (ngSubmit)="guardarTienda()" class="from-group">
+        <form [formGroup]="tiendaFormulario" (ngSubmit)="guardarTienda()" class="mt-2 form-group">
             <!-- INICIO CAMPO NOMBRE -->
             <div class="row p-1">
                 <label
@@ -57,7 +57,7 @@
                     for="sucuralDeTienda">
                     Sucursal<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-sm-8 col-lg-9">
                     <select id="sucuralDeTienda" class="form-control form-select" formControlName="sucursal">
                         <option value=""> -- Seleccione Sucursal -- </option>
                         <option *ngFor="let sucursal of sucursales" [value]="sucursal.suc_id"> {{ sucursal.suc_nombre }} ({{ sucursal.suc_direccion }}) </option>

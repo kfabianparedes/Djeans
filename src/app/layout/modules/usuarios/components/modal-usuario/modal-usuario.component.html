@@ -1,10 +1,10 @@
 <p-dialog 
     [(visible)]="mostrarModal" 
     [modal]="true" 
-    [style]="{width: '25vw'}"
+    [closeOnEscape]="false"
     [draggable]="false" 
     [resizable]="false" 
-    [breakpoints]="{'1280px': '40vw', '1024px': '45vw', '960px': '75vw', '640px': '100vw'}"
+    [breakpoints]="USER_MODAL_RESPONSIVE"
     (onHide)="closeModal()"
     >
 
@@ -86,7 +86,7 @@
                     for="rolUsuario">
                     Rol<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-sm-8 col-lg-9 ">
                     <select id="rolUsuario" class="form-control form-select" formControlName="rol">
                         <option value=""> -- Seleccione Rol -- </option>
                         <option *ngFor="let rol of roles ; let i = index" [value]="rol.rol_id"> {{ rol.rol_tipo }} </option>

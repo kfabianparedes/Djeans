@@ -5,6 +5,7 @@ import { ButtonProgressService } from 'src/app/shared/services/button-progress.s
 import { validarCaracteresAlfabeticosConEspacios } from 'src/app/shared/utils/reutilizables';
 import { Categoria } from '../../models/categoria.model';
 import { DataCategoriaRegistroActualizar } from '../../models/registro-actualizar-categoria.model';
+import { CATEGORY_MODAL_RESPONSIVE } from '../../utils/breakpoint-category-modal';
 
 @Component({
   selector: 'modal-categoria',
@@ -37,6 +38,7 @@ export class ModalCategoriaComponent implements OnInit, OnChanges {
     estado: true,
   };
 
+  public readonly CATEGORY_MODAL_RESPONSIVE = CATEGORY_MODAL_RESPONSIVE;
   constructor(
     private fb: FormBuilder,
     public buttonProgressService: ButtonProgressService

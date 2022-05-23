@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { Talla } from '../../models/talla.models';
 import {DataTallaRegistroActualizar} from '../../models/registro-actualizar-talla.model';
+import { SIZE_MODAL_RESPONSIVE } from '../../utils/breakpoint-talla-modal';
 
 @Component({
   selector: 'modal-talla',
@@ -39,6 +40,8 @@ export class ModalTallaComponent implements OnInit {
     estado : true 
   }
 
+  public readonly SIZE_MODAL_RESPONSIVE = SIZE_MODAL_RESPONSIVE;
+  
   constructor(
     private fb: FormBuilder,
     private buttonProgressService: ButtonProgressService) { }

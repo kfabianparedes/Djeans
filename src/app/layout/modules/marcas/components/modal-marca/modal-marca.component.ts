@@ -5,6 +5,7 @@ import { ButtonProgressService } from 'src/app/shared/services/button-progress.s
 import { datosInicialesDescripcionEstado, validarCaracteresAlfanumericosConEspaciosMasSimbolos } from 'src/app/shared/utils/reutilizables';
 import { Marca } from '../../models/marca';
 import { DataMarcaRegistroActualizar } from '../../models/registro_actualizar_marca.model';
+import { BRAND_MODAL_RESPONSIVE } from '../../utils/breakpoint-brand-modal';
 
 @Component({
   selector: 'modal-marca',
@@ -30,6 +31,8 @@ export class ModalMarcaComponent implements OnInit {
     estado: [ true, Validators.required ],
   });
 
+  public readonly BRAND_MODAL_RESPONSIVE = BRAND_MODAL_RESPONSIVE;
+  
   constructor(
     private fb: FormBuilder,
     public _buttonProgressService: ButtonProgressService

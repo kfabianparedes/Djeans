@@ -21,6 +21,7 @@ export class LayoutComponent implements OnInit {
   constructor(private _rolService: RolService) { }
 
   ngOnInit(): void {
+    console.log(window.innerWidth);
     this._listarRoles();
   }
   verificarEstadoSideBar(event:boolean):void{

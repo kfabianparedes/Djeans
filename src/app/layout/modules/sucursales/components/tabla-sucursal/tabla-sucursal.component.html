@@ -18,7 +18,7 @@
                                         [(ngModel)]="filtroBusquedaModelo"
                                         class="input-busqueda form-control"
                                         (input)="filtrarBusqueda(tablaModelo)"
-                                        placeholder="Nombre de Sucursal"
+                                        placeholder="Nombre de sucursal"
                                     >
                                     <button [disabled]="cargando | async"
                                             (click)="filtrarBusqueda(tablaModelo)"
@@ -37,7 +37,7 @@
         <ng-template pTemplate="header">
             <tr class="titulo-tabla contenedor">
                 <th class="text-center" pSortableColumn="suc_nombre">Nombre <p-sortIcon field="suc_nombre"></p-sortIcon></th>
-                <th class="text-center" pSortableColumn="suc_direccion">Direccion <p-sortIcon field="suc_direccion"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="suc_direccion">Dirección <p-sortIcon field="suc_direccion"></p-sortIcon></th>
                 <th class="text-center" pSortableColumn="sucursalEstado">Estado <p-sortIcon field="sucursalEstado"></p-sortIcon></th>
                 <th class="text-center"></th>
             </tr>

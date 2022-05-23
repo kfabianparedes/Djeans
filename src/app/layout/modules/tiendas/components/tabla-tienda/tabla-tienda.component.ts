@@ -36,7 +36,7 @@ export class TablaTiendaComponent implements OnInit {
   }
 
   public actualizarTienda(tienda: Tienda): void {
-    this.tituloModal.emit('Registrar Nueva Tienda');
+    this.tituloModal.emit('Actualizar Tienda');
     this.abrirModal.emit(true);
     this.tiendaParaActualizar.emit(tienda);
 

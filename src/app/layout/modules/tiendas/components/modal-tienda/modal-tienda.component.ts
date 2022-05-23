@@ -6,6 +6,7 @@ import { ButtonProgressService } from 'src/app/shared/services/button-progress.s
 import { Sucursal } from '../../../sucursales/models/sucursal.model';
 import { DataTiendaRegistroActualizar } from '../../models/registro-actualizar-tienda';
 import { Tienda } from '../../models/tienda.models';
+import { STORE_MODAL_RESPONSIVE } from '../../utils/breakpoint-tienda-modal';
 
 
 
@@ -42,7 +43,8 @@ export class ModalTiendaComponent implements OnInit,OnChanges {
     sucursal: '',
   };
 
-
+  public readonly STORE_MODAL_RESPONSIVE = STORE_MODAL_RESPONSIVE;
+  
   constructor(
     private fb: FormBuilder,
     public buttonProgressService: ButtonProgressService,

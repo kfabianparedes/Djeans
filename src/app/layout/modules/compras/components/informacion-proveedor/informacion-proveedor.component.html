@@ -1,0 +1,62 @@
+<div class="row card">
+    <div class="card-header">
+        <h4>Información de proveedor</h4>
+    </div>
+    <div class="card-body"> 
+        <div class="row justify-content-between">
+            <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="row p-inputgroup">
+                    <label for="busquedaProveedor"><strong>Buscar proveedor:</strong></label>
+                    <div class="p-inputgroup">
+                        <input type="text" pInputText placeholder="RUC">   
+                        <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"></button>      
+                    </div>
+                </div>
+            </div> -->
+                
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                    <label for="busquedaProveedor"><strong>Buscar proveedor:</strong></label>
+                    <p-dropdown 
+                        [options]="proveedores" 
+                        [(ngModel)]="proveedor" 
+                        optionLabel="pro_razon_social" 
+                        [filter]="true" 
+                        filterBy="pro_ruc" 
+                        [showClear]="true" 
+                        optionDisabled="!pro_estado"
+                        placeholder="Selecciona proveedor">
+                            <ng-template pTemplate="selectedItem">
+                                <div class="proveedor-item proveedor-item-value" *ngIf="proveedor">
+                                    <div>{{proveedor.pro_nombre}}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-proveedor pTemplate="item">
+                                <div class="proveedor-item">
+                                    <div>{{proveedor.pro_razon_social}}</div>
+                                </div>
+                            </ng-template>
+                    </p-dropdown>
+                
+            </div>
+            
+
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="row p-inputgroup">
+                    <label for="busquedaProveedor"><strong>Buscar proveedor:</strong></label>
+                    <div class="p-inputgroup">
+                        <input type="text" pInputText placeholder="RUC">   
+                        <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"></button>      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="row">
+            
+        </div>
+    </div>
+    <div class="card-footer">
+
+    </div>
+</div>

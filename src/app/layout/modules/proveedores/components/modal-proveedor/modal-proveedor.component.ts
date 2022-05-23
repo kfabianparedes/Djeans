@@ -7,6 +7,7 @@ import { DataProveedorRegistroActualizar } from '../../models/registro-actualiza
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { MessageService } from 'primeng/api';
 import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
+import { PROVIDER_MODAL_RESPONSIVE } from '../../utils/breakpoint-models-modal';
 
 @Component({
   selector: 'modal-proveedor',
@@ -91,7 +92,7 @@ export class ModalProveedorComponent implements OnInit {
 
   }
 
-  
+  public readonly PROVIDER_MODAL_RESPONSIVE = PROVIDER_MODAL_RESPONSIVE;
   constructor(
     public rolPermissionService: RolPermissionService,
     private fb: FormBuilder,

@@ -1,10 +1,10 @@
 <p-dialog 
     [(visible)]="mostrarModal" 
     [modal]="true" 
-    [style]="{width: '40vw'}"
+    [closeOnEscape]="false"
     [draggable]="false" 
     [resizable]="false" 
-    [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+    [breakpoints]="SIZE_MODAL_RESPONSIVE"
     (onHide)="closeModal()"
     >
     <ng-template pTemplate="header"> 
@@ -18,7 +18,7 @@
                 for="descripcionTalla">
                 Descripción<small class="text-danger"><strong>(*)</strong></small>:
             </label>
-            <div class="col-12 col-sm-8 col-lg-9">
+            <div class="div-descripcion col-12 col-sm-8 col-lg-9">
                 <input 
                     id="descripcionTalla"
                     autocomplete="off"
@@ -50,7 +50,7 @@
                 *ngIf="!esRegistro">
                     <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoTalla">Estado:</label>
                     <div class="col-8 col-sm-8 col-lg-9">
-                        <div class="form-check form-switch mt-2">
+                        <div class="div-form-check form-check form-switch mt-2">
                             <input class="form-check-input"
                                 type="checkbox"
                                 formControlName="estado"

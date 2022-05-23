@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { ReplaySubject } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { errorAlerta } from 'src/app/shared/utils/reutilizables';
@@ -36,7 +35,7 @@ export class HomeProveedorComponent implements OnInit {
 
   private _listarProveedores() : void {
     this.proveedores = [];
-    this.proveedorService.listarModelos().subscribe({
+    this.proveedorService.listarProveedores().subscribe({
       next: (respuesta:Respuesta)=>{
 
         (respuesta.data).forEach((proveedor:Proveedor)=>{
@@ -65,7 +64,7 @@ export class HomeProveedorComponent implements OnInit {
   }
 
   public eliminarProveedor(idProveedor : number) : void {
-    this.proveedorService.eliminarModelo(idProveedor).subscribe({
+    this.proveedorService.eliminarProveedor(idProveedor).subscribe({
       next: (respuesta:Respuesta)=>{
 
         this.messageService.add({

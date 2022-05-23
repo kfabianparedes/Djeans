@@ -1,146 +1,146 @@
-<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+<nav class="accordion  sb-sidenav sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
         <div class="nav">
             <div class="sb-sidenav-menu-heading">Inicio</div>
 
-            <a class="seleccion nav-link" [routerLink]="['/layout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <span class="seleccion nav-link" [routerLink]="['/layout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                 <div class="sb-nav-link-icon"><i class="pi pi-home"></i></div>Dashboard
-            </a>
+            </span>
 
-            <div class="sb-sidenav-menu-heading">Interface</div>
+            <div class="sb-sidenav-menu-heading">Módulos</div>
 
-            <a *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" class="seleccion nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#opcionesAdministracion" aria-expanded="false" aria-controls="opcionesAdministracion">
-                <div class="sb-nav-link-icon"><i class="pi pi-sitemap"></i></div>
-                Administración
-                <div class="sb-sidenav-collapse-arrow"><i class="pi pi-chevron-down"></i></div>
-            </a>
-            <div class="collapse" id="opcionesAdministracion" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                <nav class="sb-sidenav-menu-nested nav">
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su]"
-                        class="nav-link" 
-                        [routerLink]="['/layout','usuario']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Usuarios
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','categoria']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Categorías
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','modelo']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Modelos
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','sucursal']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Sucursales
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','tienda']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Tienda
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','proveedor']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Proveedores
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','marca']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Marcas
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','talla']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Tallas
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','color']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Colores
-                    </a>
-                    <a 
-                        *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
-                        class="nav-link" 
-                        [routerLink]="['/layout','producto']" 
-                        routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact:true}">
-                        Productos
-                    </a>
-                </nav>
+            <span *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                class="seleccion nav-link collapsed" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#opcionesAdministracion" 
+                aria-expanded="false" 
+                aria-controls="opcionesAdministracion">
+                    <div class="sb-nav-link-icon"><i class="pi pi-sitemap"></i></div>
+                    Administración
+                    <div class="sb-sidenav-collapse-arrow"><i class="pi pi-chevron-down"></i></div>
+            </span>
+            <div class="collapse" 
+                id="opcionesAdministracion" 
+                aria-labelledby="headingOne" 
+                data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su]"
+                            class="nav-link" 
+                            [routerLink]="['/layout','usuario']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Usuarios
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','categoria']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Categorías
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','modelo']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Modelos
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','sucursal']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Sucursales
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','tienda']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Tienda
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','proveedor']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Proveedores
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','marca']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Marcas
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','talla']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Tallas
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','color']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Colores
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout','producto']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Productos
+                        </span>
+                    </nav>
             </div>
 
+            <span *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad,rolPermissionService.ROL_USER.em]" 
+                class="seleccion nav-link collapsed" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#opcionesTransaccion" 
+                aria-expanded="false" 
+                aria-controls="opcionesTransaccion">
+                    <div class="sb-nav-link-icon"><i class="pi pi-th-large"></i></div>
+                    Transacciones
+                    <div class="sb-sidenav-collapse-arrow"><i class="pi pi-chevron-down"></i></div>
+            </span>
+            <div class="collapse" 
+                id="opcionesTransaccion" 
+                aria-labelledby="headingTwo" 
+                data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su]"
+                            class="nav-link" 
+                            [routerLink]="['/layout','compra']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Compras
+                        </span>
+                        <span 
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad,rolPermissionService.ROL_USER.em]" 
+                            class="nav-link" 
+                            [routerLink]="['/layout']" 
+                            routerLinkActive="active" 
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Ventas
+                        </span>
+                    </nav>
+            </div>
 
-
-            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                Pages
-                <div class="sb-sidenav-collapse-arrow"><i class="pi pi-chevron-down"></i></div>
-            </a>
-            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                        Authentication
-                        <div class="sb-sidenav-collapse-arrow"><i class="pi pi-chevron-down"></i></div>
-                    </a>
-                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="login.html">Login</a>
-                            <a class="nav-link" href="register.html">Register</a>
-                            <a class="nav-link" href="password.html">Forgot Password</a>
-                        </nav>
-                    </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                        Error
-                        <div class="sb-sidenav-collapse-arrow"><i class="pi pi-chevron-down"></i></div>
-                    </a>
-                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="401.html">401 Page</a>
-                            <a class="nav-link" href="404.html">404 Page</a>
-                            <a class="nav-link" href="500.html">500 Page</a>
-                        </nav>
-                    </div>
-                </nav>
-            </div> -->
-            <!-- <div class="sb-sidenav-menu-heading">Addons</div>
-            <a class="nav-link" href="charts.html">
-                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                Charts
-            </a>
-            <a class="nav-link" href="tables.html">
-                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                Tables
-            </a> -->
         </div>
     </div>
 

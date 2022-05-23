@@ -5,6 +5,7 @@ import { ButtonProgressService } from 'src/app/shared/services/button-progress.s
 import { datosInicialesDescripcionEstado, validarCaracteresAlfanumericosConEspaciosMasSimbolos } from 'src/app/shared/utils/reutilizables';
 import { Modelo } from '../../models/modelo.model';
 import { DataModeloRegistroActualizar } from '../../models/registro-actualizar-modelo.model';
+import { MODEL_MODAL_RESPONSIVE } from '../../utils/breakpoint-models-modal';
 
 @Component({
   selector: 'modal-modelo',
@@ -30,6 +31,8 @@ export class ModalModeloComponent implements OnInit, OnChanges {
     estado: [ true, Validators.required ],
   });
 
+  public readonly MODEL_MODAL_RESPONSIVE = MODEL_MODAL_RESPONSIVE;
+  
   constructor(
     private fb: FormBuilder,
     public buttonProgressService: ButtonProgressService

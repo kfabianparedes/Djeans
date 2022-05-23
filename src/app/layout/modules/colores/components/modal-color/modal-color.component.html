@@ -1,10 +1,10 @@
 <p-dialog 
     [(visible)]="mostrarModal" 
     [modal]="true" 
-    [style]="{width: '40vw'}"
+    [closeOnEscape]="false"
     [draggable]="false" 
     [resizable]="false" 
-    [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+    [breakpoints]="COLOR_MODAL_RESPONSIVE"
     (onHide)="closeModal()"
     >
     <ng-template pTemplate="header"> 

@@ -20,6 +20,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { RolDirective } from './directives/rol.directive';
+import {DividerModule} from 'primeng/divider';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { RolDirective } from './directives/rol.directive';
     DialogModule
   ],
   exports: [
+    RolDirective,
     SidebarComponent,
     NavbarComponent,
     FooterComponent,
@@ -64,7 +67,8 @@ import { RolDirective } from './directives/rol.directive';
     ButtonModule,
     InputTextModule,
     DialogModule,
-    RolDirective,
+    DividerModule,
+    DropdownModule
   ]
 })
 export class SharedModule { }

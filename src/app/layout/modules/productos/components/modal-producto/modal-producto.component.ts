@@ -33,6 +33,7 @@ import { ProveedorService } from '../../../proveedores/services/proveedor.servic
 // MARCAR
 import { Marca } from '../../../marcas/models/marca';
 import { MarcaService } from '../../../marcas/services/marca.service';
+import { PRODUCT_MODAL_RESPONSIVE } from '../../utils/breakpoint-product-modal';
 
 
 @Component({
@@ -79,6 +80,7 @@ export class ModalProductoComponent implements OnInit {
     estado:[true,[Validators.required]],
   });
 
+  public readonly PRODUCT_MODAL_RESPONSIVE = PRODUCT_MODAL_RESPONSIVE;
   constructor(
     private fb: FormBuilder,
     public buttonProgressService: ButtonProgressService,

@@ -2,10 +2,11 @@ import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
-import { validarCaracteresAlfabeticosConEspacios, validarCaracteresAlfanumericosConEspaciosMasSimbolos } from 'src/app/shared/utils/reutilizables';
+import { validarCaracteresAlfabeticosConEspacios } from 'src/app/shared/utils/reutilizables';
 import { DataUsuarioRegistroActualizar } from '../../models/registro-actualizar-usuario.model';
 import { Usuario } from '../../models/usuario.model';
-import { Rol, Roles } from '../../utils/Roles.model';
+import { USER_MODAL_RESPONSIVE } from '../../utils/breakpoint-user-modal';
+import { Rol } from '../../utils/Roles.model';
 
 @Component({
   selector: 'modal-usuario',
@@ -39,6 +40,8 @@ export class ModalUsuarioComponent implements OnInit {
     is_active: true,
     rol: ''
   };
+
+  public readonly USER_MODAL_RESPONSIVE = USER_MODAL_RESPONSIVE;
   constructor(
     private fb: FormBuilder,
     public _buttonProgressService: ButtonProgressService

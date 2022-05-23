@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { DataSucursalRegistroActualizar } from '../../models/registro-actualizar-sucursal.model';
 import { Sucursal } from '../../models/sucursal.model';
+import { BRANCH_MODAL_RESPONSIVE } from '../../utils/breakpoint-sucursal-modal';
 
 
 
@@ -47,6 +48,8 @@ export class ModalSucursalComponent implements OnInit,OnChanges {
     descripcion: '',
     estado: true,
   };
+
+  public readonly BRANCH_MODAL_RESPONSIVE = BRANCH_MODAL_RESPONSIVE;
 
   constructor(
     private fb: FormBuilder,

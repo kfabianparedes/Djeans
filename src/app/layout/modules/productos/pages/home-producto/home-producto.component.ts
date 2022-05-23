@@ -115,7 +115,7 @@ export class HomeProductoComponent implements OnInit {
     this.listarSubs = forkJoin(
       [
         this.productoService.listarProductos(),
-        this.proveedorService.listarModelos(),
+        this.proveedorService.listarProveedores(),
         this.tallaService.listarTallas(),
         this.categoriaService.listarCategorias(),
         this.modeloService.listarModelos(),

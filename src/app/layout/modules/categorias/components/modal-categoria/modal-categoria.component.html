@@ -1,11 +1,10 @@
 <p-dialog 
     [(visible)]="mostrarModal" 
-    [modal]="true" 
-    [style]="{width: '25vw'}"
+    [modal]="true"
+    [closeOnEscape]="false"
     [draggable]="false" 
     [resizable]="false" 
-    [breakpoints]="{'1280px': '40vw', '1024px': '45vw', '960px': '75vw', '640px': '100vw'}"
-    
+    [breakpoints]="CATEGORY_MODAL_RESPONSIVE"
     (onHide)="closeModal()"
     >
 
@@ -13,15 +12,14 @@
             <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
-        <form [formGroup]="categoriaFormulario" (ngSubmit)="guardarCategoria()" class="from-group">
+        <form [formGroup]="categoriaFormulario" (ngSubmit)="guardarCategoria()" class="form-group">
             <div class="row p-1">
                 <label 
-                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    class="col-12 col-sm-4 col-lg-3 col-form-label "
                     for="descripcionCategoria">
                     Descripción<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-
-                <div class="col-12 col-sm-8 col-lg-9">
+                <div class="div-descripcion col-12 col-sm-8 col-lg-9">
                     <input 
                         id="descripcionCategoria"
                         autocomplete="off"
@@ -31,7 +29,7 @@
                         placeholder="Ingrese una descripción...">
                     
                 </div>
-                    
+
                 <div *ngIf="descripcion?.invalid && (descripcion?.dirty || descripcion?.touched)"
                     class="msj-error-form row text-danger text-end p-0">
                         <small class="col-12" *ngIf="descripcion?.errors?.['required']">
@@ -51,9 +49,11 @@
             </div>
             <div class="row p-1" 
                 *ngIf="!esRegistro">
-                    <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoCategoria">Estado:</label>
+                    <label 
+                        class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" 
+                        for="estadoCategoria">Estado:</label>
                     <div class="col-8 col-sm-8 col-lg-9">
-                        <div class="form-check form-switch mt-2">
+                        <div class="div-form-check form-check form-switch mt-2">
                             <input class="form-check-input"
                                 type="checkbox"
                                 formControlName="estado"

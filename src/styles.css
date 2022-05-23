@@ -12970,3 +12970,49 @@ label{
     font-family: Montserrat-Bold;
     font-size: 20px ;
 }
+
+
+
+
+
+
+
+
+
+.div-form-check{
+    margin-left:15px; 
+}
+.div-descripcion{
+    margin-left:15px; 
+    width: 70%; 
+}
+
+@media screen and (max-width: 2328px){
+    .div-form-check{
+        margin-left: 20px; 
+    } 
+    .div-descripcion{
+        margin-left: 20px !important;
+        width: 70%; 
+    }
+}
+
+@media screen and (max-width: 913px) {
+    .div-form-check{
+        margin-left: 0px; 
+    } 
+    .div-descripcion{
+        margin-left: 0px  !important;
+        width: 100%; 
+    }
+}
+
+@media screen and (max-width: 854px) {
+    .div-form-check{
+        margin-left: 0px; 
+    } 
+    .div-descripcion{
+        margin-left: 0px  !important;
+        width: 100%; 
+    }
+}

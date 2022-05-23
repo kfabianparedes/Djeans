@@ -14,7 +14,7 @@ export class ProveedorService {
 
     constructor(private http: HttpClient) { }
 
-    public listarModelos() : Observable<Respuesta>{
+    public listarProveedores() : Observable<Respuesta>{
         const url  = `${ this._url }/proveedores/`;
         return this.http.get<Respuesta>( url )
         .pipe(
@@ -66,7 +66,7 @@ export class ProveedorService {
     }
 
 
-    public eliminarModelo(idProveedor: number): Observable<Respuesta>{
+    public eliminarProveedor(idProveedor: number): Observable<Respuesta>{
     const url  = `${ this._url }/proveedores/${idProveedor}/`;
     return this.http.delete<Respuesta>( url )
         .pipe(

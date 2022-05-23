@@ -1,10 +1,9 @@
 <p-dialog
     [(visible)]="mostrarModal"
     [modal]="true"
-    [style]="{width: '40vw'}"
     [draggable]="false"
     [resizable]="false"
-    [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+    [breakpoints]="PRODUCT_MODAL_RESPONSIVE"
     (onHide)="closeModal()"
     >
 
@@ -12,16 +11,16 @@
             <span class="titulo-modal-crud">{{tituloModal}}</span>
         </ng-template>
 
-        <form [formGroup]="productoFormulario" (ngSubmit)="guardarProducto()" class="from-group">
+        <form [formGroup]="productoFormulario" (ngSubmit)="guardarProducto()" class="form-group">
             <!-- INICIO CAMPO NOMBRE -->
             <div class="row p-1">
                 <label
-                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label"
                     for="codigo">
                     Código<small class="text-danger"></small>:
                 </label>
 
-                <div class="col-12 col-sm-8 col-lg-9">
+                <div class="col-12 col-sm-8 col-lg-8">
                     <input
                         id="codigo"
                         autocomplete="off"
@@ -49,12 +48,12 @@
             <!-- DESCRIPCION -->
             <div class="row p-1">
                 <label
-                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label"
                     for="codigo">
                     Descripción<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
 
-                <div class="col-12 col-sm-8 col-lg-9">
+                <div class="col-12 col-sm-8 col-lg-8">
                     <input
                         id="descripcion"
                         autocomplete="off"
@@ -86,12 +85,12 @@
             <!-- precio compra -->
             <div class="row p-1">
                 <label
-                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label"
                     for="precio_compra">
                     Precio de compra<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
 
-                <div class="col-12 col-sm-8 col-lg-9">
+                <div class="col-12 col-sm-8 col-lg-8">
                     <input
                         id="precio_compra"
                         autocomplete="off"
@@ -123,12 +122,12 @@
             <!-- precio venta -->
             <div class="row p-1">
                 <label
-                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label"
                     for="precio_venta">
                     Precio de venta<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
 
-                <div class="col-12 col-sm-8 col-lg-9">
+                <div class="col-12 col-sm-8 col-lg-8">
                     <input
                         id="precio_venta"
                         autocomplete="off"
@@ -160,12 +159,12 @@
             <!-- precio promoción -->
             <div class="row p-1">
                 <label
-                    class="col-12 col-sm-4 col-lg-3 col-form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label"
                     for="precio_promocion">
                     Descuento / promoción<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
 
-                <div class="col-12 col-sm-8 col-lg-9">
+                <div class="col-12 col-sm-8 col-lg-8">
                     <input
                         id="precio_promocion"
                         autocomplete="off"
@@ -197,11 +196,11 @@
             <!-- INICIO CAMPO PROVEEDOR -->
             <div class="row p-1">
                 <label 
-                    class="col-12 col-sm-4 col-lg-3 col-form-label form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
                     for="proveedorTienda">
                     Proveedor<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-md-8 col-lg-8">
                     <select id="proveedorTienda" class="form-control form-select" formControlName="proveedor">
                         <option value=""> -- Seleccione el proveedor -- </option>
                         <option *ngFor="let proveedor of proveedores" [value]="proveedor.pro_id"> {{ proveedor.pro_nombre }}</option>
@@ -220,11 +219,11 @@
             <!-- INICIO CAMPO talla -->
             <div class="row p-1">
                 <label 
-                    class="col-12 col-sm-4 col-lg-3 col-form-label form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
                     for="tallaProducto">
                     Talla<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-md-8 col-lg-8">
                     <select id="tallaProducto" class="form-control form-select" formControlName="talla">
                         <option value=""> -- Seleccione la talla -- </option>
                         <option *ngFor="let talla of tallas" [value]="talla.tal_id"> {{ talla.tal_descripcion }}</option>
@@ -243,11 +242,11 @@
             <!-- INICIO CAMPO CATEGORÍA -->
             <div class="row p-1">
                 <label 
-                    class="col-12 col-sm-4 col-lg-3 col-form-label form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
                     for="categoriaProducto">
                     Categoría<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-md-8 col-lg-8">
                     <select id="categoriaProducto" class="form-control form-select" formControlName="categoria">
                         <option value=""> -- Seleccione la categoría -- </option>
                         <option *ngFor="let categoria of categorias" [value]="categoria.cat_id"> {{ categoria.cat_descripcion }}</option>
@@ -266,11 +265,11 @@
             <!-- INICIO CAMPO CATEGORÍA -->
             <div class="row p-1">
                 <label 
-                    class="col-12 col-sm-4 col-lg-3 col-form-label form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
                     for="marcaProducto">
                     Marca<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-md-8 col-lg-8">
                     <select id="marcaProducto" class="form-control form-select" formControlName="marca">
                         <option value=""> -- Seleccione la marca -- </option>
                         <option *ngFor="let marca of marcas" [value]="marca.mar_id"> {{ marca.mar_descripcion }}</option>
@@ -289,11 +288,11 @@
             <!-- INICIO CAMPO MODELO -->
             <div class="row p-1">
                 <label 
-                    class="col-12 col-sm-4 col-lg-3 col-form-label form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
                     for="modeloProducto">
                     Modelo<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-md-8 col-lg-8">
                     <select id="modeloProducto" class="form-control form-select" formControlName="modelo">
                         <option value=""> -- Seleccione el modelo -- </option>
                         <option *ngFor="let modelo of modelos" [value]="modelo.mod_id"> {{ modelo.mod_descripcion }}</option>
@@ -312,12 +311,12 @@
             <!-- INICIO CAMPO COLOR -->
             <div class="row p-1">
                 <label 
-                    class="col-12 col-sm-4 col-lg-3 col-form-label form-label"
+                    class="col-12 col-sm-4 col-lg-4 col-form-label form-label"
                     for="colorProducto">
                     Color<small class="text-danger"><strong>(*)</strong></small>:
                 </label>
-                <div class="col-12 col-md-8 col-lg-9">
-                    <select id="modeloProducto" class="form-control form-select" formControlName="modelo">
+                <div class="col-12 col-md-8 col-lg-8">
+                    <select id="modeloProducto" class="form-control form-select" formControlName="color">
                         <option value=""> -- Seleccione el color -- </option>
                         <option *ngFor="let color of colores" [value]="color.col_id"> {{ color.col_descripcion }}</option>
                     </select>   
@@ -334,8 +333,8 @@
 
             <div class="row p-1"
                 *ngIf="!esRegistro">
-                    <label class="col-4 col-sm-4 col-lg-3 col-form-label form-check-label" for="estadoProducto">Estado:</label>
-                    <div class="col-8 col-sm-8 col-lg-9">
+                    <label class="col-4 col-sm-4 col-lg-4 col-form-label form-check-label" for="estadoProducto">Estado:</label>
+                    <div class="col-8 col-sm-8 col-lg-8">
                         <div class="form-check form-switch mt-2">
                             <input class="form-check-input"
                                 type="checkbox"
