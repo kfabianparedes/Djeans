@@ -206,6 +206,73 @@ export class HomeProductoComponent implements OnInit {
       });
 
   }
+  
+  private _registrarProducto(producto: Producto) : void {
+
+    this.productoService.registrarProductos(producto).subscribe({
+      
+      next:(respuesta: Respuesta)=>{
+
+        this.messageService.add({
+          severity:'success', 
+          summary: 'Registrando...', 
+          detail: respuesta.message
+        });
+        
+        this._listAll();
+
+      }, error : (respuestaError : HttpErrorResponse) =>{
+        const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+          if(codigoHttp !== 0){
+            this.messageService.add({
+              severity:'error', 
+              summary: `Código de error: ${respuesta.code}`, 
+              detail: respuesta.message
+            });
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+      }
+    });
+
+  }
+
+  private _actualizarProducto(producto : Producto):void{
+    
+    this.productoService.actualizarProductos(producto).subscribe(
+      {
+        next: (respuesta: Respuesta)=>{
+
+          this.messageService.add({
+            severity:'success', 
+            summary: 'Actualizando...', 
+            detail: respuesta.message
+          });
+          
+          this._listAll();
+        },
+        error: (respuestaError:HttpErrorResponse) => {
+          const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+          console.log(codigoHttp);
+          if(codigoHttp !== 0){
+            
+            codigoHttp===403?
+              errorAlerta(`${respuesta.code}`, respuesta.message ):
+              this.messageService.add({
+                severity:'error', 
+                summary: `Código de error: ${respuesta.code}`, 
+                detail: respuesta.message
+              });
+              
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+        }
+      }
+    );
+  }
 
   public closeAlert(): void{
     this.messageService.clear();
@@ -240,6 +307,24 @@ export class HomeProductoComponent implements OnInit {
     });
   }
 
+  public guardarProducto({esRegistro,producto}: DataProductoRegistroActualizar) : void {
+    if(!this.esVisualizar){
+      if(esRegistro){
+        this._registrarProducto(producto);
+      }else{
+        this._actualizarProducto(producto);
+      }
+    }else{
+
+      this.messageService.add({
+        severity:'error',
+        summary:'Peligro',
+        detail:'No se puede realizar esta actividad.'
+      });
+
+    }
+  }
+
   public guardarTituloModal(tituloDelModal : string): void{
     this.tituloModal= tituloDelModal;
   }
@@ -249,14 +334,17 @@ export class HomeProductoComponent implements OnInit {
   }
   public modificarEstadoVisualizar(esVisualizar : boolean) : void {
     this.esVisualizar = esVisualizar ; 
+    console.log(this.esVisualizar);
+    
   }
-
+  
   public guardarProductoParaActualizar( producto: Producto): void{ 
     this.productoParaActualizar = {...producto};
   }
 
   public visualizarProducto( esVisualizar: boolean) : void{
     this.esVisualizar = esVisualizar ;
+    console.log(this.esVisualizar);
   }
 
 }

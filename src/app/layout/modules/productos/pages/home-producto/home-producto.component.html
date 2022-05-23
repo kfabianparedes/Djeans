@@ -16,3 +16,19 @@
         </tabla-producto>
     </div>
 </div>
+
+<modal-producto
+    [proveedores]="proveedores"
+    [tallas]="tallas"
+    [modelos]="modelos"
+    [categorias]="categorias"
+    [marcas]="marcas"
+    [colores]="colores"
+    [tituloModal]="tituloModal" 
+    [mostrarModal]="mostrarModal"
+    [esVisualizarModal]="esVisualizar"
+    [productoUtilizadoEnModal]="productoParaActualizar"
+    (enviarInformacionProducto)="guardarProducto($event)"
+    (cerrarModal)="modificarEstadoModal($event)"
+    (esVisualizar)="modificarEstadoVisualizar($event)"> 
+</modal-producto>

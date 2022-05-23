@@ -12,7 +12,9 @@ import {DataColorRegistroActualizar} from '../../models/registro-actualizar-colo
 })
 export class ModalColorComponent implements OnInit {
 
-  private validarDescripcion : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$/;
+  private validarDescripcion : RegExp = /^[^\s][a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$/;
+  private validarDescripcion2 : RegExp = /[a-zñáéíóúA-ZÑÁÉÍÓÚ]+@[a-zñáéíóúA-ZÑÁÉÍÓÚ ]$/
+  ///^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
   @Input() mostrarModal : boolean = false; 
   @Input() tituloModal : string = '';
   @Input() colorUtilizadoEnModal!: Color; 

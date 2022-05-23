@@ -26,6 +26,7 @@ export function validarCodigosDeErrorDelAPI(codigo:number): boolean{
 export const validarCaracteresAlfabeticosSinEspacios: RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ]+$/;
 export const validarCaracteresAlfabeticosConEspacios: RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$/;
 export const validarCaracteresAlfanumericosConEspaciosMasSimbolos : RegExp = /[a-zñáéíóú\-.#' A-ZÑÁÉÍÓÚ 0-9]+$/;
+export const IGV : number = 0.18 ; 
 
 export const datosInicialesDescripcionEstado = {
     descripcion: '',

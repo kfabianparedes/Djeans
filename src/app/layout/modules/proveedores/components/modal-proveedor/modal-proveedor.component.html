@@ -219,7 +219,7 @@
                         formControlName="pro_telefono2"
                         class="form-control"
                         type="text"
-                        placeholder="{{esVisualizarModal?'':'Ingrese la dirección 2...'}}">
+                        placeholder="{{esVisualizarModal?'':'Ingrese la telefono 2...'}}">
 
                 </div>
 
@@ -260,7 +260,7 @@
 
                 <div *ngIf="direccion1?.invalid && (direccion1?.dirty || direccion1?.touched)"
                     class="msj-error-form row text-danger text-end p-0">
-                        <small class="col-12" *ngIf="telefono1?.errors?.['required']">
+                        <small class="col-12" *ngIf="direccion1?.errors?.['required']">
                             *La direccion1 es requerida.
                         </small>
                         <small class="col-12" *ngIf="direccion1?.errors?.['minlength']">

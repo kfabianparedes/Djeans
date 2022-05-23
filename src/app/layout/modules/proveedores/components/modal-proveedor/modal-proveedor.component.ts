@@ -17,9 +17,9 @@ export class ModalProveedorComponent implements OnInit {
 
   //validaciones para los formularios
   private validarRuc : RegExp = /^[0-9]+$/;
-  private validarNombre : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ. ]+$/;
-  private validarRazonSocial : RegExp = /^[a-zñáéíóúA-ZÑÁÉÍÓÚ. ]+$/;
-  private validarDireccion : RegExp = /^[a-zñáéíóú\-.# A-ZÑÁÉÍÓÚ 0-9]+$/;
+  private validarNombre : RegExp = /^[^\s][a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$/;
+  private validarRazonSocial : RegExp = /^[^\s][a-zñáéíóúA-ZÑÁÉÍÓÚ. ]+$/;
+  private validarDireccion : RegExp = /^[^\s][a-zñáéíóú\-.# A-ZÑÁÉÍÓÚ 0-9]+$/;
   private validarTelefono : RegExp = /^[0-9]+$/;
   private validarEmail : RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -191,9 +191,11 @@ export class ModalProveedorComponent implements OnInit {
 
 
   ngOnChanges(changes: SimpleChanges) : void{
-
+      
       if(changes['esVisualizarModal']){
         const visualizar : boolean = changes['esVisualizarModal'].currentValue; 
+        
+        console.log(changes['esVisualizarModal']);
         visualizar? this.proveedorFormulario.disable():this.proveedorFormulario.enable()
       }
       if(changes['proveedorUtilizadoEnModal']){
