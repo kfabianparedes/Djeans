@@ -249,6 +249,7 @@ export class ModalProductoComponent implements OnInit {
   private _culminarPeticion(): void {
     this.esRegistro==false?
       this.closeModal():
+      this.reiniciarSeleccionDescripcion();
       this._reiniciarFormulario();
   }
 
