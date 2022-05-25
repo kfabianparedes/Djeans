@@ -1,0 +1,73 @@
+<p>revisar si se puede usar Table Row Expansion</p>
+<div class="card p-1">
+  <p-table>
+      <ng-template pTemplate="caption">
+          <div class="flex row justify-content-between">
+              <div class="py-2 col-sm-12 col-md-12 col-lg-12">
+                  <div class="row">
+                      <div class="col-md-6 col-sm-6">
+                          <div class="row flex">
+                              <div class="col-sm-12 col-md-12 col-lg-12 d-flex">
+                                <div class="field col-12 md:col-12">
+                                  <label for="icon">Fecha de Inicio</label>
+                                  <p-calendar [(ngModel)]="date3" [showIcon]="true" inputId="icon"></p-calendar>
+                                </div>
+
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6">
+                        <div class="row flex">
+                          <div class="col-sm-12 col-md-12 col-lg-12 d-flex">
+                            <div class="field col-12 md:col-12">
+                              <label for="icon">Fecha de Fin</label>
+                              <p-calendar [(ngModel)]="date4" [showIcon]="true" inputId="icon"></p-calendar>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
+              </div>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr class="titulo-tabla contenedor">
+              <th class="text-center" pSortableColumn="comp_fecha_emision">Fecha Emision<p-sortIcon field="comp_fecha_emision"></p-sortIcon> </th>
+              <th class="text-center" pSortableColumn="comp_fecha_registro">Fecha Registro<p-sortIcon field="comp_fecha_registro"></p-sortIcon></th>
+              <th class="text-center" pSortableColumn="tipo_comprobante">Tipo de Comprobante<p-sortIcon field="tipo_comprobante"></p-sortIcon></th>
+              <th class="text-center" pSortableColumn="comp_serie">Nro. Serie<p-sortIcon field="comp_serie"></p-sortIcon></th>
+              <th class="text-center" pSortableColumn="comp_numero">Nro. comprobante<p-sortIcon field="comp_numero"></p-sortIcon></th>
+              <th class="text-center" pSortableColumn="proveedor">Proveedor<p-sortIcon field="proveedor"></p-sortIcon></th>
+              <th class="text-center"></th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-categoria >
+          <tr class="filas-tabla contenedor">
+              <td class="text-center">{{categoria.cat_descripcion}}</td>
+              <td class="text-center">
+
+
+              </td>
+              <td class="text-center">
+                  <button
+                      pButton
+                      pRipple
+                      type="button"
+                      icon="pi-file-pdf"
+                      class="p-button-rounded p-button-warning p-button-outlined">
+                  </button>
+                  <button
+                      pButton
+                      pRipple
+                      type="button"
+                      [class]="categoria.cat_estado?
+                          'p-button-danger p-button-rounded p-button-outlined':
+                          'p-button-primary p-button-rounded p-button-outlined'">
+                  </button>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+</div>

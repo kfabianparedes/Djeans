@@ -4,6 +4,7 @@ import { LayoutComponent } from './layout.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     LayoutRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CalendarModule
   ]
 })
 export class LayoutModule { }
