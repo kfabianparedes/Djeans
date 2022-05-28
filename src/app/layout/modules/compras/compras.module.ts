@@ -10,6 +10,7 @@ import { ModalCompraComponent } from './components/modal-compra/modal-compra.com
 import { ComprobantePagoComponent } from './components/comprobante-pago/comprobante-pago.component';
 import { InformacionProveedorComponent } from './components/informacion-proveedor/informacion-proveedor.component';
 import { InformacionProductoComponent } from './components/informacion-producto/informacion-producto.component';
+import { GuiaRemisionComponent } from './components/guia-remision/guia-remision.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { InformacionProductoComponent } from './components/informacion-producto/
     ModalCompraComponent,
     ComprobantePagoComponent,
     InformacionProveedorComponent,
-    InformacionProductoComponent
+    InformacionProductoComponent,
+    GuiaRemisionComponent
   ],
   imports: [
     CommonModule,

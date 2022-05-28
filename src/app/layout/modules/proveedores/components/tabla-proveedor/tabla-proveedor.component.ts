@@ -37,7 +37,6 @@ export class TablaProveedorComponent {
   
   public actualizarProveedor(proveedor : Proveedor) : void {
     this.tituloModal.emit('Actualizar Proveedor');
-    console.log(proveedor);
     this.abrirModal.emit(true);
     this.proveedorParaActualizar.emit(proveedor);
     this.esVisualizar.emit(false);

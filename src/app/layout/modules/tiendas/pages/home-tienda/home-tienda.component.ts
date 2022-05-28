@@ -62,7 +62,6 @@ export class HomeTiendaComponent implements OnInit , OnDestroy{
   }
 
   public eliminarTienda(idTienda:number):void{
-    console.log("eliminarTienda  ",idTienda)
     this.tiendaService.eliminarTienda(idTienda).subscribe(
       {
         next:(respuesta:Respuesta)=>{
@@ -92,13 +91,9 @@ export class HomeTiendaComponent implements OnInit , OnDestroy{
   }
 
   public guardarTienda({esRegistro,tienda}:DataTiendaRegistroActualizar):void{
-    console.log('tienda', tienda)
     if(esRegistro){
-      console.log('registro');
-
       this._registrarTienda(tienda);
     }else{
-      console.log('actualizar');
       this._actualizarTienda(tienda);
     }
   }

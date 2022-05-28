@@ -82,7 +82,6 @@ export class HomeProductoComponent implements OnInit {
             productoEstado: producto.prod_estado?'ACTIVO':'INACTIVO'
           })
         });
-        console.log(this.productos);
       },error: (respuestaError:HttpErrorResponse)=>{
 
         const respuesta : Respuesta = { ...respuestaError.error }
@@ -188,7 +187,6 @@ export class HomeProductoComponent implements OnInit {
               marcaEstado:marca.mar_estado?'ACTIVO':'INACTIVO'
             })
           });
-          console.log(this.productos);
         },
         error:(respuestaError:HttpErrorResponse)=>{
           const respuesta:Respuesta={...respuestaError.error};
@@ -255,7 +253,6 @@ export class HomeProductoComponent implements OnInit {
         error: (respuestaError:HttpErrorResponse) => {
           const respuesta: Respuesta = {...respuestaError.error};
           const codigoHttp : number = respuestaError.status;
-          console.log(codigoHttp);
           if(codigoHttp !== 0){
             
             codigoHttp===403?
@@ -334,7 +331,6 @@ export class HomeProductoComponent implements OnInit {
   }
   public modificarEstadoVisualizar(esVisualizar : boolean) : void {
     this.esVisualizar = esVisualizar ; 
-    console.log(this.esVisualizar);
     
   }
   
@@ -344,7 +340,6 @@ export class HomeProductoComponent implements OnInit {
 
   public visualizarProducto( esVisualizar: boolean) : void{
     this.esVisualizar = esVisualizar ;
-    console.log(this.esVisualizar);
   }
 
 }

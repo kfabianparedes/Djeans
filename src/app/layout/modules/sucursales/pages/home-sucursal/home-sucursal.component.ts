@@ -39,7 +39,6 @@ export class HomeSucursalComponent implements OnInit {
     this.sucursalService.listarSucursales().subscribe({
       next:(respuesta:Respuesta)=>{
         (respuesta.data).forEach((sucursal:Sucursal)=>{
-          console.log(sucursal);
           this.sucursales.push({
             ...sucursal,
             sucursalEstado:sucursal.suc_estado?'ACTIVO':'INACTIVO'
@@ -89,17 +88,13 @@ export class HomeSucursalComponent implements OnInit {
 
   public guardarSucursal({esRegistro,sucursal}:DataSucursalRegistroActualizar):void{
     if(esRegistro){
-      console.log('Registrar');
       this._registrarSucursal(sucursal);
     }else{
-      console.log('actualizar');
       this._actualizarSucursal(sucursal);
     }
   }
 
   private _actualizarSucursal(sucursal:Sucursal):void{
-    console.log('actualizar Sucursal: ');
-    console.log(sucursal);
     this.sucursalService.actualizarSucursal(sucursal).subscribe(
       {
         next:(respuesta:Respuesta)=>{
@@ -128,8 +123,6 @@ export class HomeSucursalComponent implements OnInit {
   }
 
   private _registrarSucursal(sucursal:Sucursal):void{
-    console.log('nuevo Sucursal');
-    console.log(sucursal);
     this.sucursalService.registrarSucursal(sucursal).subscribe(
       {
         next:(respuesta:Respuesta)=>{

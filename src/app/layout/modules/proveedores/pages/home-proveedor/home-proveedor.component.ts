@@ -45,7 +45,6 @@ export class HomeProveedorComponent implements OnInit {
             proveedorEstado: proveedor.pro_estado?'ACTIVO':'INACTIVO'
           })
         });
-        console.log(this.proveedores);
       },error: (respuestaError:HttpErrorResponse)=>{
 
         const respuesta : Respuesta = { ...respuestaError.error }
@@ -93,7 +92,6 @@ export class HomeProveedorComponent implements OnInit {
   }
 
   private _registrarProveedor(proveedor : Proveedor):void{
-    console.log(proveedor);
     
     this.proveedorService.registrarProveedor(proveedor).subscribe(
       {
@@ -142,7 +140,6 @@ export class HomeProveedorComponent implements OnInit {
         error: (respuestaError:HttpErrorResponse) => {
           const respuesta: Respuesta = {...respuestaError.error};
           const codigoHttp : number = respuestaError.status;
-          console.log(codigoHttp);
           if(codigoHttp !== 0){
             
             codigoHttp===403?

@@ -113,7 +113,6 @@ export class ModalSucursalComponent implements OnInit,OnChanges {
     if(changes['sucursalUtilizadoEnModal']){
       this.esRegistro = false;
       const sucursal: Sucursal = changes['sucursalUtilizadoEnModal'].currentValue;
-      console.log(sucursal);
       this.sucursalFormulario.reset({
         nombre: sucursal?.suc_nombre,
         direccion: sucursal?.suc_direccion,

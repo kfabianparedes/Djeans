@@ -3,36 +3,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { IGV } from 'src/app/shared/utils/reutilizables';
-
 import { DataProductoRegistroActualizar } from '../../models/registro-actualizar-producto.model';
-
 //PRODUCTO
 import { Producto } from '../../models/producto.model';
-import { ProductoService } from '../../services/producto.service';
-
 //MODELO
 import { Modelo } from '../../../modelos/models/modelo.model';
-import { ModeloService } from '../../../modelos/services/modelo.service';
-
 //CATEGORIA
 import { Categoria } from '../../../categorias/models/categoria.model';
-import { CategoriaService } from '../../../categorias/services/categoria.service';
-
 //COLOR
 import { Color } from '../../../colores/models/color.model';
-import { ColorService } from '../../../colores/services/color.service';
-
 //TALLA
 import { Talla } from '../../../tallas/models/talla.models';
-import { TallaService } from '../../../tallas/services/talla.service';
-
 //PROVEEDOR
 import { Proveedor } from '../../../proveedores/models/proveedor.model';
-import { ProveedorService } from '../../../proveedores/services/proveedor.service';
-
 // MARCAR
 import { Marca } from '../../../marcas/models/marca';
-import { MarcaService } from '../../../marcas/services/marca.service';
+
 import { PRODUCT_MODAL_RESPONSIVE } from '../../utils/breakpoint-product-modal';
 
 
@@ -112,7 +98,7 @@ export class ModalProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this._reiniciarFormulario();
-    this.reiniciarSeleccionDescripcion();
+    
   }
 
   get codigo(){
@@ -190,7 +176,7 @@ export class ModalProductoComponent implements OnInit {
   return;
   } 
 
-  private reiniciarSeleccionDescripcion() : void { 
+  private _reiniciarSeleccionDescripcion() : void { 
     this.categorriaSeleccionada = '' ; 
     this.marcaSeleccionada = '' ; 
     this.modeloSeleccionado = '' ; 
@@ -211,9 +197,7 @@ export class ModalProductoComponent implements OnInit {
     if(this.color!.value != '')
       this.colorSeleccionado = (this.colores.find((color:Color) => color.col_id == this.color?.value))!.col_descripcion || "" ;
 
-    this.descripcion?.setValue(this.categorriaSeleccionada + " " + this.marcaSeleccionada + " " 
-    + this.modeloSeleccionado + " " + this.tallaSeleccionada + " " + this.colorSeleccionado );
-    console.log(this.categoria);
+    this.descripcion?.setValue(`${this.categorriaSeleccionada} ${this.marcaSeleccionada} ${this.modeloSeleccionado} ${this.tallaSeleccionada} ${this.colorSeleccionado}`);
     
   }
   
@@ -249,17 +233,13 @@ export class ModalProductoComponent implements OnInit {
   private _culminarPeticion(): void {
     this.esRegistro==false?
       this.closeModal():
-      this.reiniciarSeleccionDescripcion();
+      this._reiniciarSeleccionDescripcion();
       this._reiniciarFormulario();
   }
 
   public closeModal(): void {
-    console.log(this.productoUtilizadoEnModal);
-    console.log( this.productoFormulario.value);
-    console.log(this.esVisualizarModal);
-    
-    
     this._reiniciarFormulario();
+    this._reiniciarSeleccionDescripcion();
     this.esVisualizarModal = false;
     this.mostrarModal=false;
     this.esVisualizar.emit(false);
@@ -274,8 +254,6 @@ export class ModalProductoComponent implements OnInit {
     this.descripcion?.disable();
     if(changes['esVisualizarModal']){
       const visualizar : boolean = changes['esVisualizarModal'].currentValue
-      console.log(changes['esVisualizarModal']);
-      
       visualizar?this.productoFormulario.disable():this.productoFormulario.enable()
     }
 

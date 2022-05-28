@@ -22,6 +22,8 @@ import { DialogModule } from 'primeng/dialog';
 import { RolDirective } from './directives/rol.directive';
 import {DividerModule} from 'primeng/divider';
 import {DropdownModule} from 'primeng/dropdown';
+import {CalendarModule} from 'primeng/calendar';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import {DropdownModule} from 'primeng/dropdown';
     InputTextModule,
     DialogModule,
     DividerModule,
-    DropdownModule
+    DropdownModule,
+    CalendarModule,
+    InputSwitchModule
   ]
 })
 export class SharedModule { }

@@ -47,7 +47,6 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
             proveedorEstado: proveedor.pro_estado?'ACTIVO':'INACTIVO'
           })
         });
-        console.log(this.proveedores);
       },error: (respuestaError:HttpErrorResponse)=>{
 
         const respuesta : Respuesta = { ...respuestaError.error }

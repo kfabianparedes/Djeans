@@ -40,7 +40,6 @@ export class TablaProductoComponent {
   
   public actualizarProducto(producto : Producto) : void {
     this.tituloModal.emit('Actualizar Producto');
-    console.log(producto);
     this.abrirModal.emit(true);
     this.productoParaActualizar.emit(producto);
     this.esVisualizar.emit(false);

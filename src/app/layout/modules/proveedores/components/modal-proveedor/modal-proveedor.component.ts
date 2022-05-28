@@ -102,7 +102,6 @@ export class ModalProveedorComponent implements OnInit {
 
   ngOnInit(): void {
     this._reiniciarFormulario();
-    console.log(this.esVisualizarModal);
     
   }
 
@@ -196,7 +195,6 @@ export class ModalProveedorComponent implements OnInit {
       if(changes['esVisualizarModal']){
         const visualizar : boolean = changes['esVisualizarModal'].currentValue; 
         
-        console.log(changes['esVisualizarModal']);
         visualizar? this.proveedorFormulario.disable():this.proveedorFormulario.enable()
       }
       if(changes['proveedorUtilizadoEnModal']){

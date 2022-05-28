@@ -66,15 +66,12 @@ export class ModalTiendaComponent implements OnInit,OnChanges {
 
   public guardarTienda(): void {  //Guarda lo obtenido del formulario para update o create
     if (this.tiendaFormulario.valid){
-      console.log(this.sucursal?.value)
       const tienda : Tienda = {
         tie_id           :  this.tiendaUtilizadoEnModal?.tie_id,
         tie_nombre       :  this.nombre?.value,
         tie_suc_id       :  +this.sucursal?.value,
         tie_estado       :  this.estado?.value
       }
-      console.log(tienda);
-      
       this._enviarInformacionDeSucursal(tienda);
       this._culminarPeticion();
     }

@@ -2,7 +2,7 @@
 <progressbar></progressbar>
 <subtitulo-pagina [subTitulo]="'Registrar compra'"></subtitulo-pagina>
 
-<div class="container-fluid">
+<div class="container-fluid text-center">
     <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
     
     <div *appRol="[rolPermissionService.ROL_USER.su]" class="row px-0 px-lg-5 pt-0 pt-lg-2">
@@ -10,7 +10,11 @@
             class="col-12 col-md-6 mb-1"
             [proveedores]="proveedores">
         </compra-informacion-proveedor>
-        <compra-comprobante-pago class="offset-0 offset-md-1 col-12 col-md-5 mt-1"></compra-comprobante-pago>
+        <div class="offset-0 offset-md-1 col-12 col-md-5 mt-1">
+                <compra-comprobante-pago></compra-comprobante-pago>
+            <compra-guia-remision></compra-guia-remision>
+        </div>
+        
     </div>
 </div>
 

@@ -59,7 +59,6 @@ export class HomeColorComponent implements OnInit {
         }
       }
     );
-    console.log(this.colores) ;
   }
 
   public guardarColor({esRegistro, color}:DataColorRegistroActualizar) : void {
