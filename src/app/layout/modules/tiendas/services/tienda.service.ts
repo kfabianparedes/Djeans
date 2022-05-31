@@ -23,6 +23,15 @@ export class TiendaService {
     );
   }
 
+  public obtenerTiendaPorId(id_tienda:number): Observable<Respuesta>{
+    const url=`${ this._url }/tiendas/${id_tienda}/`;
+    return this.http.get<Respuesta>(url)
+    .pipe(
+      map(respuesta=>respuesta),
+      catchError(err=>throwError(()=>err))
+    );
+  }
+
   public registrarTienda({tie_nombre,tie_suc_id}:Tienda):Observable<Respuesta>{
     const url  = `${ this._url }/tiendas/`;
     const body={
