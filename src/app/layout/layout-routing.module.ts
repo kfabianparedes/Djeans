@@ -18,6 +18,7 @@ const routes: Routes = [
       { path:'talla', loadChildren: () => import('./modules/tallas/tallas.module').then( m => m.TallasModule )},
       { path:'producto', loadChildren: () => import('./modules/productos/productos.module').then( m => m.ProductosModule )},
       { path:'compra', loadChildren: () => import('./modules/compras/compras.module').then( m => m.ComprasModule )},
+      { path:'inventario', loadChildren: () => import('./modules/inventarios/inventarios.module').then( m => m.InventariosModule )},
       { path:'reporte-compra', loadChildren: () => import('./modules/reportes-de-compra/reportes-de-compra.module').then( m => m.ReportesDeCompraModule )},
       { path:'', redirectTo:'', pathMatch:'full'},
       { path:'**', redirectTo:''}

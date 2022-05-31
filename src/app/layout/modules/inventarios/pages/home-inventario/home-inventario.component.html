@@ -1,0 +1,13 @@
+<titulo-pagina [titulo]="nombreTienda"></titulo-pagina>
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Inventario'"></subtitulo-pagina>
+
+<div class="container-fluid">
+    <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+
+    <div class="row">
+        <tabla-inventario
+            [inventariosTabla]="inventarios">
+        </tabla-inventario>
+    </div>
+</div>

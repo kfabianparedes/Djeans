@@ -147,6 +147,14 @@
                             [routerLinkActiveOptions]="{exact:true}">
                             Ventas
                         </span>
+                        <span
+                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad,rolPermissionService.ROL_USER.em]"
+                            class="nav-link"
+                            [routerLink]="['/layout','inventario']"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Inventarios
+                        </span>
                     </nav>
             </div>
 

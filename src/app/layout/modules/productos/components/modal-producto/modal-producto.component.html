@@ -178,9 +178,6 @@
 
                 <div *ngIf="precio_promocion?.invalid && (precio_promocion?.dirty || precio_promocion?.touched)"
                     class="msj-error-form row text-danger text-end p-0">
-                        <small class="col-12" *ngIf="precio_promocion?.errors?.['required']">
-                            *El descuento / promoción es requerido.
-                        </small>
                         <!-- <small class="col-12" *ngIf="precio_compra?.errors?.['minlength']">
                             *La descripción debe tener mínimo 5 caracteres.
                         </small>

@@ -1,0 +1,55 @@
+<div class="card p-1">
+    <p-table
+        #tablaInventario
+        responsiveLayout="scroll"
+        [value]="inventariosTabla"
+        [filterDelay] = "0"
+        [globalFilterFields]="['producto_descripcion','inv_stock']"
+    >
+        <ng-template pTemplate = "caption">
+            <div class="flex row justify-content-between">
+                <div class="py-2 col-sm-12 col-md-5 col-lg-4">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-12">
+                            <div class="row flex">
+                                <div class="col-sm-8 col-md-11 col-lg-11 d-flex">
+                                    <input 
+                                    type="text"
+                                    [(ngModel)]="filtroBusquedaInventario"
+                                    class="input-busqueda form-control"
+                                    (input)="filtrarBusqueda(tablaInventario)"
+                                    placeholder="Nombre del color"
+                                    >
+                                    <button
+                                        [disabled]="cargando | async"
+                                        (click)="filtrarBusqueda(tablaInventario)"
+                                        type="button"
+                                        class="btn btn-primary"
+                                    ><i class="pi pi-search" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr class="titulo-tabla contenedor">
+                <th class="text-center" pSortableColumn="producto_descripcion">Producto <p-sortIcon field="producto_descripcion"></p-sortIcon></th>
+                <th class="text-center"pSortableColumn="stock">Stock <p-sortIcon field="stock"></p-sortIcon></th>
+                <th class="text-center"pSortableColumn="stock"  *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]">Precio de compra<p-sortIcon field="producto_precio_compra"></p-sortIcon></th>
+                <th class="text-center"pSortableColumn="stock">Precio de venta<p-sortIcon field="producto_precio_venta"></p-sortIcon></th>
+                <th class="text-center"pSortableColumn="stock">Promoción<p-sortIcon field="producto_promocion"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inventario>
+            <tr class="filas-tabla contenedor">
+                <td class="text-center">{{inventario.producto_descripcion}}</td>
+                <td class="text-center">{{inventario.stock}}</td>
+                <td class="text-center"  *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]">{{inventario.producto_precio_compra}}</td>
+                <td class="text-center">{{inventario.producto_precio_venta}}</td>
+                <td class="text-center">{{inventario.producto_promocion}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
