@@ -38,7 +38,7 @@ export class HomeInventarioComponent implements OnInit {
   private subsList : Subscription = new Subscription;
 
   private _listarInventarios() : void {
-    const id_tienda_constante = 16 ; 
+    const id_tienda_constante = 1 ; 
 
     this.subsList = forkJoin(
       [

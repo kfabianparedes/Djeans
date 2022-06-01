@@ -19,6 +19,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     FormsModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    ModalProveedorComponent
   ]
 })
 export class ProveedoresModule { }

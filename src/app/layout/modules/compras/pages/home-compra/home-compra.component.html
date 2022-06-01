@@ -2,19 +2,111 @@
 <progressbar></progressbar>
 <subtitulo-pagina [subTitulo]="'Registrar compra'"></subtitulo-pagina>
 
-<div class="container-fluid text-center">
+<div class="container-fluid ">
     <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
     
     <div *appRol="[rolPermissionService.ROL_USER.su]" class="row px-0 px-lg-5 pt-0 pt-lg-2">
-        <compra-informacion-proveedor 
-            class="col-12 col-md-6 mb-1"
-            [proveedores]="proveedores">
-        </compra-informacion-proveedor>
-        <div class="offset-0 offset-md-1 col-12 col-md-5 mt-1">
-                <compra-comprobante-pago></compra-comprobante-pago>
-            <compra-guia-remision></compra-guia-remision>
+        <div class="row">
+            <div class="col-12 col-md-6 my-1">
+                <section class="row">
+                    <compra-informacion-proveedor 
+                        [proveedores]="proveedores"
+                        (registrarNuevoProveedor)="modificarEstadoModal($event)"
+                        (proveedorSeleccionado)="obtenerProductosPorProveedor($event)"
+                        >
+                    </compra-informacion-proveedor>
+                </section>
+    
+                <section class="row">
+                    <div class="card p-3">
+                        <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
+                            <label class="ml-3" for="busquedaProveedor"><strong>BUSCAR PRODUCTO</strong></label>
+                            <div class="col-12">
+                                <button 
+                                    [disabled]="!esPosibleBuscarProveedor"
+                                    (click)="buscarProductosPorProveedor()" 
+                                    [style]="{'width':'100%'}"  
+                                    class="btn btn-primary" 
+                                    type="button">PRODUCTOS
+                                        <i  style="font-size: 12px;" 
+                                            class="pi pi-search">
+                                        </i> 
+                                </button>      
+                            </div>
+                        </div>
+                    </div>
+    
+                    
+    
+                </section>
+    
+                
+            </div>
+    
+            <div class="offset-0 offset-md-1 col-12 col-md-5 mt-1">
+                <compra-comprobante-pago>
+                </compra-comprobante-pago>
+
+                <div class="row card p-3 ">
+                    <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
+                        <label class="ml-3" for="busquedaProveedor"><strong>GUÍA DE REMISIÓN</strong></label>
+                        <div class="col-12">
+                            <button 
+                                (click)="agregarGuiaRemisionCompra()" 
+                                [style]="{'width':'100%'}"  
+                                class="btn btn-{{configGuiaRemision.colorGuiaRemision}}" 
+                                type="button">{{configGuiaRemision.textoOpcion}} 
+                                    <i  style="font-size: 12px;" 
+                                        class="pi pi-{{configGuiaRemision.iconGuiaRemision}}">
+                                    </i> 
+                            </button>      
+                        </div>
+                    </div>
+                </div>
+    
+                <compra-guia-remision 
+                    [mostrarModal]="configGuiaRemision.hayGuiaRemision">
+                </compra-guia-remision>
+    
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <tabla-compra>
+            </tabla-compra>
         </div>
         
     </div>
 </div>
 
+
+<modal-proveedor
+    *appRol="[rolPermissionService.ROL_USER.su]"
+    [tituloModal]="'Nuevo Proveedor'" 
+    [mostrarModal]="mostrarModal"
+    [esVisualizarModal]="false"
+    (enviarInformacionProveedor)="guardarProveedor($event)"
+    (cerrarModal)="modificarEstadoModal($event)"> 
+</modal-proveedor>
+
+
+<modal-producto
+    [proveedores]="proveedores"
+    [tallas]="tallas"
+    [modelos]="modelos"
+    [categorias]="categorias"
+    [marcas]="marcas"
+    [colores]="colores"
+    [tituloModal]="'Nuevo Producto'" 
+    [mostrarModal]="mostrarModalProducto"
+    [esVisualizarModal]="false"
+    (enviarInformacionProducto)="guardarProducto($event)"
+    (cerrarModal)="modificarEstadoModalProducto($event)"> 
+</modal-producto>
+
+<tabla-productos
+    [mostrarTablaProductos]="mostrarTablaProducto"
+    [productosDeTabla]="productosPorProveedor"
+    (cerrarTablaProductos)="mostrarTablaProducto=$event"
+>
+</tabla-productos>

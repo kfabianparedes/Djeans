@@ -1,0 +1,103 @@
+<p-dialog
+    [(visible)]="mostrarTablaProductos"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [breakpoints]="PRODUCT_TABLE_RESPONSIVE"
+    (onHide)="closeModal()"
+    >
+
+        <ng-template pTemplate="header">
+            <span class="titulo-modal-crud">BUSCAR PRODUCTOS</span>
+        </ng-template>
+
+        <p-table
+            #tablaProducto
+            responsiveLayout="scroll"
+            [value]="productosDeTabla"
+            [filterDelay]="0"
+            [globalFilterFields]="['prod_codigo','prod_descripcion','prod_precio_compra','prod_precio_venta','productoEstado']"
+            >
+            <ng-template pTemplate="caption">
+                <div class="flex row justify-content-between">
+                    <div class="py-2 col-sm-12 col-md-5 col-lg-4">
+                        <div class="row">
+                            <div class="col-md-9 col-sm-12">
+                                <div class="row flex">
+                                    <div class="col-sm-8 col-md-11 col-lg-11 d-flex">
+                                        <input 
+                                            type="text" 
+                                            [(ngModel)]="filtroBusquedaProducto"
+                                            class="input-busqueda form-control" 
+                                            (input)="filtrarBusqueda(tablaProducto)" 
+                                            placeholder="Nombre del producto"
+                                        >
+                                        <button [disabled]="cargando | async" 
+                                                (click)="filtrarBusqueda(tablaProducto)" 
+                                                type="button" 
+                                                class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i>
+                                        </button> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
+                        <button 
+                                *appRol="[rolPermissionService.ROL_USER.su]"
+                                [disabled]="cargando | async" 
+                                
+                                class="btn-header-derecha btn btn-primary"
+                                type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr class="titulo-tabla contenedor">
+                    <th class="text-center" pSortableColumn="prod_codigo">Código <p-sortIcon field="prod_codigo"></p-sortIcon></th>
+                    <th class="text-center" pSortableColumn="prod_descripcion">Descripción <p-sortIcon field="prod_descripcion"></p-sortIcon></th>
+                    <th class="text-center" pSortableColumn="prod_precio_compra">Precio compra <p-sortIcon field="prod_precio_compra"></p-sortIcon></th>
+                    <th class="text-center" pSortableColumn="prod_precio_venta">Precio venta <p-sortIcon field="prod_precio_venta"></p-sortIcon></th>
+                    <th class="text-center" pSortableColumn="productoEstado">Estado <p-sortIcon field="productoEstado"></p-sortIcon></th>
+                    <th class="text-center"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-producto >
+                <tr class="filas-tabla contenedor"> 
+                    <td class="text-center">{{producto.prod_codigo}}</td>
+                    <td class="text-center">{{producto.prod_descripcion}}</td>
+                    <td class="text-center">{{producto.prod_precio_compra}}</td>
+                    <td class="text-center">{{producto.prod_precio_venta}}</td>
+                    <td class="text-center">
+                        <p-tag 
+                            value="{{producto.productoEstado}}" 
+                            severity="{{producto.prod_estado?'success':'danger'}}">
+                        </p-tag>
+                    </td>
+                    <td class="text-center">
+                        <button 
+                            [disabled]="cargando | async" 
+                            
+                            pButton 
+                            pRipple 
+                            type="button" 
+                            icon="pi pi-eye" 
+                            class="p-button-rounded p-button-success p-button-outlined">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <ng-template pTemplate="footer">
+            <button
+                [disabled]="cargando | async"
+                (click)="closeModal()"
+                class="btn btn-outline-danger">
+                <i class="pi pi-times"></i>
+                Cancelar
+            </button>
+        </ng-template>
+
+</p-dialog>

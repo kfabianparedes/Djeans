@@ -18,7 +18,7 @@
                                     [(ngModel)]="filtroBusquedaInventario"
                                     class="input-busqueda form-control"
                                     (input)="filtrarBusqueda(tablaInventario)"
-                                    placeholder="Nombre del color"
+                                    placeholder="Ingrese producto"
                                     >
                                     <button
                                         [disabled]="cargando | async"
@@ -39,7 +39,7 @@
                 <th class="text-center"pSortableColumn="stock">Stock <p-sortIcon field="stock"></p-sortIcon></th>
                 <th class="text-center"pSortableColumn="stock"  *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad]">Precio de compra<p-sortIcon field="producto_precio_compra"></p-sortIcon></th>
                 <th class="text-center"pSortableColumn="stock">Precio de venta<p-sortIcon field="producto_precio_venta"></p-sortIcon></th>
-                <th class="text-center"pSortableColumn="stock">Promoción<p-sortIcon field="producto_promocion"></p-sortIcon></th>
+                <th class="text-center"pSortableColumn="stock">Descuento máximo<p-sortIcon field="producto_promocion"></p-sortIcon></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-inventario>

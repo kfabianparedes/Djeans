@@ -19,6 +19,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ProductosRoutingModule,
     SharedModule,FormsModule,
     ReactiveFormsModule
+  ],
+  exports:[
+    TablaProductoComponent,
+    ModalProductoComponent
   ]
 })
 export class ProductosModule { }

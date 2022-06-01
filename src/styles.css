@@ -12963,8 +12963,12 @@ label{
 }
 .msj-error-form{
     font-family: Montserrat-Light;
+    font-size: 18px;
 }
 
+.color-header{
+    background-color: #343a40;
+}
 
 .titulo-modal-crud{
     font-family: Montserrat-Bold;

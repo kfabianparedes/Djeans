@@ -139,21 +139,21 @@
                             [routerLinkActiveOptions]="{exact:true}">
                             Compras
                         </span>
-                        <span
+                        <!-- <span
                             *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad,rolPermissionService.ROL_USER.em]"
                             class="nav-link"
                             [routerLink]="['/layout']"
                             routerLinkActive="active"
                             [routerLinkActiveOptions]="{exact:true}">
                             Ventas
-                        </span>
+                        </span> -->
                         <span
-                            *appRol="[rolPermissionService.ROL_USER.su,rolPermissionService.ROL_USER.ad,rolPermissionService.ROL_USER.em]"
+                            *appRol="[rolPermissionService.ROL_USER.em]"
                             class="nav-link"
                             [routerLink]="['/layout','inventario']"
                             routerLinkActive="active"
                             [routerLinkActiveOptions]="{exact:true}">
-                            Inventarios
+                            Buscar Productos
                         </span>
                     </nav>
             </div>

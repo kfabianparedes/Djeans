@@ -11,6 +11,9 @@ import { ComprobantePagoComponent } from './components/comprobante-pago/comproba
 import { InformacionProveedorComponent } from './components/informacion-proveedor/informacion-proveedor.component';
 import { InformacionProductoComponent } from './components/informacion-producto/informacion-producto.component';
 import { GuiaRemisionComponent } from './components/guia-remision/guia-remision.component';
+import { ProveedoresModule } from '../proveedores/proveedores.module';
+import { ProductosModule } from '../productos/productos.module';
+import { TablaProductosComponent } from './components/tabla-productos/tabla-productos.component';
 
 
 @NgModule({
@@ -21,14 +24,17 @@ import { GuiaRemisionComponent } from './components/guia-remision/guia-remision.
     ComprobantePagoComponent,
     InformacionProveedorComponent,
     InformacionProductoComponent,
-    GuiaRemisionComponent
+    GuiaRemisionComponent,
+    TablaProductosComponent
   ],
   imports: [
     CommonModule,
     ComprasRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ProveedoresModule,
+    ProductosModule
   ]
 })
 export class ComprasModule { }

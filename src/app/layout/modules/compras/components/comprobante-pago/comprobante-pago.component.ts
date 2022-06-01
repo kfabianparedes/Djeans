@@ -1,8 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { TipoDeComprobante } from 'src/app/shared/models/tipo-de-comprobante.model';
+import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
 import { TipoDeComprobanteService } from 'src/app/shared/services/tipo-de-comprobante.service';
 import { errorAlerta } from 'src/app/shared/utils/reutilizables';
 import { Proveedor } from '../../../proveedores/models/proveedor.model';
@@ -16,11 +19,11 @@ import { ConfigGuiaRemision } from '../../utils/configuracion-guia-remision';
 export class ComprobantePagoComponent implements OnInit {
   proveedor : Proveedor = {} as Proveedor;
   tiposDeComprobante: TipoDeComprobante[] = [];
-  comprobante: TipoDeComprobante = {} as TipoDeComprobante;
 
+  public guardar : boolean = false;
   public todayDate =  new Date();
   public tomorrowDate =  new Date(this.todayDate.setDate(this.todayDate.getDate()));
-  
+
   public configGuiaRemision: ConfigGuiaRemision = {
     hayGuiaRemision: false,
     iconGuiaRemision: 'plus',
@@ -28,17 +31,49 @@ export class ComprobantePagoComponent implements OnInit {
     textoOpcion: 'AGREGAR'
   };
 
-  constructor(private _tipoDeComprobanteService: TipoDeComprobanteService) { }
+  public comprobanteDePagoForm: FormGroup = this.fb.group({
+    tipoDeComprobante: ['', [ Validators.required ]],
+    fechaDeEmision: ['', [ Validators.required ]],
+    serieDePago: ['', [ Validators.required, Validators.minLength(4) , Validators.maxLength(4) ,  Validators.pattern(/^[A-Z0-9]+[0-9]*$/)]],
+    numeroDePago: ['', [ Validators.required, Validators.minLength(6) , Validators.maxLength(6),  Validators.pattern(/^[0-9]*$/)]],
+  });
+  
+  public cargando : Subject<boolean> = this._buttonProgressService.cargando;
+  constructor(
+      private fb: FormBuilder,
+      private _buttonProgressService: ButtonProgressService,
+      private _tipoDeComprobanteService: TipoDeComprobanteService) { }
 
   ngOnInit(): void {
     this._listarModelos();
+  }
+
+  public guardarDatos(): void {
+    this.guardar?
+      this.comprobanteDePagoForm.disable():
+      this.comprobanteDePagoForm.enable()
+    console.log(this.comprobanteDePagoForm.value);
+    // this.proveedorForm.reset({proveedor: ''});
+  }
+
+  get tipoDeComprobante() {
+    return this.comprobanteDePagoForm.get('tipoDeComprobante');
+  }
+  get fechaDeEmision() {
+    return this.comprobanteDePagoForm.get('fechaDeEmision');
+  }
+  get serieDePago() {
+    return this.comprobanteDePagoForm.get('serieDePago');
+  }
+  get numeroDePago() {
+    return this.comprobanteDePagoForm.get('numeroDePago');
   }
 
   private _listarModelos(): void{
     this.tiposDeComprobante = [];
     this._tipoDeComprobanteService.listarTipoDeComprobantes().subscribe({
       next: (respuesta: Respuesta)=>{
-        
+
         (respuesta.data).forEach((tipoDeComprobante: TipoDeComprobante) => {
           this.tiposDeComprobante.push({...tipoDeComprobante});
         });
@@ -55,12 +90,5 @@ export class ComprobantePagoComponent implements OnInit {
 
     });
   }
-
-  public agregarGuiaRemision(): void{
-
-    this.configGuiaRemision.hayGuiaRemision = !this.configGuiaRemision.hayGuiaRemision;
-    this.configGuiaRemision.iconGuiaRemision==='plus'?this.configGuiaRemision.iconGuiaRemision='times':this.configGuiaRemision.iconGuiaRemision='plus';
-    this.configGuiaRemision.colorGuiaRemision==='primary'?this.configGuiaRemision.colorGuiaRemision='danger':this.configGuiaRemision.colorGuiaRemision='primary';
-    this.configGuiaRemision.textoOpcion=='AGREGAR'?this.configGuiaRemision.textoOpcion='CANCELAR':this.configGuiaRemision.textoOpcion='AGREGAR';
-  }
+  
 }

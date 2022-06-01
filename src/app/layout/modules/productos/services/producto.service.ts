@@ -75,7 +75,6 @@ export class ProductoService {
         );
     }
 
-
     public eliminarProducto(idProducto: number): Observable<Respuesta>{
         const url  = `${ this._url }/productos/${idProducto}/`;
         return this.http.delete<Respuesta>( url )
@@ -83,5 +82,16 @@ export class ProductoService {
             map(respuesta => respuesta),
             catchError(err => throwError(()=>err))
             );
-        }
+    }
+
+    public listarProductosPorProveedor(idProveedor: number) : Observable<Respuesta>{
+        const url  = `${ this._url }/productos/proveedor/${idProveedor}`;
+        console.log(url);
+        
+        return this.http.get<Respuesta>( url )
+        .pipe(
+        map(respuesta => respuesta),
+        catchError(err => throwError(()=>err))
+        );
+    }
 }

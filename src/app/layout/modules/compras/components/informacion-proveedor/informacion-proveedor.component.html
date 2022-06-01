@@ -1,10 +1,10 @@
-<div class="row card" [ngClass]="{'bg-light':guardar}">
+<div class="row card"> <!-- [ngClass]="{'bg-light':guardar}"> -->
     <div class="card-header color-header text-white">
         <div class="row">
             <div class="mt-2 text-start col-12 col-md-4">
                 <p class="h5">Información de proveedor</p>
             </div>
-            <div class="mt-2 col-7 offset-md-0 col-md-3 ">
+            <div class="mt-2 col-7 offset-md-5 offset-5 col-md-3 ">
                 <div class="input-group">
                     <p class="h5 mr-3">Guardar</p>
                     <input [(ngModel)]="guardar" (change)="guardarDatos()" type="checkbox" class="p-inputswitch">
@@ -66,9 +66,9 @@
                         [disabled]="( cargando | async ) || guardar"
                         (click)="nuevoProveedor()"   
                         [style]="{'width':'100%'}"  
-                        class="btn btn-primary" 
+                        class="btn btn-success" 
                         type="button">
-                        REGISTRAR <i style="font-size: 12px;" class="pi pi-plus"></i> 
+                        REGISTRAR <i style="font-size: 12px;" class="pi pi-user-plus"></i> 
                     </button>      
                 </div>
                     
@@ -78,3 +78,4 @@
     </div>
     
 </div>
+

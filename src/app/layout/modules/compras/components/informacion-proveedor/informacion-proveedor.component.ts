@@ -11,8 +11,9 @@ import { Proveedor } from '../../../proveedores/models/proveedor.model';
 })
 export class InformacionProveedorComponent implements OnInit {
   
-  
+  @Output() registrarNuevoProveedor = new EventEmitter<boolean>();
   @Input() proveedores: Proveedor[] = [];
+  @Output() proveedorSeleccionado = new EventEmitter<number>();
   // @Output() proveedorRegistrado = new EventEmitter<Proveedor>();
   public guardar : boolean = false;
   // public proveedorSeleccionado : Proveedor = {} as Proveedor;
@@ -34,16 +35,27 @@ export class InformacionProveedorComponent implements OnInit {
   }
 
   public guardarDatos(): void {
-    this.guardar?
-      this.proveedorForm.disable():
+    if(this.guardar){
+      this.proveedorForm.disable();
+      this.proveedorSeleccionado.emit(this.proveedor?.value.pro_id);
+    }else{
       this.proveedorForm.enable()
-
+    }
+    console.log(this.proveedor?.value.pro_id);
+    console.log(this.proveedor?.value);
     console.log(this.proveedorForm.value);
     // this.proveedorForm.reset({proveedor: ''});
   }
 
   public nuevoProveedor(): void {
-    console.log('Nuevo proveedor');
-    
+    this.registrarNuevoProveedor.emit(true);
   }
+
+
+
+
+
+
+  
+
 } 
