@@ -1,22 +1,28 @@
 <div class="row card"> <!-- [ngClass]="{'bg-light':guardar}"> -->
     <div class="card-header color-header text-white">
         <div class="row">
-            <div class="mt-2 text-start col-12 col-md-4">
-                <p class="h5">Información de proveedor</p>
+            <div class="mt-2 text-start col-12 col-md-12 col-lg-12 col-xl-4">
+                <p class="h5"><strong>Información de proveedor</strong></p>
             </div>
-            <div class="mt-2 col-7 offset-md-5 offset-5 col-md-3 ">
-                <div class="input-group">
+            <div class="mt-2 offset-0 col-12 offset-md-0 col-md-12 offset-lg-0 col-lg-12 offset-xl-5 col-xl-3">
+                <div class="justify-content-end input-group">
                     <p class="h5 mr-3">Guardar</p>
-                    <input [(ngModel)]="guardar" (change)="guardarDatos()" type="checkbox" class="p-inputswitch">
+                    <input [(ngModel)]="dataSave" (change)="guardarDatos()" type="checkbox" class="p-inputswitch">
                 </div>
             </div>
         </div>
-        
     </div>
     <div class="card-body"> 
         <div class="row justify-content-between">
             <form [formGroup]="proveedorForm" class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
-                <label class="ml-3" for="selectProveedor"><strong>BUSCAR PROVEEDOR:</strong></label>
+                <label 
+                    class="ml-3 label-compra" 
+                    for="selectProveedor">
+                        BUSCAR PROVEEDOR
+                        <small class="text-danger">
+                            <strong>(*)</strong>
+                        </small>:
+                </label>
                 <div class="col-12">
                     <p-dropdown 
                         #proveedorOption
@@ -42,7 +48,7 @@
             <br>
 
             <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
-                <label class="ml-3" for="rucEmpresa"><strong>RUC EMPRESA:</strong></label>
+                <label for="rucEmpresa" class="ml-3 label-compra">RUC EMPRESA:</label>
                 <div class="col-12 p-inputgroup">
                     <span class="text-end p-inputgroup-addon"><i class="pi pi-building"></i></span>
                     <input
@@ -59,11 +65,11 @@
             <br>
 
             <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
-                <label class="ml-3" for="registrarProveedor"><strong>NUEVO PROVEEDOR</strong></label>
+                <label class="ml-3 label-compra" for="registrarProveedor"><strong>NUEVO PROVEEDOR</strong></label>
                 <div class="col-12">
                     <button 
                         id="registrarProveedor"
-                        [disabled]="( cargando | async ) || guardar"
+                        [disabled]="( cargando | async ) || dataSave"
                         (click)="nuevoProveedor()"   
                         [style]="{'width':'100%'}"  
                         class="btn btn-success" 

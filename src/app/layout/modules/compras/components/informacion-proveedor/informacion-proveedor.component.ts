@@ -9,14 +9,14 @@ import { Proveedor } from '../../../proveedores/models/proveedor.model';
   templateUrl: './informacion-proveedor.component.html',
   styleUrls: ['./informacion-proveedor.component.css']
 })
-export class InformacionProveedorComponent implements OnInit {
-  
+export class InformacionProveedorComponent {
+  @Output() isDataSave = new EventEmitter<boolean>();
+  @Input() dataSave! : boolean;
+
   @Output() registrarNuevoProveedor = new EventEmitter<boolean>();
   @Input() proveedores: Proveedor[] = [];
   @Output() proveedorSeleccionado = new EventEmitter<number>();
-  // @Output() proveedorRegistrado = new EventEmitter<Proveedor>();
-  public guardar : boolean = false;
-  // public proveedorSeleccionado : Proveedor = {} as Proveedor;
+
   public proveedorForm: FormGroup = this.fb.group({
     proveedor: ['', [ Validators.required ]],
   });
@@ -27,24 +27,19 @@ export class InformacionProveedorComponent implements OnInit {
     private _buttonProgressService: ButtonProgressService
     ) { }
 
-  ngOnInit(): void {
-  }
-
   get proveedor() {
     return this.proveedorForm.get('proveedor');
   }
 
   public guardarDatos(): void {
-    if(this.guardar){
+    if(this.dataSave){
       this.proveedorForm.disable();
       this.proveedorSeleccionado.emit(this.proveedor?.value.pro_id);
+      this.isDataSave.emit(true)
     }else{
       this.proveedorForm.enable()
+      this.isDataSave.emit(false);
     }
-    console.log(this.proveedor?.value.pro_id);
-    console.log(this.proveedor?.value);
-    console.log(this.proveedorForm.value);
-    // this.proveedorForm.reset({proveedor: ''});
   }
 
   public nuevoProveedor(): void {

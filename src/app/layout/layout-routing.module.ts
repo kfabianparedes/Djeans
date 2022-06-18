@@ -19,7 +19,8 @@ const routes: Routes = [
       { path:'producto', loadChildren: () => import('./modules/productos/productos.module').then( m => m.ProductosModule )},
       { path:'compra', loadChildren: () => import('./modules/compras/compras.module').then( m => m.ComprasModule )},
       { path:'inventario', loadChildren: () => import('./modules/inventarios/inventarios.module').then( m => m.InventariosModule )},
-      { path:'reporte-compra', loadChildren: () => import('./modules/reportes-de-compra/reportes-de-compra.module').then( m => m.ReportesDeCompraModule )},
+      // { path:'reporte-compra', loadChildren: () => import('./modules/reportes-de-compra/reportes-de-compra.module').then( m => m.ReportesDeCompraModule )},
+      { path:'reporte', loadChildren: () => import('./modules/reportes/reportes.module').then( m => m.ReportesModule )},
       { path:'', redirectTo:'', pathMatch:'full'},
       { path:'**', redirectTo:''}
 

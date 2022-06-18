@@ -85,7 +85,7 @@ export class ProductoService {
     }
 
     public listarProductosPorProveedor(idProveedor: number) : Observable<Respuesta>{
-        const url  = `${ this._url }/productos/proveedor/${idProveedor}`;
+        const url  = `${ this._url }/productos/proveedor/${idProveedor}/`;
         console.log(url);
         
         return this.http.get<Respuesta>( url )

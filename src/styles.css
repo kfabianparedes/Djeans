@@ -12942,6 +12942,10 @@ body {
     font-family: Montserrat-Light;
 }
 
+.label-compra{
+    font-family: Montserrat-SemiBold;
+    font-size: 15px;
+}
 
 .btn-header-derecha{
     font-family: Montserrat-Bold;

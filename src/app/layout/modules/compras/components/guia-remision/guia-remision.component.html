@@ -2,13 +2,14 @@
 <div *ngIf="mostrarModal" class="row card">
     <div class="card-header color-header text-white">
         <div class="row">
-            <div class="mt-2 text-start col-12 col-md-4">
-                <p class="h5">Guía de remisión</p>
+            <div class="mt-2 text-start col-12 col-md-12 col-lg-12 col-xl-4">
+                <p class="h5"><strong>Guía de remisión</strong></p>
             </div>
-            <div class="mt-2 col-7 offset-md-5 offset-5 col-md-3 ">
-                <div class="input-group">
+            <!-- <div class="mt-2 col-12"> -->
+            <div class="mt-2 offset-0 col-12 offset-md-0 col-md-12 offset-lg-0 col-lg-12 offset-xl-5 col-xl-3">
+                <div class="justify-content-end input-group">
                     <p class="h5 mr-3">Guardar</p>
-                    <input type="checkbox" class="p-inputswitch">
+                    <input [(ngModel)]="dataSave" (change)="guardarDatos()" type="checkbox" class="p-inputswitch">
                 </div>
             </div>
         </div>
@@ -20,7 +21,14 @@
                 <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-8 ">
                     <div class="row">
                         <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-5">
-                            <label class="ml-3" for="idNroSerie"><strong>NRO. DE SERIE:</strong></label>
+                            <label 
+                                class="ml-3 label-compra" 
+                                for="idNroSerie">
+                                    NRO. DE SERIE
+                                    <small class="text-danger">
+                                        <strong>(*)</strong>
+                                    </small>:
+                            </label>
                             <div class="col-12">
                                 <input
                                     id="idNroSerie"
@@ -49,7 +57,14 @@
                             
                         </div>
                         <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-7 ">
-                            <label class="ml-3" for="idNroComprobante"><strong>NRO. DE COMPROBANTE:</strong></label>
+                            <label 
+                                class="ml-3 label-compra" 
+                                for="idNroComprobante">
+                                    NRO. DE COMPROBANTE
+                                    <small class="text-danger">
+                                        <strong>(*)</strong>
+                                    </small>:
+                            </label>
                             <div class="col-12">
                                 <input
                                     id="idNroComprobante"
@@ -80,12 +95,18 @@
                 </div>
                 <br>
                 <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
-                    <label class="ml-3" for="idFechaEmision"><strong>FECHA EMISIÓN:</strong></label>
+                    <label 
+                        class="ml-3 label-compra" 
+                        for="idFechaEmision">
+                            FECHA EMISIÓN
+                            <small class="text-danger">
+                                <strong>(*)</strong>
+                            </small>:
+                    </label>
                     <div class="col-12">
                         <p-calendar 
                             id="idFechaEmision"
-                            placeholder="dd/mm/aa" 
-                            dateFormat='dd/mm/yy'
+                            placeholder="DD/MM/AAAA"
                             [maxDate]="tomorrowDate" 
                             [style]="{'width':'100%'}" 
                             [showIcon]="true" 

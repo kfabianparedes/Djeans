@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
@@ -9,6 +9,9 @@ import { ButtonProgressService } from 'src/app/shared/services/button-progress.s
   styleUrls: ['./guia-remision.component.css']
 })
 export class GuiaRemisionComponent implements OnInit,OnChanges {
+  @Output() isDataSave = new EventEmitter<boolean>();
+  @Input() dataSave! : boolean;
+  
   @Input() mostrarModal! : boolean ;
   
   public todayDate =  new Date();
@@ -41,6 +44,8 @@ export class GuiaRemisionComponent implements OnInit,OnChanges {
   ngOnInit(): void {
   }
 
+
+
   get fechaDeEmision() {
     return this.guiaRemisionForm.get('fechaDeEmision');
   }
@@ -51,4 +56,23 @@ export class GuiaRemisionComponent implements OnInit,OnChanges {
     return this.guiaRemisionForm.get('numeroDePago');
   }
 
+  public guardarDatos(): void {
+
+    // if(this.dataSave){
+    //   this.comprobanteDePagoForm.disable();
+    //   const informacionComprobanteDePago : ComprobanteDePagoDTO = {
+    //     tipoDeComprobante: this.tipoDeComprobante?.value,
+    //     fechaDeEmision: this.fechaDeEmision?.value,
+    //     serieDePago: this.serieDePago?.value,
+    //     numeroDePago: this.numeroDePago?.value,
+    //   }
+    //   this.dataComprobanteDePago.emit(informacionComprobanteDePago);
+    //   this.isDataSave.emit(true)
+    // }else{
+    //   this.comprobanteDePagoForm.enable()
+    //   this.isDataSave.emit(false);
+    // }
+    // console.log(this.comprobanteDePagoForm.value);
+    // this.proveedorForm.reset({proveedor: ''});
+  }
 }

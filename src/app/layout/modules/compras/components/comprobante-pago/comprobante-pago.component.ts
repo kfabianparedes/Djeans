@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -9,6 +9,7 @@ import { ButtonProgressService } from 'src/app/shared/services/button-progress.s
 import { TipoDeComprobanteService } from 'src/app/shared/services/tipo-de-comprobante.service';
 import { errorAlerta } from 'src/app/shared/utils/reutilizables';
 import { Proveedor } from '../../../proveedores/models/proveedor.model';
+import { ComprobanteDePagoDTO } from '../../utils/comprobante-pago-dto';
 import { ConfigGuiaRemision } from '../../utils/configuracion-guia-remision';
 
 @Component({
@@ -17,10 +18,13 @@ import { ConfigGuiaRemision } from '../../utils/configuracion-guia-remision';
   styleUrls: ['./comprobante-pago.component.css']
 })
 export class ComprobantePagoComponent implements OnInit {
+  @Output() isDataSave = new EventEmitter<boolean>();
+  @Input() dataSave! : boolean;
+
+  @Output() dataComprobanteDePago = new EventEmitter<ComprobanteDePagoDTO>();
   proveedor : Proveedor = {} as Proveedor;
   tiposDeComprobante: TipoDeComprobante[] = [];
 
-  public guardar : boolean = false;
   public todayDate =  new Date();
   public tomorrowDate =  new Date(this.todayDate.setDate(this.todayDate.getDate()));
 
@@ -43,16 +47,28 @@ export class ComprobantePagoComponent implements OnInit {
       private fb: FormBuilder,
       private _buttonProgressService: ButtonProgressService,
       private _tipoDeComprobanteService: TipoDeComprobanteService) { }
-
+      
   ngOnInit(): void {
     this._listarModelos();
   }
 
   public guardarDatos(): void {
-    this.guardar?
-      this.comprobanteDePagoForm.disable():
+
+    if(this.dataSave){
+      this.comprobanteDePagoForm.disable();
+      const informacionComprobanteDePago : ComprobanteDePagoDTO = {
+        tipoDeComprobante: this.tipoDeComprobante?.value,
+        fechaDeEmision: this.fechaDeEmision?.value,
+        serieDePago: this.serieDePago?.value,
+        numeroDePago: this.numeroDePago?.value,
+      }
+      this.dataComprobanteDePago.emit(informacionComprobanteDePago);
+      this.isDataSave.emit(true)
+    }else{
       this.comprobanteDePagoForm.enable()
-    console.log(this.comprobanteDePagoForm.value);
+      this.isDataSave.emit(false);
+    }
+    // console.log(this.comprobanteDePagoForm.value);
     // this.proveedorForm.reset({proveedor: ''});
   }
 
@@ -90,5 +106,5 @@ export class ComprobantePagoComponent implements OnInit {
 
     });
   }
-  
+
 }

@@ -22,6 +22,7 @@ import { DataProveedorRegistroActualizar } from '../../../proveedores/models/reg
 import { ProveedorService } from '../../../proveedores/services/proveedor.service';
 import { Talla } from '../../../tallas/models/talla.models';
 import { TallaService } from '../../../tallas/services/talla.service';
+import { ComprobanteDePagoDTO } from '../../utils/comprobante-pago-dto';
 import { ConfigGuiaRemision } from '../../utils/configuracion-guia-remision';
 
 @Component({
@@ -33,7 +34,7 @@ import { ConfigGuiaRemision } from '../../utils/configuracion-guia-remision';
 export class HomeCompraComponent implements OnInit , OnDestroy{
 
   public proveedores: Proveedor[] = [];
-  public mostrarModal : boolean = false;
+  public mostrarModalProveedor : boolean = false;
   public mostrarModalProducto : boolean = false;
   public mostrarTablaProducto : boolean = false;
   
@@ -47,6 +48,14 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   public colores : Color[] = [] ;
   public tallas : Talla[] = [] ;
 
+  //Data guardada formularios
+  public idProveedorSeleccionado!: number;
+  public isProviderSave: boolean = false;
+
+  public comprobanteDePago!: ComprobanteDePagoDTO;
+  public isPurchaseSave: boolean = false;
+
+  //
   constructor(
     private productoService : ProductoService, 
     private tallaService : TallaService, 
@@ -102,11 +111,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   public guardarProducto({producto}: DataProductoRegistroActualizar) : void {
     this._registrarProducto(producto);
   }
-
-  public modificarEstadoModal(estadoModal: boolean): void {
-    this.mostrarModal = estadoModal;
-  }
-
+  
   public modificarEstadoTablaProducto(estadoModalP: boolean): void {
     this.mostrarTablaProducto = estadoModalP;
   }
@@ -189,6 +194,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
     this.configGuiaRemision.textoOpcion=='AGREGAR'?this.configGuiaRemision.textoOpcion='CANCELAR':this.configGuiaRemision.textoOpcion='AGREGAR';
   }
   private listarData: Subscription = new Subscription;
+  
   private _listAll() : void {
     //vaciamos los arreglos  
     this.productos = [] as Producto[];
@@ -295,22 +301,18 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
 
   }
   
-  public esPosibleBuscarProveedor : boolean = false;
-  public idProveedorSelccionado: number = 0;
-  public obtenerProductosPorProveedor(idProveedor: number): void {
-    console.log('PROVEEDOR:');
-    console.log(idProveedor);
-    if(idProveedor){
-      this.esPosibleBuscarProveedor = true;
-      this.idProveedorSelccionado = idProveedor;
-    }
-    
+  public esPosibleBuscarProductos(): boolean {
+    return this.idProveedorSeleccionado && this.isProviderSave ? true : false;
+  }
+  
+  public esPosibleGuardarComprobantes(): boolean {
+    return this.comprobanteDePago && this.isPurchaseSave ? true : false;
   }
 
   public buscarProductosPorProveedor(): void {
     this.productosPorProveedor = [] ;
     this.mostrarTablaProducto=!this.mostrarTablaProducto;
-    this.productoService.listarProductosPorProveedor(this.idProveedorSelccionado).subscribe(
+    this.productoService.listarProductosPorProveedor(this.idProveedorSeleccionado).subscribe(
       {
         next: (respuesta:Respuesta)=>{
           (respuesta.data).forEach((producto:Producto)=>{
@@ -337,6 +339,10 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
         }
       }
     );
+  }
+
+  public esPosibleGenerarCompra(): boolean {
+    return this.esPosibleBuscarProductos() && this.esPosibleGuardarComprobantes();
   }
 
   ngOnDestroy(): void {
