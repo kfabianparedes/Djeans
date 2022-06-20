@@ -158,7 +158,7 @@ export class ModalProductoComponent implements OnInit {
         prod_descripcion: this.descripcion?.value,
         prod_precio_compra: +this.precio_compra?.value,
         prod_precio_venta: +this.precio_venta?.value,
-        prod_descuento_promocion: +((this.precio_promocion?.value==""?-1:this.precio_promocion?.value).toFixed(2)),
+        prod_descuento_promocion: +(this.precio_promocion?.value==""?-1:this.precio_promocion?.value),
         prod_precio_compra_base: +((this.precio_compra?.value * IGV).toFixed(2)),
         prod_precio_venta_base: +((this.precio_venta?.value * IGV).toFixed(2)),
         proveedor : this.proveedor?.value,

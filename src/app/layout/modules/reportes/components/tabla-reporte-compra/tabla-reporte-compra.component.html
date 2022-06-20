@@ -1,0 +1,120 @@
+
+
+<div class="card p-1">
+    <p-table
+        #tablaProducto
+        responsiveLayout="scroll"
+        [value]="reportesCompraTabla"
+        [filterDelay]="0">
+        <ng-template pTemplate="caption">
+            <form [formGroup]="filtroFormulario" (ngSubmit)="enviarRangoDeFechas()" class="form-group">
+            <div class="flex row">
+                    <div class="py-2 col-sm-6 col-md-5 col-lg-4 col-xl-3 text-center">
+                        <div class="row"> 
+                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 ">
+                                <label
+                                for="desde" 
+                                class="col-form-label">
+                                Desde: 
+                                </label>
+                            </div>
+                            <div class="col-9 col-sm-9 col-md-9 col-lg-9 ">
+                                <input 
+                                id="desde"
+                                type="date"
+                                class="input-busqueda form-control"
+                                formControlName="fechaInicio"
+                                >
+                            </div>
+                        </div>
+                                        <!-- <button [disabled]="cargando | async" 
+                                                (click)="filtrarBusqueda(tablaProducto)" 
+                                                type="button" 
+                                                class="btn btn-primary"><i class="pi pi-search" aria-hidden="true"></i>
+                                        </button>  -->
+                    </div>
+
+                    <div class="py-2 col-sm-6 col-md-5 col-lg-4 col-xl-3 text-center">
+                        <div class="row"> 
+                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 ">
+                                <label
+                                for="desde" 
+                                class="col-form-label">
+                                Hasta: 
+                                </label>
+                            </div>
+                            <div class="col-9 col-sm-9 col-md-9 col-lg-9 ">
+                                <input 
+                                id="desde"
+                                type="date"
+                                class="input-busqueda form-control"
+                                formControlName="fechaFin"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                <div class="py-2 col-3 col-sm-6 col-md-1 col-lg-2 col-xl-1 text-center">
+                    <button [disabled]="cargando | async" 
+                            type="button" 
+                            (click)="enviarRangoDeFechas()"
+                            class="btn btn-primary">Filtrar
+                    </button>
+                    
+                </div>
+                <div class="py-2 col-1 col-sm-6 col-md-1 col-lg-2 col-xl-1 text-center">
+                    
+                    <button [disabled]="cargando | async" 
+                    type="button" 
+                    (click)="refrezcarLista()"
+                    class="btn btn-primary"> <i class="pi pi-refresh"></i>
+                    </button>
+                    
+                </div>
+                <!-- <div class="py-2 col-sm-12 col-md-4 col-lg-3 text-center">
+                    <button 
+                            *appRol="[rolPermissionService.ROL_USER.su]"
+                            [disabled]="cargando | async" 
+                            (click)="registroProducto()" 
+                            class="btn-header-derecha btn btn-primary"
+                            type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo
+                    </button> 
+                </div> -->
+            </div>
+        </form>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr class="titulo-tabla contenedor">
+                <th class="text-center" pSortableColumn="comp_serie">Serie <p-sortIcon field="comp_serie"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="comp_numero">Número <p-sortIcon field="comp_numero"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="comp_fecha_registro">Fecha de registro<p-sortIcon field="comp_fecha_registro"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="proveedor_descripcion">Proveedor <p-sortIcon field="proveedor_descripcion"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="tipo_comprobante_descripcion">Comprobante <p-sortIcon field="tipo_comprobante_descripcion"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="comp_importe_total">Total <p-sortIcon field="comp_importe_total"></p-sortIcon></th>
+                <th class="text-center" pSortableColumn="usuario_descripcion">Usuario <p-sortIcon field="usuario_descripcion"></p-sortIcon></th>
+                <th class="text-center"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-compra >
+            <tr class="filas-tabla contenedor"> 
+                <td class="text-center">{{compra.comp_serie}}</td>
+                <td class="text-center">{{compra.comp_numero}}</td>
+                <td class="text-center">{{compra.comp_fecha_registro  | date: 'dd/MM/yyyy' }}</td>
+                <td class="text-center">{{compra.proveedor_descripcion}}</td>
+                <td class="text-center">{{compra.tipo_comprobante_descripcion}}</td>
+                <td class="text-center">{{compra.comp_importe_total}}</td>
+                <td class="text-center">{{compra.usuario_descripcion}}</td>
+                <td class="text-center">
+                    <button 
+                        [disabled]="cargando | async" 
+                        (click)="visualizarDetalleDeCompra(compra.comp_id,compra.comp_serie,compra.comp_numero);" 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-eye" 
+                        class="p-button-rounded p-button-success p-button-outlined">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
