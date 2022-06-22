@@ -1,5 +1,5 @@
 <p-dialog
-    [(visible)]="mostrarTablaProductos"
+    [(visible)]="verTabla"
     [modal]="true"
     [closeOnEscape]="false"
     [draggable]="false"
@@ -79,11 +79,11 @@
                     <td class="text-center">
                         <button 
                             [disabled]="cargando | async" 
-                            
+                            (click)="enviarDetalle(producto)"
                             pButton 
                             pRipple 
                             type="button" 
-                            icon="pi pi-eye" 
+                            icon="pi pi-check" 
                             class="p-button-rounded p-button-success p-button-outlined">
                         </button>
                     </td>

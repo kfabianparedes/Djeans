@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { forkJoin, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { DetalleDeCompra } from 'src/app/shared/models/detalle-de-compra.models';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 import { errorAlerta } from 'src/app/shared/utils/reutilizables';
@@ -318,9 +319,12 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
     return this.guiaDeRemision && this.isRemissionGuideSave;
   }
 
+  // valores : any;
   public buscarProductosPorProveedor(): void {
     this.productosPorProveedor = [] ;
     this.mostrarTablaProducto=!this.mostrarTablaProducto;
+    
+
     this.productoService.listarProductosPorProveedor(this.proveedorSeleccionado.pro_id).subscribe(
       {
         next: (respuesta:Respuesta)=>{
@@ -332,6 +336,20 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
           });
           console.log('LISTA DE PRODUCTOS');
           console.log(this.productosPorProveedor);
+
+          // this.valores = this.productosPorProveedor.findIndex((value:Producto,index:number)=>{
+          //   const productoBuscado = this.detallesDeCompra.find((detalle:DetalleDeCompra)=>value === detalle.productoDetalle)
+          //   if(productoBuscado)
+          //     return [index,1];
+          //   else
+          //     return [-1,0];
+          // })
+          // console.log(this.valores);
+          
+          // this.productosPorProveedor.splice(valores[0],valores[1]);
+
+
+
         },
         error:(respuestaError:HttpErrorResponse)=>{
           const respuesta:Respuesta={...respuestaError.error};
@@ -371,5 +389,26 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   public guardarProveedorSeleccionado($event: Proveedor): void {
     this.proveedorSeleccionado = $event;
     this.idProveedorSeleccionado = this.proveedorSeleccionado.pro_id;
+  }
+
+  public detallesDeCompra: DetalleDeCompra[] = [];
+
+  public agregarDetalleCompra(productoSeleccionado: Producto): void {
+
+    const detalleEncontrado = this.detallesDeCompra.find((detalleDeCompra:DetalleDeCompra)=>detalleDeCompra.productoDetalle === productoSeleccionado);
+    console.log('Detalles de compra',detalleEncontrado);
+    if(detalleEncontrado==undefined){
+      const detalle : DetalleDeCompra = {
+        det_comp_id: 0,
+        det_comp_cantidad: 0,
+        det_comp_importe: 0,
+        producto: productoSeleccionado.prod_id,
+        productoDetalle: productoSeleccionado,
+        producto_descripcion: productoSeleccionado.prod_descripcion,
+        compra: 0
+      }
+      this.detallesDeCompra.push({...detalle})
+    }
+
   }
 }

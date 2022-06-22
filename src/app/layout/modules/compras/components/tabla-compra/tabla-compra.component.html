@@ -1,67 +1,80 @@
 <div class="card">
     <p-table 
-        [value]="products2" 
+        [value]="detallesDeCompra" 
         dataKey="id" 
         editMode="row" 
-        responsiveLayout="scroll">
+        responsiveLayout="scroll"
+        >
         
         <ng-template pTemplate="header">
             <tr class="titulo-tabla contenedor">
-                <th class="text-center">Code</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">Category</th>
-                <th class="text-center">Quantity</th>
-                <th style="width:8rem"></th>
+                <th class="text-center">Descripcion</th>
+                <th class="text-center">Precio Compra</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Importe</th>
+                <th class="text-center"></th>
             </tr>
 
         </ng-template>
         
-        <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
-            <tr [pEditableRow]="product">
-                <td>
+        <ng-template pTemplate="body" let-detalle let-editing="editing" let-ri="rowIndex">
+            <tr class="filas-tabla contenedor" [pEditableRow]="detalle">
+                <td class="text-center">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.code">
+                            <input pInputText type="text" [(ngModel)]="detalle.producto_descripcion">
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{product.code}}
+                            {{detalle.producto_descripcion}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <td>
+                <td class="text-center">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.name" required>
+                            <input pInputText type="text" [(ngModel)]="detalle.productoDetalle.prod_precio_compra" required>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{product.name}}
+                            {{detalle.productoDetalle.prod_precio_compra | currency: 'PEN'}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <td>
+                <!-- <td class="text-center">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-dropdown [options]="statuses" [(ngModel)]="product.inventoryStatus" [style]="{'width':'100%'}"></p-dropdown>
+                            <p-dropdown [options]="statuses" [(ngModel)]="detalle.inventoryStatus" [style]="{'width':'100%'}"></p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{product.inventoryStatus}}
+                            {{detalle.inventoryStatus}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td> -->
+                <td class="text-center">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="detalle.det_comp_cantidad">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{detalle.det_comp_cantidad}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <td>
+                
+                <td class="text-center">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.price">
+                            <input pInputText type="text" [(ngModel)]="detalle.det_comp_importe">
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{product.price | currency: 'USD'}}
+                            {{detalle.det_comp_importe | currency: 'PEN'}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <td style="text-align:center">
-                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                <td class="text-center">
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(detalle)" class="p-button-rounded p-button-text mr-2"></button>
+                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" (click)="eliminarDetalle(detalle)" class="p-button-rounded p-button-text p-button-danger"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(detalle)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(detalle, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
                 </td>
             </tr>
         </ng-template>

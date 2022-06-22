@@ -12,10 +12,14 @@ import { PRODUCT_TABLE_RESPONSIVE } from '../../utils/breakpoint-tabla-productos
   styleUrls: ['./tabla-productos.component.css']
 })
 export class TablaProductosComponent implements OnChanges  {
+  verTabla: boolean = true;
   @Input() mostrarTablaProductos!: boolean;
   @Output() cerrarTablaProductos = new EventEmitter<boolean>();
   @Input() productosDeTabla: Producto[] = [];
   @Output() crearNuevoProducto = new EventEmitter<boolean>();
+
+  @Output() enviarProducto = new EventEmitter<Producto>();
+
 
   public cargando : Subject<boolean> = this._buttonProgressService.cargando ; 
   public filtroBusquedaProducto: string = '' ;
@@ -46,5 +50,11 @@ export class TablaProductosComponent implements OnChanges  {
   
   public registrarNuevoProducto(): void {
     this.crearNuevoProducto.emit(true);
+  }
+
+  public enviarDetalle(producto: Producto): void {
+    console.log(producto);
+    this.productosDeTabla = [...this.productosDeTabla.filter(($producto: Producto) => $producto !== producto)]
+    this.enviarProducto.emit(producto);
   }
 }

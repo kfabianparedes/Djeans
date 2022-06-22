@@ -80,7 +80,10 @@
         </div>
 
         <div class="row mt-5">
-            <tabla-compra>
+            <tabla-compra
+                [detallesDeCompra]="detallesDeCompra"
+                (detalleDeCompraActualizado)="detallesDeCompra=$event"
+            >
             </tabla-compra>
         </div>
 
@@ -124,9 +127,11 @@
 </modal-producto>
 
 <tabla-productos
-    
-    [mostrarTablaProductos]="mostrarTablaProducto"
+    *ngIf="mostrarTablaProducto"
     [productosDeTabla]="productosPorProveedor"
     (cerrarTablaProductos)="mostrarTablaProducto=$event"
-    (crearNuevoProducto)="registrarNuevoProductoEnModal($event)">
+    (crearNuevoProducto)="registrarNuevoProductoEnModal($event)"
+    (enviarProducto)="agregarDetalleCompra($event)"
+    
+    >
 </tabla-productos>
