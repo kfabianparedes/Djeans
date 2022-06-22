@@ -1,1 +1,24 @@
-<p>reporte-compra works!</p>
+<titulo-pagina [titulo]="'Compras'"></titulo-pagina>
+<progressbar></progressbar>
+<subtitulo-pagina [subTitulo]="'Resporte de compras'"></subtitulo-pagina>
+
+<div class="container-fluid">
+    <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+    
+    <tabla-reporte-compra
+        [reportesCompraTabla]="compras"
+        (fechasFiltro) = "modificarRangoFechas($event)"
+        (mostrarModal)="modificarMostrarModal($event)"
+        (visualizarDetalleCompraId) = "modificarVisualizarDetalleCompraId($event)"
+        (visualizarDetalleCompraSerie) = "modificarVisualizarDetalleCompraSerie($event)"
+        (visualizarDetalleCompraNumero) = "modificarVisualizarDetalleCompraNumero($event)">
+    </tabla-reporte-compra>
+</div>
+
+<modal-reporte-compra
+    [visualizarDetalleCompraSerie] = "visualizarDetalleCompraSerie"
+    [detalles] ="detalleDeLaCompraVisualizar"
+    [visualizarDetalleCompraNumero] = "visualizarDetalleCompraNumero"
+    (cerrarModal) = modificarMostrarModal($event)
+    [mostrarModal] = "mostrarModal"> 
+</modal-reporte-compra>
