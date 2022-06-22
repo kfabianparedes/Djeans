@@ -15,6 +15,8 @@ export class TablaProductosComponent implements OnChanges  {
   @Input() mostrarTablaProductos!: boolean;
   @Output() cerrarTablaProductos = new EventEmitter<boolean>();
   @Input() productosDeTabla: Producto[] = [];
+  @Output() crearNuevoProducto = new EventEmitter<boolean>();
+
   public cargando : Subject<boolean> = this._buttonProgressService.cargando ; 
   public filtroBusquedaProducto: string = '' ;
 
@@ -40,5 +42,9 @@ export class TablaProductosComponent implements OnChanges  {
     // this.mostrarTablaProductos = changes['mostrarModal'].currentValue; 
     // if(!this.mostrarModal)
     //   this.guiaRemisionForm.reset({...this._datosIniciales});
+  }
+  
+  public registrarNuevoProducto(): void {
+    this.crearNuevoProducto.emit(true);
   }
 }

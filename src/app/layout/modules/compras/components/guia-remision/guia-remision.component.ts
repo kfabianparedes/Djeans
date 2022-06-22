@@ -2,21 +2,22 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
+import {GuiaRemisionDTO} from "../../utils/guia-remision-dto";
 
 @Component({
   selector: 'compra-guia-remision',
   templateUrl: './guia-remision.component.html',
   styleUrls: ['./guia-remision.component.css']
 })
-export class GuiaRemisionComponent implements OnInit,OnChanges {
-  @Output() isDataSave = new EventEmitter<boolean>();
+export class GuiaRemisionComponent {
   @Input() dataSave! : boolean;
-  
-  @Input() mostrarModal! : boolean ;
-  
+  @Output() isDataSave = new EventEmitter<boolean>();
+
+  @Output() dataGuiaDeRemision = new EventEmitter<GuiaRemisionDTO>();
+
   public todayDate =  new Date();
   public tomorrowDate =  new Date(this.todayDate.setDate(this.todayDate.getDate()));
-  
+
   public guiaRemisionForm: FormGroup = this.fb.group({
     fechaDeEmision: ['', [ Validators.required ]],
     serieDePago: ['', [ Validators.required, Validators.minLength(4) , Validators.maxLength(4) ,  Validators.pattern(/^[A-Z0-9]+[0-9]*$/)]],
@@ -34,18 +35,6 @@ export class GuiaRemisionComponent implements OnInit,OnChanges {
       private _buttonProgressService: ButtonProgressService
     ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.guiaRemisionForm.value);
-    this.mostrarModal = changes['mostrarModal'].currentValue; 
-    if(!this.mostrarModal)
-      this.guiaRemisionForm.reset({...this._datosIniciales});
-  }
-
-  ngOnInit(): void {
-  }
-
-
-
   get fechaDeEmision() {
     return this.guiaRemisionForm.get('fechaDeEmision');
   }
@@ -57,22 +46,20 @@ export class GuiaRemisionComponent implements OnInit,OnChanges {
   }
 
   public guardarDatos(): void {
-
-    // if(this.dataSave){
-    //   this.comprobanteDePagoForm.disable();
-    //   const informacionComprobanteDePago : ComprobanteDePagoDTO = {
-    //     tipoDeComprobante: this.tipoDeComprobante?.value,
-    //     fechaDeEmision: this.fechaDeEmision?.value,
-    //     serieDePago: this.serieDePago?.value,
-    //     numeroDePago: this.numeroDePago?.value,
-    //   }
-    //   this.dataComprobanteDePago.emit(informacionComprobanteDePago);
-    //   this.isDataSave.emit(true)
-    // }else{
-    //   this.comprobanteDePagoForm.enable()
-    //   this.isDataSave.emit(false);
-    // }
-    // console.log(this.comprobanteDePagoForm.value);
-    // this.proveedorForm.reset({proveedor: ''});
+    if(this.dataSave){
+      this.guiaRemisionForm.disable();
+      const informacionGuiaRemision : GuiaRemisionDTO = {
+        fechaDeEmision: this.fechaDeEmision?.value,
+        serieDePago: this.serieDePago?.value,
+        numeroDePago: this.numeroDePago?.value,
+      }
+      this.dataGuiaDeRemision.emit(informacionGuiaRemision);
+      this.isDataSave.emit(true)
+    }else{
+      this.guiaRemisionForm.enable()
+      this.isDataSave.emit(false);
+    }
+    console.log(this.guiaRemisionForm.value);
+    // this.guiaRemisionForm.reset({...this._datosIniciales});
   }
 }

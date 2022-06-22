@@ -1,5 +1,5 @@
 
-<div *ngIf="mostrarModal" class="row card">
+<div class="row card">
     <div class="card-header color-header text-white">
         <div class="row">
             <div class="mt-2 text-start col-12 col-md-12 col-lg-12 col-xl-4">
@@ -18,11 +18,11 @@
     <div class="card-body">
         <form [formGroup]="guiaRemisionForm" >
             <div class="row justify-content-between">
-                <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-8 ">
+                <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-7 ">
                     <div class="row">
-                        <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-5">
-                            <label 
-                                class="ml-3 label-compra" 
+                        <div class="col-12 col-sm-12 col-md-12 col-xl-5">
+                            <label
+                                class="ml-3 label-compra"
                                 for="idNroSerie">
                                     NRO. DE SERIE
                                     <small class="text-danger">
@@ -51,14 +51,14 @@
                                     <small class="col-12" *ngIf="serieDePago?.errors?.['pattern']">
                                         *El número de serie debe ser válido. Ejemplo: F001
                                     </small>
-                                </div> 
+                                </div>
                             </div>
 
-                            
+
                         </div>
-                        <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-7 ">
-                            <label 
-                                class="ml-3 label-compra" 
+                        <div class="col-12 col-sm-12 col-md-12 col-xl-7 ">
+                            <label
+                                class="ml-3 label-compra"
                                 for="idNroComprobante">
                                     NRO. DE COMPROBANTE
                                     <small class="text-danger">
@@ -87,16 +87,16 @@
                                     <small class="col-12" *ngIf="numeroDePago?.errors?.['pattern']">
                                         *El número de comprobante debe ser válido. Ejemplo: 000001
                                     </small>
-                                </div>   
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <br>
-                <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
-                    <label 
-                        class="ml-3 label-compra" 
+                <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-5 ">
+                    <label
+                        class="ml-3 label-compra"
                         for="idFechaEmision">
                             FECHA EMISIÓN
                             <small class="text-danger">
@@ -104,12 +104,12 @@
                             </small>:
                     </label>
                     <div class="col-12">
-                        <p-calendar 
+                        <p-calendar
                             id="idFechaEmision"
                             placeholder="DD/MM/AAAA"
-                            [maxDate]="tomorrowDate" 
-                            [style]="{'width':'100%'}" 
-                            [showIcon]="true" 
+                            [maxDate]="tomorrowDate"
+                            [style]="{'width':'100%'}"
+                            [showIcon]="true"
                             inputId="icon"
                             formControlName="fechaDeEmision">
                         </p-calendar>
@@ -122,8 +122,8 @@
                     </div>
                 </div>
             </div>
-            
-        </form> 
-        
+
+        </form>
+
     </div>
 </div>

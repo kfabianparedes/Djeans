@@ -24,6 +24,7 @@ import { Talla } from '../../../tallas/models/talla.models';
 import { TallaService } from '../../../tallas/services/talla.service';
 import { ComprobanteDePagoDTO } from '../../utils/comprobante-pago-dto';
 import { ConfigGuiaRemision } from '../../utils/configuracion-guia-remision';
+import {GuiaRemisionDTO} from "../../utils/guia-remision-dto";
 
 @Component({
   selector: 'app-home-compra',
@@ -37,37 +38,40 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   public mostrarModalProveedor : boolean = false;
   public mostrarModalProducto : boolean = false;
   public mostrarTablaProducto : boolean = false;
-  
+
   public proveedor: Proveedor = {} as Proveedor;
 
-  public productosPorProveedor : Producto[] = [] ;
-  public productos : Producto[] = [] ;
-  public categorias : Categoria[] = [] ;
-  public modelos : Modelo[] = [] ;
-  public marcas : Marca[] = [] ;
-  public colores : Color[] = [] ;
-  public tallas : Talla[] = [] ;
+  public productosPorProveedor : Producto[] = [];
+  public productos : Producto[] = [];
+  public categorias : Categoria[] = [];
+  public modelos : Modelo[] = [];
+  public marcas : Marca[] = [];
+  public colores : Color[] = [];
+  public tallas : Talla[] = [];
 
   //Data guardada formularios
-  public idProveedorSeleccionado!: number;
+  public proveedorSeleccionado!: Proveedor;
   public isProviderSave: boolean = false;
 
   public comprobanteDePago!: ComprobanteDePagoDTO;
   public isPurchaseSave: boolean = false;
 
+  public guiaDeRemision!: GuiaRemisionDTO;
+  public isRemissionGuideSave: boolean = false;
+
   //
+
   constructor(
-    private productoService : ProductoService, 
-    private tallaService : TallaService, 
-    private modeloService : ModeloService, 
-    private proveedorService : ProveedorService, 
-    private colorService : ColorService, 
-    private marcaService : MarcaService, 
-    private categoriaService : CategoriaService, 
+    private productoService : ProductoService,
+    private tallaService : TallaService,
+    private modeloService : ModeloService,
+    private proveedorService : ProveedorService,
+    private colorService : ColorService,
+    private marcaService : MarcaService,
+    private categoriaService : CategoriaService,
     public rolPermissionService: RolPermissionService,
     public messageService: MessageService,
   ) { }
-
 
   ngOnInit(): void {
     // this._listarProveedores();
@@ -79,6 +83,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   }
 
   private _suscripcionProveedores: Subscription = new Subscription;
+  
   private _listarProveedores() : void {
     this.proveedores = [];
     this._suscripcionProveedores = this.proveedorService.listarProveedores().subscribe({
@@ -94,7 +99,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
       },error: (respuestaError:HttpErrorResponse)=>{
 
         const respuesta : Respuesta = { ...respuestaError.error }
-        const codigoHttp : number = respuestaError.status; 
+        const codigoHttp : number = respuestaError.status;
         if(codigoHttp !== 0){
           errorAlerta( respuesta.code.toString(), respuesta.message);
         }else{
@@ -111,7 +116,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   public guardarProducto({producto}: DataProductoRegistroActualizar) : void {
     this._registrarProducto(producto);
   }
-  
+
   public modificarEstadoTablaProducto(estadoModalP: boolean): void {
     this.mostrarTablaProducto = estadoModalP;
   }
@@ -125,8 +130,8 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
       {
         next: (respuesta: Respuesta)=>{
           this.messageService.add({
-            severity:'success', 
-            summary: 'Registrado...', 
+            severity:'success',
+            summary: 'Registrado...',
             detail: respuesta.message
           });
           this._listAll();
@@ -136,8 +141,8 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
           const codigoHttp : number = respuestaError.status;
           if(codigoHttp !== 0){
             this.messageService.add({
-              severity:'error', 
-              summary: `Código de error: ${respuesta.code}`, 
+              severity:'error',
+              summary: `Código de error: ${respuesta.code}`,
               detail: respuesta.message
             });
           }else{
@@ -148,19 +153,19 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
     );
 
   }
-  
+
   private _registrarProducto(producto: Producto) : void {
 
     this.productoService.registrarProductos(producto).subscribe({
-      
+
       next:(respuesta: Respuesta)=>{
 
         this.messageService.add({
-          severity:'success', 
-          summary: 'Registrando...', 
+          severity:'success',
+          summary: 'Registrando...',
           detail: respuesta.message
         });
-        
+
         this._listAll();
 
       }, error : (respuestaError : HttpErrorResponse) =>{
@@ -168,8 +173,8 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
           const codigoHttp : number = respuestaError.status;
           if(codigoHttp !== 0){
             this.messageService.add({
-              severity:'error', 
-              summary: `Código de error: ${respuesta.code}`, 
+              severity:'error',
+              summary: `Código de error: ${respuesta.code}`,
               detail: respuesta.message
             });
           }else{
@@ -188,15 +193,15 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   };
 
   public agregarGuiaRemisionCompra(): void {
-    this.configGuiaRemision.hayGuiaRemision = !this.configGuiaRemision.hayGuiaRemision;
+    this.configGuiaRemision.hayGuiaRemision?this.configGuiaRemision.hayGuiaRemision=false:this.configGuiaRemision.hayGuiaRemision=true;
     this.configGuiaRemision.iconGuiaRemision==='save'?this.configGuiaRemision.iconGuiaRemision='times':this.configGuiaRemision.iconGuiaRemision='save';
     this.configGuiaRemision.colorGuiaRemision==='success'?this.configGuiaRemision.colorGuiaRemision='danger':this.configGuiaRemision.colorGuiaRemision='success';
     this.configGuiaRemision.textoOpcion=='AGREGAR'?this.configGuiaRemision.textoOpcion='CANCELAR':this.configGuiaRemision.textoOpcion='AGREGAR';
   }
   private listarData: Subscription = new Subscription;
-  
+
   private _listAll() : void {
-    //vaciamos los arreglos  
+    //vaciamos los arreglos
     this.productos = [] as Producto[];
     this.proveedores = [] as Proveedor[];
     this.tallas = [] as Talla[];
@@ -204,7 +209,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
     this.modelos = [] as Modelo[];
     this.colores = [] as Color[];
     this.marcas = [] as Marca[];
-    
+
     //hacemos la mega subscripción
 
     this.listarData = forkJoin(
@@ -228,7 +233,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
           const marcasData = [...respuestas[6].data];
 
           (productosData).forEach((producto:Producto)=>{
-            
+
             this.productos.push({
               ...producto,
               productoEstado:producto.prod_estado?'ACTIVO':'INACTIVO',
@@ -239,47 +244,47 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
               colorDescripcion: (coloresData.find((color:Color) => color.col_id === producto.color)).col_descripcion || '',
               marcaDescripcion: (marcasData.find((marca:Marca) => marca.mar_id === producto.marca)).mar_descripcion || ''
             });
-          
+
           });
 
           (proveedoresData).forEach((proveedor:Proveedor)=>{
             this.proveedores.push({
-              ...proveedor, 
+              ...proveedor,
               proveedorEstado:proveedor.pro_estado?'ACTIVO':'INACTIVO'
             })
           });
 
           (tallasData).forEach((talla:Talla)=>{
             this.tallas.push({
-              ...talla, 
+              ...talla,
               tallaEstado:talla.tal_estado?'ACTIVO':'INACTIVO'
             })
           });
 
           (categoriasData).forEach((categoria:Categoria)=>{
             this.categorias.push({
-              ...categoria, 
+              ...categoria,
               categoriaEstado:categoria.cat_estado?'ACTIVO':'INACTIVO'
             })
           });
 
           (modelosData).forEach((modelo:Modelo)=>{
             this.modelos.push({
-              ...modelo, 
+              ...modelo,
               modeloEstado:modelo.mod_estado?'ACTIVO':'INACTIVO'
             })
           });
 
           (coloresData).forEach((color:Color)=>{
             this.colores.push({
-              ...color, 
+              ...color,
               colorEstado:color.col_estado?'ACTIVO':'INACTIVO'
             })
           });
 
           (marcasData).forEach((marca:Marca)=>{
             this.marcas.push({
-              ...marca, 
+              ...marca,
               marcaEstado:marca.mar_estado?'ACTIVO':'INACTIVO'
             })
           });
@@ -300,19 +305,23 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
       });
 
   }
-  
+
   public esPosibleBuscarProductos(): boolean {
-    return this.idProveedorSeleccionado && this.isProviderSave ? true : false;
+    return this.proveedorSeleccionado && this.isProviderSave;
   }
-  
+
   public esPosibleGuardarComprobantes(): boolean {
-    return this.comprobanteDePago && this.isPurchaseSave ? true : false;
+    return this.comprobanteDePago && this.isPurchaseSave ;
+  }
+
+  public esPosibleGuardarGuiaRemision(): boolean {
+    return this.guiaDeRemision && this.isRemissionGuideSave;
   }
 
   public buscarProductosPorProveedor(): void {
     this.productosPorProveedor = [] ;
     this.mostrarTablaProducto=!this.mostrarTablaProducto;
-    this.productoService.listarProductosPorProveedor(this.idProveedorSeleccionado).subscribe(
+    this.productoService.listarProductosPorProveedor(this.proveedorSeleccionado.pro_id).subscribe(
       {
         next: (respuesta:Respuesta)=>{
           (respuesta.data).forEach((producto:Producto)=>{
@@ -341,12 +350,26 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
     );
   }
 
-  public esPosibleGenerarCompra(): boolean {
-    return this.esPosibleBuscarProductos() && this.esPosibleGuardarComprobantes();
+  public esPosibleComprar(): boolean {
+    return this.configGuiaRemision.hayGuiaRemision?
+    this.esPosibleBuscarProductos() && this.esPosibleGuardarComprobantes() && this.esPosibleGuardarGuiaRemision():
+    this.esPosibleBuscarProductos() && this.esPosibleGuardarComprobantes();
+    
   }
 
   ngOnDestroy(): void {
     this._suscripcionProveedores.unsubscribe();
     this.listarData.unsubscribe();
+  }
+
+  public idProveedorSeleccionado : number = 0;
+  public registrarNuevoProductoEnModal($event: boolean): void {
+    this.mostrarModalProducto = $event;
+    // this.proveedorSeleccionado = this.proveedorSeleccionado;
+  }
+  
+  public guardarProveedorSeleccionado($event: Proveedor): void {
+    this.proveedorSeleccionado = $event;
+    this.idProveedorSeleccionado = this.proveedorSeleccionado.pro_id;
   }
 }

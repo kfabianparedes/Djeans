@@ -1,6 +1,7 @@
 <p-dialog
     [(visible)]="mostrarTablaProductos"
     [modal]="true"
+    [closeOnEscape]="false"
     [draggable]="false"
     [resizable]="false"
     [breakpoints]="PRODUCT_TABLE_RESPONSIVE"
@@ -46,7 +47,7 @@
                         <button 
                                 *appRol="[rolPermissionService.ROL_USER.su]"
                                 [disabled]="cargando | async" 
-                                
+                                (click)="registrarNuevoProducto()"
                                 class="btn-header-derecha btn btn-primary"
                                 type="button" ><i class="pi pi-user-plus">&nbsp;</i>Nuevo
                         </button>
@@ -101,3 +102,4 @@
         </ng-template>
 
 </p-dialog>
+

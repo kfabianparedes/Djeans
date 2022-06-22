@@ -4,77 +4,78 @@
 
 <div class="row">
     <p-toast (onClose)="closeAlert()" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
-    
+
     <div *appRol="[rolPermissionService.ROL_USER.su]" class="px-0 px-lg-5 pt-0 pt-lg-2">
         <div class="row">
             <div class="col-12 col-md-6 my-1">
                 <section class="row">
-                    <compra-informacion-proveedor 
+                    <compra-informacion-proveedor
                         [proveedores]="proveedores"
                         [dataSave]="isProviderSave"
                         (isDataSave)="isProviderSave=$event"
                         (registrarNuevoProveedor)="mostrarModalProveedor=$event"
-                        (proveedorSeleccionado)="idProveedorSeleccionado=$event"
+                        (proveedorSeleccionado)="guardarProveedorSeleccionado($event)"
                         >
                     </compra-informacion-proveedor>
                 </section>
-    
+
                 <section class="row">
                     <div class="card p-3">
-                        <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
+                        <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4">
                             <label class="ml-3" for="busquedaProveedor"><strong>BUSCAR PRODUCTO</strong></label>
                             <div class="col-12">
-                                <button 
+                                <button
+                                    id="busquedaProveedor"
                                     [disabled]="!esPosibleBuscarProductos()"
-                                    (click)="buscarProductosPorProveedor()" 
-                                    [style]="{'width':'100%'}"  
-                                    class="btn btn-primary" 
+                                    (click)="buscarProductosPorProveedor()"
+                                    [style]="{'width':'100%'}"
+                                    class="btn btn-primary"
                                     type="button">PRODUCTOS
-                                        <i  
-                                            style="font-size: 12px;" 
+                                        <i
+                                            style="font-size: 12px;"
                                             class="pi pi-search">
-                                        </i> 
-                                </button>      
+                                        </i>
+                                </button>
                             </div>
                         </div>
                     </div>
-    
-                    
-    
                 </section>
-    
-                
+
+
             </div>
-    
+
             <div class="offset-0 offset-md-1 col-12 col-md-5 mt-1">
                 <compra-comprobante-pago
                     [dataSave]="isPurchaseSave"
                     (isDataSave)="isPurchaseSave=$event"
-                    (dataComprobanteDePago)="comprobanteDePago=$event"
-                >
+                    (dataComprobanteDePago)="comprobanteDePago=$event">
                 </compra-comprobante-pago>
 
                 <div class="row card p-3 ">
                     <div class="mt-2 col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-4 ">
-                        <label class="ml-3" for="busquedaProveedor"><strong>GUÍA DE REMISIÓN</strong></label>
+                        <label class="ml-3" for="addRemissionGuide"><strong>GUÍA DE REMISIÓN</strong></label>
                         <div class="col-12">
-                            <button 
-                                (click)="agregarGuiaRemisionCompra()" 
-                                [style]="{'width':'100%'}"  
-                                class="btn btn-{{configGuiaRemision.colorGuiaRemision}}" 
-                                type="button">{{configGuiaRemision.textoOpcion}} 
-                                    <i  style="font-size: 12px;" 
+                            <button
+                                id="addRemissionGuide"
+                                (click)="agregarGuiaRemisionCompra()"
+                                [style]="{'width':'100%'}"
+                                class="btn btn-{{configGuiaRemision.colorGuiaRemision}}"
+                                type="button">{{configGuiaRemision.textoOpcion}}
+                                    <i  style="font-size: 12px;"
                                         class="pi pi-{{configGuiaRemision.iconGuiaRemision}}">
-                                    </i> 
-                            </button>      
+                                    </i>
+                            </button>
                         </div>
                     </div>
                 </div>
-    
-                <compra-guia-remision 
-                    [mostrarModal]="configGuiaRemision.hayGuiaRemision">
+
+                <compra-guia-remision
+                    *ngIf="configGuiaRemision.hayGuiaRemision"
+                    [dataSave]="isRemissionGuideSave"
+                    (isDataSave)="isRemissionGuideSave=$event"
+                    (dataGuiaDeRemision)="guiaDeRemision=$event">
                 </compra-guia-remision>
-    
+
             </div>
         </div>
 
@@ -82,12 +83,12 @@
             <tabla-compra>
             </tabla-compra>
         </div>
-        
+
         <div class="row mt-4">
-            <div class="text-center ">
-                <button 
+            <div class="text-center">
+                <button
                     type="button"
-                    [disabled]="!esPosibleGenerarCompra()"
+                    [disabled]="!esPosibleComprar()"
                     class="py-2 px-5 btn btn-primary">REALIZAR COMPRA
                 </button>
             </div>
@@ -98,31 +99,34 @@
 
 <modal-proveedor
     *appRol="[rolPermissionService.ROL_USER.su]"
-    [tituloModal]="'Nuevo Proveedor'" 
+    [tituloModal]="'Nuevo Proveedor'"
     [mostrarModal]="mostrarModalProveedor"
     [esVisualizarModal]="false"
     (enviarInformacionProveedor)="guardarProveedor($event)"
-    (cerrarModal)="mostrarModalProveedor=$event"> 
+    (cerrarModal)="mostrarModalProveedor=$event">
 </modal-proveedor>
 
 
 <modal-producto
+    *ngIf="mostrarModalProducto"
+    [proveedorSeleccionado]="proveedorSeleccionado"
     [proveedores]="proveedores"
     [tallas]="tallas"
     [modelos]="modelos"
     [categorias]="categorias"
     [marcas]="marcas"
     [colores]="colores"
-    [tituloModal]="'Nuevo Producto'" 
-    [mostrarModal]="mostrarModalProducto"
+    [tituloModal]="'Nuevo Producto'"
+    [mostrarModal]="true"
     [esVisualizarModal]="false"
     (enviarInformacionProducto)="guardarProducto($event)"
-    (cerrarModal)="modificarEstadoModalProducto($event)"> 
+    (cerrarModal)="modificarEstadoModalProducto($event)">
 </modal-producto>
 
 <tabla-productos
+    
     [mostrarTablaProductos]="mostrarTablaProducto"
     [productosDeTabla]="productosPorProveedor"
     (cerrarTablaProductos)="mostrarTablaProducto=$event"
->
+    (crearNuevoProducto)="registrarNuevoProductoEnModal($event)">
 </tabla-productos>

@@ -42,6 +42,7 @@ export class ModalProductoComponent implements OnInit {
   @Output() esVisualizar = new EventEmitter<boolean>();
   @Output() enviarInformacionProducto = new EventEmitter<DataProductoRegistroActualizar>();
 
+  @Input() proveedorSeleccionado!: Proveedor;
 
   private categorriaSeleccionada : string = '';
   private marcaSeleccionada : string = ''; 
@@ -97,8 +98,12 @@ export class ModalProductoComponent implements OnInit {
   
 
   ngOnInit(): void {
+    this.descripcion?.disable();
     this._reiniciarFormulario();
-    
+  }
+
+  private _reiniciarFormulario(): void {
+    this.productoFormulario.reset({...this._datosIniciales});
   }
 
   get codigo(){
@@ -140,6 +145,7 @@ export class ModalProductoComponent implements OnInit {
   get modelo(){
     return this.productoFormulario.get('modelo');
   }
+
   get color(){
     return this.productoFormulario.get('color');
   }
@@ -158,9 +164,9 @@ export class ModalProductoComponent implements OnInit {
         prod_descripcion: this.descripcion?.value,
         prod_precio_compra: +this.precio_compra?.value,
         prod_precio_venta: +this.precio_venta?.value,
-        prod_descuento_promocion: +((this.precio_promocion?.value==""?-1:this.precio_promocion?.value).toFixed(2)),
-        prod_precio_compra_base: +((this.precio_compra?.value * IGV).toFixed(2)),
-        prod_precio_venta_base: +((this.precio_venta?.value * IGV).toFixed(2)),
+        prod_descuento_promocion: +this.precio_promocion?.value,//+((this.precio_promocion?.value==""?-1:this.precio_promocion?.value).toFixed(2)),
+        prod_precio_compra_base: +this.precio_compra?.value * IGV,//+((this.precio_compra?.value * IGV).toFixed(2)),
+        prod_precio_venta_base: +this.precio_venta?.value * IGV,//+((this.precio_venta?.value * IGV).toFixed(2)),
         proveedor : this.proveedor?.value,
         talla : this.talla?.value,
         marca : this.marca?.value, 
@@ -246,15 +252,13 @@ export class ModalProductoComponent implements OnInit {
     this.cerrarModal.emit(false);
   }
 
-  private _reiniciarFormulario(): void {
-    this.productoFormulario.reset({...this._datosIniciales});
-  }
+  
 
   ngOnChanges(changes: SimpleChanges) : void {
-    this.descripcion?.disable();
+    
     if(changes['esVisualizarModal']){
-      const visualizar : boolean = changes['esVisualizarModal'].currentValue
-      visualizar?this.productoFormulario.disable():this.productoFormulario.enable()
+      const visualizar : boolean = changes['esVisualizarModal'].currentValue;
+      visualizar?this.productoFormulario.disable():this.productoFormulario.enable();
     }
 
     if(changes['productoUtilizadoEnModal']){
@@ -275,10 +279,17 @@ export class ModalProductoComponent implements OnInit {
         color : producto?.color,
         estado : producto?.prod_estado,
       });
+
     }else{
       this.esRegistro = true ; 
     }
 
+    if(changes['proveedorSeleccionado']){
+      const visualizar : Proveedor = changes['proveedorSeleccionado'].currentValue;
+      // console.log(visualizar);
+      this.proveedor?.setValue(visualizar?.pro_id);
+      this.proveedor?.disable();
+    }
   }
 
 

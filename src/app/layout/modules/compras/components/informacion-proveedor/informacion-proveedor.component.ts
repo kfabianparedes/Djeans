@@ -15,7 +15,7 @@ export class InformacionProveedorComponent {
 
   @Output() registrarNuevoProveedor = new EventEmitter<boolean>();
   @Input() proveedores: Proveedor[] = [];
-  @Output() proveedorSeleccionado = new EventEmitter<number>();
+  @Output() proveedorSeleccionado = new EventEmitter<Proveedor>();
 
   public proveedorForm: FormGroup = this.fb.group({
     proveedor: ['', [ Validators.required ]],
@@ -34,7 +34,7 @@ export class InformacionProveedorComponent {
   public guardarDatos(): void {
     if(this.dataSave){
       this.proveedorForm.disable();
-      this.proveedorSeleccionado.emit(this.proveedor?.value.pro_id);
+      this.proveedorSeleccionado.emit(this.proveedor?.value);
       this.isDataSave.emit(true)
     }else{
       this.proveedorForm.enable()

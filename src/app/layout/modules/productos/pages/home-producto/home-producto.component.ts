@@ -206,7 +206,8 @@ export class HomeProductoComponent implements OnInit {
   }
   
   private _registrarProducto(producto: Producto) : void {
-
+    console.log(producto);
+    
     this.productoService.registrarProductos(producto).subscribe({
       
       next:(respuesta: Respuesta)=>{

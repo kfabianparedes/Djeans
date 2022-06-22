@@ -29,17 +29,17 @@ export class ProductoService {
 
         prod_codigo: producto.prod_codigo.toUpperCase(),
         prod_descripcion: producto.prod_descripcion.toUpperCase(),
-        prod_precio_compra_base: producto.prod_precio_compra_base,
-        prod_precio_compra: producto.prod_precio_compra,
-        prod_precio_venta_base: producto.prod_precio_venta_base,
-        prod_precio_venta: producto.prod_precio_venta,
-        prod_descuento_promocion: producto.prod_descuento_promocion,
-        proveedor: producto.proveedor,
-        talla: producto.talla,
-        categoria: producto.categoria,
-        marca: producto.marca,
-        modelo: producto.modelo,
-        color: producto.color,
+        prod_precio_compra_base: +producto.prod_precio_compra_base.toFixed(2),
+        prod_precio_compra: +producto.prod_precio_compra.toFixed(2),
+        prod_precio_venta_base: +producto.prod_precio_venta_base.toFixed(2),
+        prod_precio_venta: +producto.prod_precio_venta.toFixed(2),
+        prod_descuento_promocion: +producto.prod_descuento_promocion.toFixed(2),
+        proveedor: +producto.proveedor,
+        talla: +producto.talla,
+        categoria: +producto.categoria,
+        marca: +producto.marca,
+        modelo: +producto.modelo,
+        color: +producto.color,
         prod_estado : true
         }
         return this.http.post<Respuesta>( url, body )
