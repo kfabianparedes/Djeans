@@ -32,7 +32,7 @@
                 <td class="text-center">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="detalle.productoDetalle.prod_precio_compra" required>
+                            <input pInputText type="text" [(ngModel)]="detalle.productoDetalle.prod_precio_compra">
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{detalle.productoDetalle.prod_precio_compra | currency: 'PEN'}}
@@ -63,7 +63,7 @@
                 <td class="text-center">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="detalle.det_comp_importe">
+                            <input disabled pInputText type="text" [(ngModel)]="detalle.det_comp_importe">
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{detalle.det_comp_importe | currency: 'PEN'}}
@@ -73,7 +73,7 @@
                 <td class="text-center">
                     <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(detalle)" class="p-button-rounded p-button-text mr-2"></button>
                     <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" (click)="eliminarDetalle(detalle)" class="p-button-rounded p-button-text p-button-danger"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(detalle)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="guardarEditado(detalle)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
                     <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(detalle, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
                 </td>
             </tr>

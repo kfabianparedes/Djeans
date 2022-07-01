@@ -23,8 +23,8 @@ export class TablaReporteCompraComponent {
   public cargando : Subject<boolean> = this._buttonProgressService.cargando;
 
   filtroFormulario : FormGroup = this.fb.group({
-    fechaInicio:[''],
-    fechaFin: ['']
+    fechaInicio:['',[Validators.required]],
+    fechaFin: ['',[Validators.required]]
   });
 
   constructor(
@@ -41,7 +41,6 @@ export class TablaReporteCompraComponent {
   }
   public reiniciarTabla(tabla : Table): void {
     tabla?.reset();
-    
   }
 
   get fechaInicio(){
@@ -65,8 +64,8 @@ export class TablaReporteCompraComponent {
   }
 
 
-  public refrezcarLista() : void {
-    this.fechasFiltro.emit(["refrezcar","refrezcar",]);
+  public refrescarLista() : void {
+    this.fechasFiltro.emit(["refrescar","refrescar",]);
     this.filtroFormulario.reset(this._datosIniciales);
   }
 

@@ -54,7 +54,7 @@ export class TablaProductosComponent implements OnChanges  {
 
   public enviarDetalle(producto: Producto): void {
     console.log(producto);
-    this.productosDeTabla = [...this.productosDeTabla.filter(($producto: Producto) => $producto !== producto)]
+    this.productosDeTabla = [...this.productosDeTabla.filter(($producto: Producto) => $producto !== producto)];//[...this.productosDeTabla.filter(($producto: Producto) => $producto !== producto)]
     this.enviarProducto.emit(producto);
   }
 }

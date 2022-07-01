@@ -392,12 +392,12 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   }
 
   public detallesDeCompra: DetalleDeCompra[] = [];
-
+  public nuevoDetalle: DetalleDeCompra = {} as DetalleDeCompra;
   public agregarDetalleCompra(productoSeleccionado: Producto): void {
 
-    const detalleEncontrado = this.detallesDeCompra.find((detalleDeCompra:DetalleDeCompra)=>detalleDeCompra.productoDetalle === productoSeleccionado);
-    console.log('Detalles de compra',detalleEncontrado);
-    if(detalleEncontrado==undefined){
+    // const detalleEncontrado = this.detallesDeCompra.find((detalleDeCompra:DetalleDeCompra)=>detalleDeCompra.productoDetalle === productoSeleccionado);
+    // console.log('Detalles de compra',detalleEncontrado);
+    // if(detalleEncontrado==undefined){
       const detalle : DetalleDeCompra = {
         det_comp_id: 0,
         det_comp_cantidad: 0,
@@ -407,8 +407,11 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
         producto_descripcion: productoSeleccionado.prod_descripcion,
         compra: 0
       }
-      this.detallesDeCompra.push({...detalle})
-    }
+      // this.detallesDeCompra.push({...detalle})
+      this.nuevoDetalle = {...detalle};
+    // }
 
   }
+
+  
 }

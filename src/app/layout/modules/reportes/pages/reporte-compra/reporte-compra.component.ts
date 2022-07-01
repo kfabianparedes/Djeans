@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
@@ -35,7 +35,7 @@ import { forkJoin, Subscription } from 'rxjs';
   templateUrl: './reporte-compra.component.html',
   styleUrls: ['./reporte-compra.component.css']
 })
-export class ReporteCompraComponent implements OnInit {
+export class ReporteCompraComponent implements OnInit , OnDestroy{
 
   public compras : Compra[] = [] ; 
   public usuarios : Usuario [] = [] ; 
@@ -65,11 +65,13 @@ export class ReporteCompraComponent implements OnInit {
     private comprobanteService: TipoDeComprobanteService,
     public messageService : MessageService) { }
 
+  
+
   ngOnInit(): void {
     this._listarCompras();
   }
 
-  private listarCompras: Subscription = new Subscription
+  private listarCompras: Subscription = new Subscription;
 
   private _listarCompras(): void {
     this.compras = [];
@@ -245,7 +247,7 @@ export class ReporteCompraComponent implements OnInit {
 
     console.log("Fecha Inicio: " + this.rangoFechas[0]);
     console.log("Fecha Fin: " + this.rangoFechas[1]);
-    if(this.rangoFechas[0]=="refrezcar" && this.rangoFechas[1]=="refrezcar"){
+    if(this.rangoFechas[0]=="refrescar" && this.rangoFechas[1]=="refrescar"){
       this._listarCompras();
 
     }else{
@@ -290,5 +292,9 @@ export class ReporteCompraComponent implements OnInit {
     }
   }
 
+
+  ngOnDestroy(): void {
+    this.listarCompras.unsubscribe();
+  }
   
 }

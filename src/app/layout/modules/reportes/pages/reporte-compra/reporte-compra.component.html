@@ -7,18 +7,18 @@
     
     <tabla-reporte-compra
         [reportesCompraTabla]="compras"
-        (fechasFiltro) = "modificarRangoFechas($event)"
+        (fechasFiltro)="modificarRangoFechas($event)"
         (mostrarModal)="modificarMostrarModal($event)"
-        (visualizarDetalleCompraId) = "modificarVisualizarDetalleCompraId($event)"
-        (visualizarDetalleCompraSerie) = "modificarVisualizarDetalleCompraSerie($event)"
-        (visualizarDetalleCompraNumero) = "modificarVisualizarDetalleCompraNumero($event)">
+        (visualizarDetalleCompraId)="modificarVisualizarDetalleCompraId($event)"
+        (visualizarDetalleCompraSerie)="modificarVisualizarDetalleCompraSerie($event)"
+        (visualizarDetalleCompraNumero)="modificarVisualizarDetalleCompraNumero($event)">
     </tabla-reporte-compra>
 </div>
 
 <modal-reporte-compra
-    [visualizarDetalleCompraSerie] = "visualizarDetalleCompraSerie"
-    [detalles] ="detalleDeLaCompraVisualizar"
-    [visualizarDetalleCompraNumero] = "visualizarDetalleCompraNumero"
-    (cerrarModal) = modificarMostrarModal($event)
-    [mostrarModal] = "mostrarModal"> 
+    [visualizarDetalleCompraSerie]="visualizarDetalleCompraSerie"
+    [detalles]="detalleDeLaCompraVisualizar"
+    [visualizarDetalleCompraNumero]="visualizarDetalleCompraNumero"
+    (cerrarModal)="modificarMostrarModal($event)"
+    [mostrarModal]="mostrarModal"> 
 </modal-reporte-compra>

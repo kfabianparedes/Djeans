@@ -27,6 +27,14 @@
                                 >
                             </div>
                         </div>
+                        <div class="row">
+                            <div *ngIf="fechaInicio?.invalid && (fechaInicio?.dirty || fechaInicio?.touched)"
+                                class="msj-error-form row text-danger text-end p-0">
+                                    <small class="col-12" *ngIf="fechaInicio?.errors?.['required']">
+                                        *La fecha de inicio es requerida.
+                                    </small>
+                            </div>
+                        </div>
                                         <!-- <button [disabled]="cargando | async" 
                                                 (click)="filtrarBusqueda(tablaProducto)" 
                                                 type="button" 
@@ -52,11 +60,19 @@
                                 >
                             </div>
                         </div>
+                        <div class="row">
+                            <div *ngIf="fechaFin?.invalid && (fechaFin?.dirty || fechaFin?.touched)"
+                                class="msj-error-form row text-danger text-end p-0">
+                                    <small class="col-12" *ngIf="fechaFin?.errors?.['required']">
+                                        *La fecha de fin es requerida.
+                                    </small>
+                            </div>
+                        </div>
                     </div>
                 <div class="py-2 col-3 col-sm-6 col-md-1 col-lg-2 col-xl-1 text-center">
-                    <button [disabled]="cargando | async" 
+                    <button [disabled]="filtroFormulario.invalid || (cargando | async)" 
                             type="button" 
-                            (click)="enviarRangoDeFechas()"
+                            (click)="enviarRangoDeFechas();reiniciarTabla(tablaProducto);"
                             class="btn btn-primary">Filtrar
                     </button>
                     
@@ -65,7 +81,7 @@
                     
                     <button [disabled]="cargando | async" 
                     type="button" 
-                    (click)="refrezcarLista()"
+                    (click)="refrescarLista();reiniciarTabla(tablaProducto);"
                     class="btn btn-primary"> <i class="pi pi-refresh"></i>
                     </button>
                     

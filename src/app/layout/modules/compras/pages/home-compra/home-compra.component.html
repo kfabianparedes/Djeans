@@ -81,6 +81,7 @@
 
         <div class="row mt-5">
             <tabla-compra
+                [nuevoDetalle]="nuevoDetalle"
                 [detallesDeCompra]="detallesDeCompra"
                 (detalleDeCompraActualizado)="detallesDeCompra=$event"
             >
