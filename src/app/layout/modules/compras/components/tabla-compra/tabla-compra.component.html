@@ -1,11 +1,10 @@
 <div class="card">
     <p-table 
         [value]="detallesDeCompra" 
-        dataKey="id" 
+        dataKey="det_comp_id" 
         editMode="row" 
         responsiveLayout="scroll"
         >
-        
         <ng-template pTemplate="header">
             <tr class="titulo-tabla contenedor">
                 <th class="text-center">Descripcion</th>
@@ -16,8 +15,7 @@
             </tr>
 
         </ng-template>
-        
-        <ng-template pTemplate="body" let-detalle let-editing="editing" let-ri="rowIndex">
+        <ng-template pTemplate="body" let-detalle let-index="rowIndex">
             <tr class="filas-tabla contenedor" [pEditableRow]="detalle">
                 <td class="text-center">
                     <p-cellEditor>
@@ -35,48 +33,62 @@
                             <input pInputText type="text" [(ngModel)]="detalle.productoDetalle.prod_precio_compra">
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{detalle.productoDetalle.prod_precio_compra | currency: 'PEN'}}
+                            {{detalle.productoDetalle.prod_precio_compra | currency: 'S/'}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <!-- <td class="text-center">
+                <td pEditableColumn class="text-center">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-dropdown [options]="statuses" [(ngModel)]="detalle.inventoryStatus" [style]="{'width':'100%'}"></p-dropdown>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{detalle.inventoryStatus}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td> -->
-                <td class="text-center">
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="detalle.det_comp_cantidad">
+                            <input 
+                                pInputText
+                                type="number" 
+                                min="0" 
+                                (blur)="agregarCantidad(detalle.det_comp_cantidad ,index)" 
+                                [(ngModel)]="detalle.det_comp_cantidad"
+                            >
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{detalle.det_comp_cantidad}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                
                 <td class="text-center">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input disabled pInputText type="text" [(ngModel)]="detalle.det_comp_importe">
+                            <input pInputText type="text" [(ngModel)]="detalle.det_comp_importe">
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{detalle.det_comp_importe | currency: 'PEN'}}
+                            {{detalle.det_comp_importe | currency: 'S/'}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td class="text-center">
-                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(detalle)" class="p-button-rounded p-button-text mr-2"></button>
-                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" (click)="eliminarDetalle(detalle)" class="p-button-rounded p-button-text p-button-danger"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="guardarEditado(detalle)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
-                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(detalle, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                    <!-- Eliminar detalle -->
+                    <button pButton pRipple type="button" icon="pi pi-trash" (click)="eliminarDetalle(detalle)" class="p-button-rounded p-button-text p-button-danger"></button>
                 </td>
+
             </tr>
         </ng-template>
+
+        <ng-template pTemplate="summary" class="row">
+            <div class="flex row justify-content-end">
+                <div class="py-2 col-sm-12 col-md-4 col-lg-2 text-end">
+                    <div>
+                        <span class="h5">Sub total: {{ montoTotal * 0.82  | currency: 'S/'}}</span> 
+                    </div>
+                    <div>
+                        <span class="h5">IGV: {{ montoTotal * 0.18  | currency: 'S/'}}</span> 
+                    </div>
+                    <!-- <hr> -->
+                    <div>
+                        <hr>
+                        <span class="h3">Total: {{montoTotal  | currency: 'S/'}}</span> 
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+
     </p-table>
 </div>

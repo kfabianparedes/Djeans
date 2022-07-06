@@ -83,7 +83,8 @@
             <tabla-compra
                 [nuevoDetalle]="nuevoDetalle"
                 [detallesDeCompra]="detallesDeCompra"
-                (detalleDeCompraActualizado)="detallesDeCompra=$event"
+                (isDataSave)="isDetailsSave=$event"
+                (dataDetallesDeCompra)="detallesParaCompra=$event"
             >
             </tabla-compra>
         </div>
@@ -91,6 +92,7 @@
         <div class="row mt-4">
             <div class="text-center">
                 <button
+                    (click)="registarCompra()"
                     type="button"
                     [disabled]="!esPosibleComprar()"
                     class="py-2 px-5 btn btn-primary">REALIZAR COMPRA
@@ -133,6 +135,6 @@
     (cerrarTablaProductos)="mostrarTablaProducto=$event"
     (crearNuevoProducto)="registrarNuevoProductoEnModal($event)"
     (enviarProducto)="agregarDetalleCompra($event)"
-    
+
     >
 </tabla-productos>

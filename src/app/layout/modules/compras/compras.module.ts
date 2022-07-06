@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { ComprasRoutingModule } from './compras-routing.module';
 import { HomeCompraComponent } from './pages/home-compra/home-compra.component';
@@ -35,6 +35,7 @@ import { TablaProductosComponent } from './components/tabla-productos/tabla-prod
     ReactiveFormsModule,
     ProveedoresModule,
     ProductosModule
-  ]
+  ],
+  providers:[DatePipe]
 })
 export class ComprasModule { }

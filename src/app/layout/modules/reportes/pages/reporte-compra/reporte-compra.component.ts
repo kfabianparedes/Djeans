@@ -196,6 +196,7 @@ export class ReporteCompraComponent implements OnInit , OnDestroy{
             
             this.detalleDeLaCompraVisualizar.push({
               ...detalle,
+              productoDetalle:(productosData.find((producto:Producto) => producto.prod_id === detalle.producto)) || null,
               producto_descripcion:(productosData.find((producto:Producto) => producto.prod_id === detalle.producto)).prod_descripcion || '' 
             })
           })
@@ -295,6 +296,7 @@ export class ReporteCompraComponent implements OnInit , OnDestroy{
 
   ngOnDestroy(): void {
     this.listarCompras.unsubscribe();
+    this.listarDetalles.unsubscribe();
   }
   
 }

@@ -3,9 +3,8 @@ import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
-import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
 import { Compra } from '../../../compras/models/compra.model';
-import { ReporteCompraService } from '../../pages/reporte-compra/services/reporte-compra.service';
+import { TIPOS_DE_COMPROBANTE } from '../../utils/tipo-comprobante';
 
 @Component({
   selector: 'tabla-reporte-compra',
@@ -20,6 +19,7 @@ export class TablaReporteCompraComponent {
   @Output() visualizarDetalleCompraNumero = new EventEmitter<string>();
   @Output() fechasFiltro = new EventEmitter<string[]>();
   @Output() mostrarModal = new EventEmitter<boolean>();
+
   public cargando : Subject<boolean> = this._buttonProgressService.cargando;
 
   filtroFormulario : FormGroup = this.fb.group({
@@ -34,6 +34,8 @@ export class TablaReporteCompraComponent {
 
   ngOnInit(): void {
   }
+
+  public readonly TIPOS_DE_COMPROBANTE = TIPOS_DE_COMPROBANTE;
 
   private _datosIniciales = {
     fechaInicio : '',

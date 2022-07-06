@@ -1,16 +1,15 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input,OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ButtonProgressService } from 'src/app/shared/services/button-progress.service';
-import { REPORT_MODAL_RESPONSIVE } from '../../utils/breakpoint-Reporte-modal';
 import { DetalleDeCompra } from 'src/app/shared/models/detalle-de-compra.models';
+import { REPORT_MODAL_RESPONSIVE } from '../../utils/breakpoint-reporte-modal';
 
 @Component({
   selector: 'modal-reporte-compra',
   templateUrl: './modal-reporte-compra.component.html',
   styleUrls: ['./modal-reporte-compra.component.css']
 })
-export class ModalReporteCompraComponent implements OnInit {
-
+export class ModalReporteCompraComponent{
 
   //variables de la compra que se quiere visualizar 
   @Input() visualizarDetalleCompraSerie : string = '';
@@ -26,12 +25,7 @@ export class ModalReporteCompraComponent implements OnInit {
 
   public readonly REPORT_MODAL_RESPONSIVE = REPORT_MODAL_RESPONSIVE;
 
-  ngOnInit(): void {
-  }
-
   public closeModal(): void {
-    console.log(this.detalles);
-    
     this.mostrarModal=false;
     this.cerrarModal.emit(false);
   }

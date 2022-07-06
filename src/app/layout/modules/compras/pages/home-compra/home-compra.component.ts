@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { DetalleDeCompra } from 'src/app/shared/models/detalle-de-compra.models';
 import { Respuesta } from 'src/app/shared/models/respuesta.model';
 import { RolPermissionService } from 'src/app/shared/services/rol-permission.service';
-import { errorAlerta } from 'src/app/shared/utils/reutilizables';
+import { errorAlerta, exitoAlerta } from 'src/app/shared/utils/reutilizables';
 import { Categoria } from '../../../categorias/models/categoria.model';
 import { CategoriaService } from '../../../categorias/services/categoria.service';
 import { Color } from '../../../colores/models/color.model';
@@ -23,9 +23,13 @@ import { DataProveedorRegistroActualizar } from '../../../proveedores/models/reg
 import { ProveedorService } from '../../../proveedores/services/proveedor.service';
 import { Talla } from '../../../tallas/models/talla.models';
 import { TallaService } from '../../../tallas/services/talla.service';
+import { Compra } from '../../models/compra.model';
+import { CompraService } from '../../services/compra.service';
 import { ComprobanteDePagoDTO } from '../../utils/comprobante-pago-dto';
 import { ConfigGuiaRemision } from '../../utils/configuracion-guia-remision';
+import { DetallesDeCompraDTO } from '../../utils/detalles-compra-dto';
 import {GuiaRemisionDTO} from "../../utils/guia-remision-dto";
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-home-compra',
@@ -60,22 +64,29 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   public guiaDeRemision!: GuiaRemisionDTO;
   public isRemissionGuideSave: boolean = false;
 
+  public detallesParaCompra!: DetallesDeCompraDTO;
+  public isDetailsSave: boolean = false;
+
   //
+  public todayDate =  new Date();
+  
 
   constructor(
-    private productoService : ProductoService,
-    private tallaService : TallaService,
-    private modeloService : ModeloService,
-    private proveedorService : ProveedorService,
-    private colorService : ColorService,
-    private marcaService : MarcaService,
-    private categoriaService : CategoriaService,
+    private _productoService : ProductoService,
+    private _tallaService : TallaService,
+    private _modeloService : ModeloService,
+    private _proveedorService : ProveedorService,
+    private _colorService : ColorService,
+    private _marcaService : MarcaService,
+    private _categoriaService : CategoriaService,
     public rolPermissionService: RolPermissionService,
     public messageService: MessageService,
+    public authService: AuthService,
+    private _compraService: CompraService,
+    private _datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
-    // this._listarProveedores();
     this._listAll();
   }
 
@@ -85,31 +96,6 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
 
   private _suscripcionProveedores: Subscription = new Subscription;
   
-  private _listarProveedores() : void {
-    this.proveedores = [];
-    this._suscripcionProveedores = this.proveedorService.listarProveedores().subscribe({
-      next: (respuesta:Respuesta)=>{
-
-        (respuesta.data).forEach((proveedor:Proveedor)=>{
-
-          this.proveedores.push({
-            ...proveedor,
-            proveedorEstado: proveedor.pro_estado?'ACTIVO':'INACTIVO'
-          })
-        });
-      },error: (respuestaError:HttpErrorResponse)=>{
-
-        const respuesta : Respuesta = { ...respuestaError.error }
-        const codigoHttp : number = respuestaError.status;
-        if(codigoHttp !== 0){
-          errorAlerta( respuesta.code.toString(), respuesta.message);
-        }else{
-          errorAlerta( 'Error en el servidor', AuthService.mensajeErrorDelServidor);
-        }
-      }
-    });
-  }
-
   public guardarProveedor({proveedor}: DataProveedorRegistroActualizar ): void {
     this._registrarProveedor(proveedor);
   }
@@ -127,7 +113,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   }
 
   private _registrarProveedor(proveedor : Proveedor):void{
-    this.proveedorService.registrarProveedor(proveedor).subscribe(
+    this._proveedorService.registrarProveedor(proveedor).subscribe(
       {
         next: (respuesta: Respuesta)=>{
           this.messageService.add({
@@ -157,7 +143,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
 
   private _registrarProducto(producto: Producto) : void {
 
-    this.productoService.registrarProductos(producto).subscribe({
+    this._productoService.registrarProductos(producto).subscribe({
 
       next:(respuesta: Respuesta)=>{
 
@@ -199,6 +185,7 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
     this.configGuiaRemision.colorGuiaRemision==='success'?this.configGuiaRemision.colorGuiaRemision='danger':this.configGuiaRemision.colorGuiaRemision='success';
     this.configGuiaRemision.textoOpcion=='AGREGAR'?this.configGuiaRemision.textoOpcion='CANCELAR':this.configGuiaRemision.textoOpcion='AGREGAR';
   }
+
   private listarData: Subscription = new Subscription;
 
   private _listAll() : void {
@@ -215,13 +202,13 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
 
     this.listarData = forkJoin(
       [
-        this.productoService.listarProductos(),
-        this.proveedorService.listarProveedores(),
-        this.tallaService.listarTallas(),
-        this.categoriaService.listarCategorias(),
-        this.modeloService.listarModelos(),
-        this.colorService.listarColores(),
-        this.marcaService.listarMarcas()
+        this._productoService.listarProductos(),
+        this._proveedorService.listarProveedores(),
+        this._tallaService.listarTallas(),
+        this._categoriaService.listarCategorias(),
+        this._modeloService.listarModelos(),
+        this._colorService.listarColores(),
+        this._marcaService.listarMarcas()
       ])
       .subscribe({
         next:(respuestas: Respuesta[])=>{
@@ -319,13 +306,16 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
     return this.guiaDeRemision && this.isRemissionGuideSave;
   }
 
+  public esPosibleGuardarDetalles(): boolean{
+    return this.detallesParaCompra && this.isDetailsSave;
+  }
   // valores : any;
   public buscarProductosPorProveedor(): void {
     this.productosPorProveedor = [] ;
     this.mostrarTablaProducto=!this.mostrarTablaProducto;
     
 
-    this.productoService.listarProductosPorProveedor(this.proveedorSeleccionado.pro_id).subscribe(
+    this._productoService.listarProductosPorProveedor(this.proveedorSeleccionado.pro_id).subscribe(
       {
         next: (respuesta:Respuesta)=>{
           (respuesta.data).forEach((producto:Producto)=>{
@@ -334,22 +324,6 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
               productoEstado: producto.prod_estado?'ACTIVO':'INACTIVO'
             })
           });
-          console.log('LISTA DE PRODUCTOS');
-          console.log(this.productosPorProveedor);
-
-          // this.valores = this.productosPorProveedor.findIndex((value:Producto,index:number)=>{
-          //   const productoBuscado = this.detallesDeCompra.find((detalle:DetalleDeCompra)=>value === detalle.productoDetalle)
-          //   if(productoBuscado)
-          //     return [index,1];
-          //   else
-          //     return [-1,0];
-          // })
-          // console.log(this.valores);
-          
-          // this.productosPorProveedor.splice(valores[0],valores[1]);
-
-
-
         },
         error:(respuestaError:HttpErrorResponse)=>{
           const respuesta:Respuesta={...respuestaError.error};
@@ -370,8 +344,8 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
 
   public esPosibleComprar(): boolean {
     return this.configGuiaRemision.hayGuiaRemision?
-    this.esPosibleBuscarProductos() && this.esPosibleGuardarComprobantes() && this.esPosibleGuardarGuiaRemision():
-    this.esPosibleBuscarProductos() && this.esPosibleGuardarComprobantes();
+    this.esPosibleBuscarProductos() && this.esPosibleGuardarComprobantes() && this.esPosibleGuardarDetalles() && this.esPosibleGuardarGuiaRemision():
+    this.esPosibleBuscarProductos() && this.esPosibleGuardarComprobantes() && this.esPosibleGuardarDetalles() ;
     
   }
 
@@ -395,7 +369,6 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
   public nuevoDetalle: DetalleDeCompra = {} as DetalleDeCompra;
   public agregarDetalleCompra(productoSeleccionado: Producto): void {
       const detalle : DetalleDeCompra = {
-        det_comp_id: 0,
         det_comp_cantidad: 0,
         det_comp_importe: 0,
         producto: productoSeleccionado.prod_id,
@@ -404,7 +377,55 @@ export class HomeCompraComponent implements OnInit , OnDestroy{
         compra: 0
       }
       this.nuevoDetalle = {...detalle};
+  }
 
+  public registarCompra(): void{ 
+
+    const nuevaCompra : Compra = {
+      comp_importe_total : this.detallesParaCompra.comp_importe_total , 
+      comp_fecha_emision : this._datePipe.transform( this.comprobanteDePago.fechaDeEmision, "yyyy-MM-dd")! ,
+      comp_fecha_registro : this._datePipe.transform( this.todayDate.toLocaleString("en-US", {timeZone: "America/Lima"}), "yyyy-MM-dd")!,
+      comp_serie : this.comprobanteDePago.serieDePago ,
+      comp_numero : this.comprobanteDePago.numeroDePago , 
+      comp_ingresada : true, 
+      usuario : this.authService.getUserInfo().id ,
+      proveedor : this.proveedorSeleccionado.pro_id , 
+      tipo_comprobante: this.comprobanteDePago.tipoDeComprobante
+    }
+    console.log(nuevaCompra);
+    const detallesDeCompra : DetalleDeCompra[] = [...this.detallesParaCompra.detallesDeCompra];
+    console.log(this.guiaDeRemision);
+    const guiaDeRemisionDeCompra: GuiaRemisionDTO = {
+      fechaDeEmision: this._datePipe.transform( this.guiaDeRemision.fechaDeEmision , "yyyy-MM-dd")! ,
+      serieDePago: this.guiaDeRemision.serieDePago,
+      numeroDePago: this.guiaDeRemision.numeroDePago
+    };
+    this._compraService.registrarUsuario( nuevaCompra, detallesDeCompra, guiaDeRemisionDeCompra ).subscribe(
+      {
+        next: (respuesta: Respuesta)=>{
+          this.messageService.add({
+            severity:'success', 
+            summary: 'Registrado...', 
+            detail: respuesta.message
+          });
+          exitoAlerta('¡Registrado!', respuesta.message);
+        },
+        error: (respuestaError:HttpErrorResponse) => {
+          const respuesta: Respuesta = {...respuestaError.error};
+          const codigoHttp : number = respuestaError.status;
+          if(codigoHttp !== 0){
+            this.messageService.add({
+              severity:'error', 
+              summary: `Código de error: ${respuesta.code}`, 
+              detail: respuesta.message
+            });
+            errorAlerta( `${respuesta.code}` , respuesta.message );
+          }else{
+            errorAlerta( 'Error en el servidor' , AuthService.mensajeErrorDelServidor );
+          }
+        }
+      }
+    );
   }
 
   

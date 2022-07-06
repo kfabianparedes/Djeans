@@ -116,8 +116,12 @@
                 <td class="text-center">{{compra.comp_numero}}</td>
                 <td class="text-center">{{compra.comp_fecha_registro  | date: 'dd/MM/yyyy' }}</td>
                 <td class="text-center">{{compra.proveedor_descripcion}}</td>
-                <td class="text-center">{{compra.tipo_comprobante_descripcion}}</td>
-                <td class="text-center">{{compra.comp_importe_total}}</td>
+                <td class="text-center">
+                    <p-tag
+                        value="{{compra.tipo_comprobante_descripcion}}"
+                        severity="{{compra.tipo_comprobante==TIPOS_DE_COMPROBANTE.BOLETA?'danger':'success'}}">
+                    </p-tag>
+                <td class="text-center">{{compra.comp_importe_total | currency: 'S/'}}</td>
                 <td class="text-center">{{compra.usuario_descripcion}}</td>
                 <td class="text-center">
                     <button 

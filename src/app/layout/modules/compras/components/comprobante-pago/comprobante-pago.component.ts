@@ -57,11 +57,12 @@ export class ComprobantePagoComponent implements OnInit {
     if(this.dataSave){
       this.comprobanteDePagoForm.disable();
       const informacionComprobanteDePago : ComprobanteDePagoDTO = {
-        tipoDeComprobante: this.tipoDeComprobante?.value,
+        tipoDeComprobante: this.tipoDeComprobante?.value.tipo_comprobante_id,
         fechaDeEmision: this.fechaDeEmision?.value,
         serieDePago: this.serieDePago?.value,
         numeroDePago: this.numeroDePago?.value,
       }
+      
       this.dataComprobanteDePago.emit(informacionComprobanteDePago);
       this.isDataSave.emit(true)
     }else{

@@ -25,3 +25,4 @@ export const USU_ID = 'USU_ID';
 export const USU_USERNAME = 'USU_USERNAME';
 export const USU_ROLE = 'USU_ROLE';
 export const TYPE_ROLE = 'TYPE_ROLE';
+
